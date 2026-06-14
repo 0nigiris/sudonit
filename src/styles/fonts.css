@@ -1,0 +1,33 @@
+/* Self-hosted fonts (good for self-hosting + performance + privacy).
+   Files live in /public/fonts/. See /public/fonts/README.md for how to add them.
+   If a file is missing, the fallback stack in tokens.css keeps the site fully
+   legible — nothing breaks. Weights are kept minimal on purpose.
+
+   font-display:swap + tuned fallbacks keep CLS ~0. */
+
+/* Display — Clash Display (variable) */
+@font-face {
+  font-family: 'Clash Display';
+  src: url('/fonts/ClashDisplay-Variable.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Body — General Sans (variable) */
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Variable.woff2') format('woff2-variations');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mono — JetBrains Mono (regular only; used scarcely for tiny labels) */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

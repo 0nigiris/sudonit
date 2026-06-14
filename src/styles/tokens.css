@@ -1,0 +1,81 @@
+/* ============================================================
+   OniT — Design tokens (LOCKED visual system, Direction B blend)
+   Single source of truth for color, type, space, motion.
+   Personality lives in TYPE + PHOTO + VOICE. Color SUPPORTS, never defines.
+   ============================================================ */
+
+:root {
+  /* --- Base (warmth + personality, from T2) --- */
+  --c-base: #15130f;        /* warm near-black — page background */
+  --c-surface: #211d16;     /* raised surfaces / cards */
+  --c-text: #f2ede4;        /* warm off-white — body text */
+  --c-muted: #9a9286;       /* secondary text */
+  --c-line: #2c2820;        /* hairlines / borders */
+
+  /* --- The warm mark / brand light (the SIGNATURE, not the theme) ---
+     Reserved for: brand mark, primary CTA, full glow at Repair + Contact only. */
+  --c-light: #ff9d4d;       /* rich amber */
+  --c-light-dim: #5a3f25;   /* low-glow resting state */
+
+  /* --- Verb tints (Catppuccin DNA, harmonized onto warm base) ---
+     For blocks / labels / accents only. Body text stays --c-text (contrast). */
+  --c-fix: #fab387;         /* FIX  — Repair (runs hottest) */
+  --c-teach: #84a9d6;       /* TEACH — Tutoring */
+  --c-build: #bba0e0;       /* BUILD — Smart Glasses */
+  --c-create: #8fcfbf;      /* CREATE — English */
+
+  /* --- Typography ---
+     Display = Clash Display (personality). Body = General Sans. Mono = JetBrains
+     (tiny technical labels only, scarce — NOT a terminal aesthetic).
+     Fallback stacks chosen so the site is fully legible before/without webfonts. */
+  --font-display: 'Clash Display', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'General Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+
+  /* Fluid type scale (clamp = responsive without breakpoints to maintain) */
+  --fs-display: clamp(2.75rem, 8vw, 6.5rem);
+  --fs-h1: clamp(2rem, 5vw, 3.75rem);
+  --fs-h2: clamp(1.5rem, 3.5vw, 2.5rem);
+  --fs-lead: clamp(1.125rem, 2vw, 1.5rem);
+  --fs-body: clamp(1rem, 1.2vw, 1.125rem);
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+
+  --lh-tight: 1.05;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+  --tracking-label: 0.08em;
+
+  /* --- Spacing scale --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --space-8: 9rem;
+
+  /* Editorial measure + page gutter */
+  --measure: 64ch;
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --maxw: 1200px;
+
+  /* --- Radius / borders --- */
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+
+  /* --- Motion tokens (premium, almost-invisible) ---
+     transform + opacity ONLY. settle = fast-out, soft-landing (the "Apple" feel). */
+  --dur-micro: 140ms;
+  --dur-entrance: 480ms;
+  --dur-reveal: 560ms;
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* --- Layering --- */
+  --z-header: 100;
+  --z-sticky: 90;
+  --z-mark: 5;
+}

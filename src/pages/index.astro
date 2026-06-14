@@ -1,0 +1,55 @@
+---
+/**
+ * Home — RU (default locale, served at "/").
+ * PHASE 0: scaffold placeholder only. The real scroll story (Hero → Who → Why →
+ * Services → Showcase → Projects → Contact) is built in Phase 2 and will work
+ * fully without JavaScript.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WarmMark from '../components/WarmMark.astro';
+import { SITE } from '../data/site';
+
+const locale = 'ru' as const;
+---
+
+<BaseLayout
+  locale={locale}
+  title=""
+  description="Alexander — Alicante. Fix · Teach · Build · Create."
+>
+  <section class="scaffold container">
+    <p class="eyebrow">Phase 0 · scaffold</p>
+    <h1 class="scaffold__h">
+      I Fix. I Teach.<br />I Build. I Create.
+      <WarmMark size={28} breath={true} />
+    </h1>
+    <p class="scaffold__lead">
+      {SITE.owner} · {SITE.location} · RU / EN / ES
+    </p>
+    <p class="scaffold__note">
+      Structure, design tokens, fonts, layout, i18n and contact config are in
+      place. The story sections arrive in Phase 2 — and will render fully with
+      JavaScript disabled.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .scaffold {
+    padding-block: var(--space-8);
+    max-width: var(--maxw);
+  }
+  .scaffold__h {
+    font-size: var(--fs-display);
+    margin-block: var(--space-3) var(--space-4);
+  }
+  .scaffold__lead {
+    font-size: var(--fs-lead);
+    color: var(--c-text);
+  }
+  .scaffold__note {
+    margin-top: var(--space-4);
+    max-width: var(--measure);
+    color: var(--c-muted);
+  }
+</style>

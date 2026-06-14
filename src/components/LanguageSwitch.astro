@@ -1,0 +1,54 @@
+---
+/**
+ * LanguageSwitch — quiet RU/EN/ES control. Not a menu, not a dropdown to learn.
+ * Pure links (works with no JS). Highlights the active locale.
+ */
+import { LOCALES, DEFAULT_LOCALE, type Locale } from '../data/site';
+
+interface Props {
+  current: Locale;
+}
+const { current } = Astro.props;
+
+// Map a locale to its home path. RU (default) is unprefixed.
+function localeHref(locale: Locale): string {
+  return locale === DEFAULT_LOCALE ? '/' : `/${locale}/`;
+}
+---
+
+<nav class="lang" aria-label="Language">
+  {
+    LOCALES.map((locale) => (
+      <a
+        href={localeHref(locale)}
+        hreflang={locale}
+        class:list={['lang__item', { 'is-active': locale === current }]}
+        aria-current={locale === current ? 'true' : undefined}
+      >
+        {locale.toUpperCase()}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .lang {
+    display: inline-flex;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+  }
+  .lang__item {
+    color: var(--c-muted);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    transition: color var(--dur-micro) var(--ease-settle);
+  }
+  .lang__item:hover {
+    color: var(--c-text);
+  }
+  .lang__item.is-active {
+    color: var(--c-text);
+  }
+</style>

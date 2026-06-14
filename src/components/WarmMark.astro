@@ -1,0 +1,54 @@
+---
+/**
+ * WarmMark — the subtle recurring signature (the rescoped "wake-up").
+ * GUARDRAIL: this is a SIGNATURE, never the identity / theme.
+ *  - size ceiling: small UI accent only, never a hero element
+ *  - resting state is dim; full glow is reserved for Repair + Contact (`glow` prop)
+ *  - one gentle "breath" only where intended; off under reduced-motion
+ */
+interface Props {
+  glow?: boolean;     // full amber glow (use ONLY at Repair + Contact)
+  breath?: boolean;   // one-time subtle breath (hero)
+  size?: number;      // px; keep small
+  class?: string;
+}
+const { glow = false, breath = false, size = 16, class: className = '' } = Astro.props;
+---
+
+<span
+  class:list={['warm-mark', { glow, breath }, className]}
+  style={`--mark-size:${size}px`}
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none">
+    <!-- planet body -->
+    <circle cx="12" cy="12" r="5.5" fill="currentColor" />
+    <!-- ring (the OniT orbit, as a quiet nod — NOT navigation) -->
+    <ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(-20 12 12)"
+      stroke="currentColor" stroke-width="1.3" opacity="0.7" />
+  </svg>
+</span>
+
+<style>
+  .warm-mark {
+    display: inline-flex;
+    color: var(--c-light-dim); /* resting: dim by default */
+    line-height: 0;
+    z-index: var(--z-mark);
+  }
+  .warm-mark.glow {
+    color: var(--c-light); /* full glow — Repair + Contact only */
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--c-light) 45%, transparent));
+  }
+  .warm-mark.breath {
+    animation: mark-breath 3s var(--ease-settle) 1;
+  }
+  @keyframes mark-breath {
+    0% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.04); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .warm-mark.breath { animation: none; }
+  }
+</style>

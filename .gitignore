@@ -1,0 +1,15 @@
+# build output
+dist/
+# generated types
+.astro/
+# dependencies
+node_modules/
+# logs
+npm-debug.log*
+# environment (Stripe keys, bot tokens, etc. — never commit)
+.env
+.env.production
+# os / editor
+.DS_Store
+# local-only Claude Code settings (personal permissions etc.)
+.claude/settings.local.json
