@@ -70,6 +70,56 @@ ul {
   color: var(--c-muted);
 }
 
+/* Section rhythm */
+.section {
+  padding-block: var(--space-7);
+}
+.section__title {
+  font-size: var(--fs-h1);
+  margin-block: var(--space-2) var(--space-5);
+  max-width: 20ch;
+}
+
+/* Calls to action (shared) */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 600;
+  padding: 0.8em 1.4em;
+  border-radius: 999px;
+  font-size: var(--fs-body);
+  transition: transform var(--dur-micro) var(--ease-settle),
+    background-color var(--dur-micro) var(--ease-settle);
+}
+.cta--warm {
+  background: var(--c-light);
+  color: #1a1206;
+}
+.cta--ghost {
+  border: 1px solid var(--c-line);
+  color: var(--c-text);
+}
+.cta:hover {
+  transform: translateY(-1px);
+}
+
+/* Two-up card grid */
+.cards2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+@media (max-width: 760px) {
+  .cards2 {
+    grid-template-columns: 1fr;
+  }
+  /* room for the sticky mobile contact bar */
+  body {
+    padding-bottom: 76px;
+  }
+}
+
 /* Visible focus for keyboard users (accessibility, all tiers) */
 :focus-visible {
   outline: 2px solid var(--c-light);

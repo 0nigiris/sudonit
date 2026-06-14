@@ -1,0 +1,59 @@
+---
+/**
+ * MobileStickyBar — persistent one-tap contact on mobile (the repair door is
+ * always open). Pure links, no JS. Hidden on desktop. WhatsApp primary.
+ */
+import { type Locale } from '../data/site';
+import { whatsappLink, emailLink } from '../data/contact';
+import { t } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+
+<nav class="stickybar" aria-label={t(locale, 'nav.contact')}>
+  <a class="stickybar__btn stickybar__btn--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+    {t(locale, 'contact.whatsapp')}
+  </a>
+  <a class="stickybar__btn" href={emailLink()}>
+    {t(locale, 'contact.email')}
+  </a>
+</nav>
+
+<style>
+  .stickybar {
+    display: none;
+  }
+  @media (max-width: 760px) {
+    .stickybar {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: var(--z-sticky);
+      display: flex;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3)
+        calc(var(--space-2) + env(safe-area-inset-bottom, 0px));
+      background: color-mix(in srgb, var(--c-base) 92%, transparent);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--c-line);
+    }
+    .stickybar__btn {
+      flex: 1;
+      text-align: center;
+      padding: 0.8em 1em;
+      border-radius: 999px;
+      font-size: var(--fs-small);
+      font-weight: 600;
+      border: 1px solid var(--c-line);
+      color: var(--c-text);
+    }
+    .stickybar__btn--warm {
+      flex: 2;
+      background: var(--c-light);
+      color: #1a1206;
+      border-color: transparent;
+    }
+  }
+</style>

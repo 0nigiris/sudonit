@@ -1,0 +1,50 @@
+---
+/**
+ * PhotoFrame — placeholder for real photography (Phase 6).
+ * Shows a tasteful tinted box with a shot-list label (e.g. "A1") instead of a
+ * broken image, so layout is real now. Swap for <Image> when photos arrive.
+ */
+interface Props {
+  id: string;          // shot-list id, e.g. "A1", "B1"
+  caption?: string;
+  ratio?: string;      // CSS aspect-ratio, e.g. "3 / 2", "4 / 5"
+  tint?: string;
+  class?: string;
+}
+const { id, caption = '', ratio = '4 / 5', tint = 'var(--c-light-dim)', class: className = '' } = Astro.props;
+---
+
+<figure class:list={['photo', className]} style={`--ratio:${ratio}; --ptint:${tint}`}>
+  <div class="photo__inner">
+    <span class="photo__tag">PHOTO · {id}</span>
+    {caption && <span class="photo__cap">{caption}</span>}
+  </div>
+</figure>
+
+<style>
+  .photo { margin: 0; }
+  .photo__inner {
+    position: relative;
+    aspect-ratio: var(--ratio);
+    border: 1px dashed var(--c-line);
+    border-radius: var(--radius);
+    background: linear-gradient(140deg, var(--c-surface),
+      color-mix(in srgb, var(--ptint) 14%, var(--c-surface)));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2px;
+    padding: var(--space-3);
+    overflow: hidden;
+  }
+  .photo__tag {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    color: var(--c-muted);
+  }
+  .photo__cap {
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+</style>

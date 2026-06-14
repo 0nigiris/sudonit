@@ -1,0 +1,25 @@
+---
+/**
+ * HomePage — composes the single scroll story from the content model.
+ * Order is the narrative: Hero → About (Who+Why) → Services → Showcase →
+ * Projects → Contact. Header/Footer/sticky bar come from BaseLayout.
+ * Fully static — works with JavaScript disabled.
+ */
+import { type Locale } from '../data/site';
+import Hero from './sections/Hero.astro';
+import About from './sections/About.astro';
+import Services from './sections/Services.astro';
+import Showcase from './sections/Showcase.astro';
+import Projects from './sections/Projects.astro';
+import Contact from './sections/Contact.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+
+<Hero locale={locale} />
+<About locale={locale} />
+<Services locale={locale} />
+<Showcase locale={locale} />
+<Projects locale={locale} />
+<Contact locale={locale} />

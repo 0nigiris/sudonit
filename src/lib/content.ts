@@ -44,13 +44,24 @@ export async function getShowcaseItems(locale: Locale) {
     getServices(locale),
     getProjects(locale),
   ]);
+  // Callers build the locale-aware href themselves via localePath(locale, key).
   return [...services, ...projects].map((e) => ({
     key: e.data.key,
     name: e.data.name,
     verb: e.data.verb,
     oneLine: e.data.oneLine,
     status: e.data.status,
-    cover: e.data.cover,
-    href: `/${e.data.key}`, // /repair /tutoring /glasses /english (locale handled in routing)
   }));
 }
+
+/**
+ * Shot-list photo id per content key (single source — the shot list is one
+ * artifact: A1, B1, C1, E1, E3…). Sections read from here so Phase 6 photo
+ * wiring is one place, not spread across section files.
+ */
+export const PHOTO_BY_KEY: Record<string, string> = {
+  repair: 'B1',
+  tutoring: 'C1',
+  glasses: 'E1',
+  english: 'E3',
+};

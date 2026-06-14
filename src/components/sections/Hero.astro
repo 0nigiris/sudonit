@@ -1,0 +1,64 @@
+---
+/**
+ * Hero — understand Alexander in one breath. The four verbs + name + portrait.
+ * Static (no motion in Phase 2). WarmMark is dim/static here.
+ */
+import { type Locale } from '../../data/site';
+import { homeT } from '../../i18n/home';
+import WarmMark from '../WarmMark.astro';
+import PhotoFrame from '../PhotoFrame.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <h1 class="hero__head">
+        <span class="hero__l">{homeT(locale, 'hero.line1')}</span>
+        <span class="hero__l">
+          {homeT(locale, 'hero.line2')}<WarmMark size={30} class="hero__mark" />
+        </span>
+      </h1>
+      <p class="hero__sub">{homeT(locale, 'hero.sub')}</p>
+    </div>
+    <PhotoFrame id="A1" ratio="4 / 5" tint="var(--c-light)" class="hero__photo" />
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-8) var(--space-7);
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.9fr;
+    gap: var(--space-6);
+    align-items: center;
+  }
+  .hero__head {
+    font-size: var(--fs-display);
+    margin-bottom: var(--space-4);
+  }
+  .hero__l {
+    display: block;
+  }
+  .hero__mark {
+    margin-left: 0.25em;
+    vertical-align: baseline;
+  }
+  .hero__sub {
+    font-size: var(--fs-lead);
+    color: var(--c-text);
+  }
+  @media (max-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    .hero__photo {
+      max-width: 420px;
+    }
+  }
+</style>

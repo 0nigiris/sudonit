@@ -1,0 +1,72 @@
+---
+/**
+ * Contact — the low-friction close. WhatsApp primary, email secondary, no form.
+ * The one place the warm mark reaches full glow (static here; Phase 4 animates).
+ */
+import { type Locale } from '../../data/site';
+import { homeT } from '../../i18n/home';
+import { t } from '../../i18n/ui';
+import { whatsappLink, emailLink, contact } from '../../data/contact';
+import { SITE } from '../../data/site';
+import WarmMark from '../WarmMark.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+
+<section class="section contact" id="contact">
+  <div class="container contact__inner">
+    <WarmMark size={40} glow={true} class="contact__mark" />
+    <p class="eyebrow">{homeT(locale, 'contact.eyebrow')}</p>
+    <h2 class="contact__title">{homeT(locale, 'contact.title')}</h2>
+    <p class="contact__note">{homeT(locale, 'contact.note')}</p>
+
+    <div class="contact__actions">
+      <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+        {t(locale, 'contact.whatsapp')}
+      </a>
+      <a class="cta cta--ghost" href={emailLink()}>
+        {t(locale, 'contact.email')}
+      </a>
+    </div>
+
+    <a class="contact__yt" href={contact.youtube} target="_blank" rel="noopener noreferrer">@{SITE.youtubeHandle}</a>
+  </div>
+</section>
+
+<style>
+  .contact__inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact__mark {
+    margin-bottom: var(--space-3);
+  }
+  .contact__title {
+    font-size: var(--fs-h1);
+    max-width: 18ch;
+    margin-block: var(--space-2) var(--space-3);
+    text-wrap: balance;
+  }
+  .contact__note {
+    color: var(--c-muted);
+    margin-bottom: var(--space-5);
+  }
+  .contact__actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .contact__yt {
+    margin-top: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+  .contact__yt:hover {
+    color: var(--c-text);
+  }
+</style>

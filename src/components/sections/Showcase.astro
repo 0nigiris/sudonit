@@ -1,0 +1,113 @@
+---
+/**
+ * Showcase — Tier 0 baseline: a clean, fully legible set of all four project
+ * cards (name + one-line always visible), each a plain link. This is the
+ * no-JS / reduced-motion fallback AND what ships in the HTML.
+ * Phase 5 progressively ENHANCES this into the angled rotating ring — it never
+ * replaces this baseline. GUARDRAIL: this is a showcase of PROJECTS, never the
+ * rotation; a screenshot must always explain the projects.
+ */
+import { type Locale } from '../../data/site';
+import { getShowcaseItems } from '../../lib/content';
+import { localePath } from '../../lib/paths';
+import { homeT } from '../../i18n/home';
+import { t } from '../../i18n/ui';
+import { tint } from '../../data/verbs';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const items = await getShowcaseItems(locale);
+---
+
+<section class="section showcase" id="showcase">
+  <div class="container">
+    <p class="eyebrow">{homeT(locale, 'showcase.eyebrow')}</p>
+    <h2 class="section__title">{homeT(locale, 'showcase.title')}</h2>
+
+    <ul class="showcase__grid" role="list">
+      {
+        items.map((it, i) => (
+          <li class="scard" style={`--tint:${tint(it.verb)}`}>
+            <a class="scard__link" href={localePath(locale, it.key)}>
+              <span class="scard__num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="scard__name">{it.name}</span>
+              <span class="scard__line">{it.oneLine}</span>
+              {it.status === 'in-progress' && (
+                <span class="scard__badge">{t(locale, 'status.inProgress')}</span>
+              )}
+              <span class="scard__cta">{t(locale, 'showcase.viewProject')} →</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+  }
+  .scard {
+    list-style: none;
+  }
+  .scard__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-4) var(--space-3);
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-top: 3px solid var(--tint);
+    border-radius: var(--radius);
+    transition: transform var(--dur-micro) var(--ease-settle),
+      border-color var(--dur-micro) var(--ease-settle);
+  }
+  .scard__link:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--tint) 55%, var(--c-line));
+  }
+  .scard__num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    color: var(--tint);
+  }
+  .scard__name {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-snug);
+  }
+  .scard__line {
+    color: var(--c-muted);
+    font-size: var(--fs-small);
+    flex: 1;
+  }
+  .scard__badge {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--c-muted);
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+  .scard__cta {
+    font-size: var(--fs-small);
+    color: var(--c-text);
+  }
+  @media (max-width: 900px) {
+    .showcase__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 520px) {
+    .showcase__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

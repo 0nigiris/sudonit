@@ -1,0 +1,39 @@
+---
+/**
+ * Projects — the "what I'm building" verbs (Build + Create), shown honestly as
+ * in-progress. Distinct from Services (those are hire-me-now).
+ */
+import { type Locale } from '../../data/site';
+import { getProjects, PHOTO_BY_KEY } from '../../lib/content';
+import { localePath } from '../../lib/paths';
+import { homeT } from '../../i18n/home';
+import { t } from '../../i18n/ui';
+import VerbCard from '../VerbCard.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const projects = await getProjects(locale);
+---
+
+<section class="section" id="projects">
+  <div class="container">
+    <p class="eyebrow">{homeT(locale, 'projects.eyebrow')}</p>
+    <h2 class="section__title">{homeT(locale, 'projects.title')}</h2>
+
+    <div class="cards2">
+      {
+        projects.map((p) => (
+          <VerbCard
+            verb={p.data.verb}
+            name={p.data.name}
+            oneLine={p.data.oneLine}
+            href={localePath(locale, p.data.key)}
+            photoId={PHOTO_BY_KEY[p.data.key]}
+            statusLabel={p.data.status === 'in-progress' ? t(locale, 'status.inProgress') : undefined}
+            cta={t(locale, 'showcase.viewProject')}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

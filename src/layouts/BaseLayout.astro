@@ -7,6 +7,7 @@ import '../styles/base.css';
 import { type Locale, SITE } from '../data/site';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import MobileStickyBar from '../components/MobileStickyBar.astro';
 
 interface Props {
   locale: Locale;
@@ -43,5 +44,6 @@ const fullTitle = title ? `${title} — ${SITE.name}` : SITE.name;
       <slot />
     </main>
     <Footer locale={locale} />
+    <MobileStickyBar locale={locale} />
   </body>
 </html>

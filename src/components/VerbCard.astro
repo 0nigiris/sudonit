@@ -1,0 +1,78 @@
+---
+/**
+ * VerbCard — a service or project card (Services + Projects sections).
+ * Whole card is a single link. Verb tint as accent; status badge when building.
+ */
+import { type Verb, VERB_META, tint } from '../data/verbs';
+import PhotoFrame from './PhotoFrame.astro';
+
+interface Props {
+  verb: Verb;
+  name: string;
+  oneLine: string;
+  href: string;
+  photoId?: string;
+  statusLabel?: string; // localized "in progress" text; omit when available
+  cta?: string;
+}
+const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
+---
+
+<a class="vcard" href={href} style={`--tint:${tint(verb)}`}>
+  {photoId && <PhotoFrame id={photoId} ratio="3 / 2" tint={tint(verb)} />}
+  <div class="vcard__body">
+    <span class="vcard__verb">
+      {VERB_META[verb].label}
+      {statusLabel && <em class="vcard__status">· {statusLabel}</em>}
+    </span>
+    <h3 class="vcard__name">{name}</h3>
+    <p class="vcard__line">{oneLine}</p>
+    {cta && <span class="vcard__cta">{cta} →</span>}
+  </div>
+</a>
+
+<style>
+  .vcard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-lg);
+    transition: border-color var(--dur-micro) var(--ease-settle),
+      transform var(--dur-micro) var(--ease-settle);
+  }
+  .vcard:hover {
+    border-color: color-mix(in srgb, var(--tint) 50%, var(--c-line));
+    transform: translateY(-2px);
+  }
+  .vcard__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-2) var(--space-3);
+  }
+  .vcard__verb {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--tint);
+  }
+  .vcard__status {
+    color: var(--c-muted);
+    font-style: normal;
+  }
+  .vcard__name {
+    font-size: var(--fs-h2);
+  }
+  .vcard__line {
+    color: var(--c-muted);
+  }
+  .vcard__cta {
+    margin-top: var(--space-1);
+    font-size: var(--fs-small);
+    color: var(--c-text);
+  }
+</style>

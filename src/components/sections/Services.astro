@@ -1,0 +1,51 @@
+---
+/**
+ * Services — the "hire-me-now" verbs (Fix + Teach), given primacy.
+ * Cards from the content model; warm primary CTA (Fix my computer -> WhatsApp).
+ */
+import { type Locale } from '../../data/site';
+import { getServices, PHOTO_BY_KEY } from '../../lib/content';
+import { localePath } from '../../lib/paths';
+import { homeT } from '../../i18n/home';
+import { t } from '../../i18n/ui';
+import { whatsappLink } from '../../data/contact';
+import VerbCard from '../VerbCard.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const services = await getServices(locale);
+---
+
+<section class="section" id="services">
+  <div class="container">
+    <p class="eyebrow">{homeT(locale, 'services.eyebrow')}</p>
+    <h2 class="section__title">{homeT(locale, 'services.title')}</h2>
+
+    <div class="cards2">
+      {
+        services.map((s) => (
+          <VerbCard
+            verb={s.data.verb}
+            name={s.data.name}
+            oneLine={s.data.oneLine}
+            href={localePath(locale, s.data.key)}
+            photoId={PHOTO_BY_KEY[s.data.key]}
+            cta={t(locale, 'showcase.viewProject')}
+          />
+        ))
+      }
+    </div>
+
+    <p class="services__cta">
+      <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+        {t(locale, 'contact.primaryRepair')} →
+      </a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .services__cta {
+    margin-top: var(--space-5);
+  }
+</style>
