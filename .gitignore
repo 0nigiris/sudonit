@@ -13,3 +13,6 @@ npm-debug.log*
 .DS_Store
 # local-only Claude Code settings (personal permissions etc.)
 .claude/settings.local.json
+# browser screenshots / playwright MCP artifacts (local QA only)
+/*.png
+.playwright-mcp/

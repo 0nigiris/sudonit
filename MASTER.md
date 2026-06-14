@@ -186,12 +186,13 @@ Verb tints (Catppuccin DNA, harmonized) — blocks/labels/accents only, NOT body
 ```
 
 ### Typography
-- **Display:** Clash Display (characterful, confident — does the personality work).
-- **Body:** General Sans (clean humanist, very readable).
+- **Display:** Geologica (confident modern grotesk with character, full Cyrillic).
+- **Body:** Onest (clean humanist, very readable, full Cyrillic).
+- *(History: Clash Display + General Sans were tried first but have no Cyrillic — dropped, since RU is primary. Chosen visually in-browser.)*
 - **Mono:** JetBrains Mono — *tiny* technical labels only, scarce. NOT a terminal aesthetic.
 - Fallback stacks chosen so the site is fully legible before/without webfonts.
 - Fluid `clamp()` type scale (display down to label) — responsive without breakpoint churn.
-- Subset to **Latin + Cyrillic** (trilingual site needs Cyrillic on display + body).
+- Self-hosted per-subset `.woff2` (latin / latin-ext / cyrillic / cyrillic-ext) with `unicode-range`.
 
 ### The warm mark
 - A small SVG: planet body + a single quiet orbit ring (nod to the logo, NOT navigation).
@@ -574,12 +575,9 @@ None of these require a rewrite.
 ## 25. Open decisions / what's needed from Alexander
 
 - **Real WhatsApp number** (currently placeholder `34000000000`).
-- **Font files** — Clash Display + General Sans + JetBrains Mono `.woff2` are now
-  installed in `public/fonts/`. ⚠️ **OPEN TYPE DECISION:** these faces have **no
-  Cyrillic** (Latin + Spanish only), and RU is the primary language. Must decide:
-  (a) switch display/body to Cyrillic-capable faces (Unbounded / Geologica / Onest
-  / Manrope / Golos), or (b) add a Cyrillic companion for RU only. Will be chosen
-  visually in-browser after the MCP restart.
+- **Font files** — ✅ RESOLVED. Type system locked to **Geologica (display) + Onest
+  (body) + JetBrains Mono (labels)**, self-hosted with Latin + Cyrillic subsets in
+  `public/fonts/`. Verified in-browser: Russian renders in-brand.
 - **Voice copy** — answer the voice prompts (why you fix what others discard; what most
   tutors get wrong; what each project really is). RU is fine; Claude shapes EN/ES.
 - **Real project details** — what *exactly* is the Smart Glasses project and the English

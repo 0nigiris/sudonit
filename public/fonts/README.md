@@ -1,31 +1,28 @@
 # Fonts
 
-Self-hosted webfonts go in this folder. Until they're added, the site falls back
-to the stacks defined in `src/styles/tokens.css` and remains fully legible —
-nothing breaks.
+Self-hosted webfonts (good for self-hosting + performance + privacy). The site is
+trilingual with **Russian as the primary language**, so the display + body faces
+must cover **Cyrillic**.
 
-Expected files (referenced by `src/styles/fonts.css`):
+## Installed (chosen)
 
-| File | Family | Source |
-|------|--------|--------|
-| `ClashDisplay-Variable.woff2` | Clash Display (display) | Fontshare (free) — fontshare.com/fonts/clash-display |
-| `GeneralSans-Variable.woff2` | General Sans (body) | Fontshare (free) — fontshare.com/fonts/general-sans |
-| `JetBrainsMono-Regular.woff2` | JetBrains Mono (tiny labels) | jetbrains.com/lp/mono / Google Fonts |
+| Family | Role | Subsets | Source |
+|--------|------|---------|--------|
+| **Geologica** | Display (headings) | latin, latin-ext, cyrillic, cyrillic-ext | Google Fonts (OFL) |
+| **Onest** | Body text | latin, latin-ext, cyrillic, cyrillic-ext | Google Fonts (OFL) |
+| **JetBrains Mono** | Tiny technical labels only | latin | jsDelivr (Fontsource) |
 
-> ⚠️ **CYRILLIC GAP (open decision).** The installed Clash Display + General Sans
-> (and the latin JetBrains Mono subset) cover **Latin + Spanish but NOT Cyrillic**.
-> Russian is the PRIMARY language, so as-is, RU text falls back to system-ui (not
-> the brand type). Decision pending: either (a) switch the display/body faces to
-> Cyrillic-capable ones (e.g. Unbounded / Geologica / Onest / Manrope / Golos),
-> or (b) pair a Cyrillic companion face for RU only. To be decided visually in the
-> browser after the MCP restart. These files stay as the Latin reference meanwhile.
+Files are per-subset variable `.woff2` (e.g. `geologica-cyrillic.woff2`,
+`onest-latin.woff2`). `src/styles/fonts.css` declares them with `unicode-range`,
+so the browser downloads only the subset a page actually needs.
 
-How to add:
-1. Download the family, take the **variable** `.woff2` (or subset it).
-2. Drop the file here with the exact filename above.
-3. (Optional) subset to Latin + Cyrillic to keep payload small — the site is
-   trilingual (RU/EN/ES), so Cyrillic coverage matters for the display + body
-   faces.
+## How fonts.css was generated
 
-Keep weights minimal. Performance budget: fonts should not blow the LCP < 2s
-mobile target.
+Pulled from the Google Fonts CSS2 API (source of truth for subsets +
+`unicode-range`), with the `src` URLs rewritten to local `/fonts/` paths and only
+the latin / latin-ext / cyrillic / cyrillic-ext blocks kept. To refresh or add a
+weight/subset, re-run that fetch and drop the new `.woff2` files here.
+
+> History: an earlier attempt used Clash Display + General Sans (Fontshare) — they
+> have **no Cyrillic**, so they were dropped in favour of Geologica + Onest, which
+> render Russian (the primary language) in-brand. Decision made visually in-browser.

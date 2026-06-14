@@ -28,8 +28,8 @@
      Display = Clash Display (personality). Body = General Sans. Mono = JetBrains
      (tiny technical labels only, scarce — NOT a terminal aesthetic).
      Fallback stacks chosen so the site is fully legible before/without webfonts. */
-  --font-display: 'Clash Display', 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'General Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Geologica', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
 
   /* Fluid type scale (clamp = responsive without breakpoints to maintain) */
