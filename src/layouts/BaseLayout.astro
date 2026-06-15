@@ -28,7 +28,7 @@ const OG_LOCALE: Record<Locale, string> = { ru: 'ru_RU', en: 'en_US', es: 'es_ES
 const bare = barePath(Astro.url.pathname);
 const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : undefined);
 const canonical = noindex ? undefined : abs(localePath(locale, bare));
-const ogImage = abs('/onit-logo.jpg');
+const ogImage = abs('/og-card.png');
 const alternates = noindex
   ? []
   : LOCALES.map((l) => ({ hreflang: l, href: abs(localePath(l, bare)) }));
@@ -60,6 +60,14 @@ const xDefault = noindex ? undefined : abs(localePath(DEFAULT_LOCALE, bare));
     <meta property="og:locale" content={OG_LOCALE[locale]} />
     {canonical && <meta property="og:url" content={canonical} />}
     {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+
+    {/* Twitter/X large-image card — reuses the same OG card. */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
     <meta name="theme-color" content="#15130f" />
 
     {/* Preload the display face (Geologica) — it's the hero/LCP element.
