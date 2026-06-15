@@ -16,10 +16,18 @@ interface Props {
   caption?: string;
   ratio?: string;      // CSS aspect-ratio, e.g. "3 / 2", "4 / 5"
   tint?: string;
+  priority?: boolean;  // above-the-fold (hero) — load eagerly for LCP
   class?: string;
 }
-const { id, alt = '', caption = '', ratio = '4 / 5', tint = 'var(--c-light-dim)', class: className = '' } =
-  Astro.props;
+const {
+  id,
+  alt = '',
+  caption = '',
+  ratio = '4 / 5',
+  tint = 'var(--c-light-dim)',
+  priority = false,
+  class: className = '',
+} = Astro.props;
 
 // Eagerly map every photo in the folder by its lowercased filename (= id).
 const modules = import.meta.glob<{ default: ImageMetadata }>(
@@ -52,7 +60,8 @@ const widths = img
         alt={altText}
         widths={widths}
         sizes="(max-width: 760px) 90vw, 40vw"
-        loading="lazy"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchpriority={priority ? 'high' : 'auto'}
         decoding="async"
       />
     ) : (

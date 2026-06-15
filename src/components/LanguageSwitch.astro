@@ -3,20 +3,24 @@
  * LanguageSwitch — quiet RU/EN/ES control. Not a menu, not a dropdown to learn.
  * Pure links (works with no JS). Highlights the active locale.
  */
-import { LOCALES, DEFAULT_LOCALE, type Locale } from '../data/site';
+import { LOCALES, type Locale } from '../data/site';
+import { localePath, barePath } from '../lib/paths';
 
 interface Props {
   current: Locale;
+  landmark?: boolean; // true = a labelled <nav> landmark; false = plain group
 }
-const { current } = Astro.props;
+const { current, landmark = true } = Astro.props;
+// Avoid two identically-named "Language" nav landmarks (header + footer):
+// the secondary instance renders as a non-landmark group.
+const Wrapper = landmark ? 'nav' : 'div';
 
-// Map a locale to its home path. RU (default) is unprefixed.
-function localeHref(locale: Locale): string {
-  return locale === DEFAULT_LOCALE ? '/' : `/${locale}/`;
-}
+// Keep the visitor on the same page when switching language.
+const bare = barePath(Astro.url.pathname);
+const localeHref = (locale: Locale) => localePath(locale, bare);
 ---
 
-<nav class="lang" aria-label="Language">
+<Wrapper class="lang" aria-label={landmark ? 'Language' : undefined}>
   {
     LOCALES.map((locale) => (
       <a
@@ -29,7 +33,7 @@ function localeHref(locale: Locale): string {
       </a>
     ))
   }
-</nav>
+</Wrapper>
 
 <style>
   .lang {

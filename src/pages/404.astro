@@ -1,0 +1,43 @@
+---
+/**
+ * 404 — a calm, on-brand dead end. One clear way back (home), nothing to learn.
+ * Single page (default locale); kept deliberately minimal.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { DEFAULT_LOCALE, SITE } from '../data/site';
+---
+
+<BaseLayout locale={DEFAULT_LOCALE} title="404" noindex>
+  <section class="nf">
+    <div class="container nf__inner">
+      <p class="eyebrow">404</p>
+      <h1 class="nf__title">Такой страницы нет</h1>
+      <p class="nf__note">Page not found · Página no encontrada</p>
+      <a class="cta cta--warm" href="/">← {SITE.name}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+  .nf__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .nf__title {
+    font-size: var(--fs-h1);
+    max-width: 16ch;
+  }
+  .nf__note {
+    color: var(--c-muted);
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+    margin-bottom: var(--space-3);
+  }
+</style>

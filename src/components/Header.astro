@@ -71,4 +71,11 @@ const home = locale === DEFAULT_LOCALE ? '/' : `/${locale}/`;
   .header__contact:hover {
     color: var(--c-text);
   }
+  /* On mobile the persistent bottom bar already carries contact — drop the
+     header link so it never crowds/clips the language switch. */
+  @media (max-width: 760px) {
+    .header__contact {
+      display: none;
+    }
+  }
 </style>
