@@ -23,7 +23,7 @@ export interface ContactConfig {
 
 export const contact: ContactConfig = {
   whatsapp: {
-    phone: '34000000000', // TODO(Alexander): real WhatsApp number
+    phone: '34691809846', // real WhatsApp (from the previous OniT site)
     defaultMessage: '',
   },
   email: 'fixkraftmine@gmail.com',
