@@ -1,33 +1,73 @@
 ---
 /**
- * PhotoFrame — placeholder for real photography (Phase 6).
- * Shows a tasteful tinted box with a shot-list label (e.g. "A1") instead of a
- * broken image, so layout is real now. Swap for <Image> when photos arrive.
+ * PhotoFrame — one framed slot for photography.
+ *
+ * Drop a real photo into `src/assets/photos/<id>.{jpg,png,webp,avif}` (id
+ * lowercased) and this swaps the placeholder box for the optimized <Image>,
+ * keeping the exact same framed aspect-ratio — zero layout change. Until the
+ * shot exists, it shows a tasteful tinted box labelled with the shot-list id
+ * so the layout is real now. See src/assets/photos/README.md.
  */
+import { Image, type ImageMetadata } from 'astro:assets';
+
 interface Props {
   id: string;          // shot-list id, e.g. "A1", "B1"
+  alt?: string;        // describe the photo (a11y); falls back to caption
   caption?: string;
   ratio?: string;      // CSS aspect-ratio, e.g. "3 / 2", "4 / 5"
   tint?: string;
   class?: string;
 }
-const { id, caption = '', ratio = '4 / 5', tint = 'var(--c-light-dim)', class: className = '' } = Astro.props;
+const { id, alt = '', caption = '', ratio = '4 / 5', tint = 'var(--c-light-dim)', class: className = '' } =
+  Astro.props;
+
+// Eagerly map every photo in the folder by its lowercased filename (= id).
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/photos/*.{jpg,jpeg,png,webp,avif}',
+  { eager: true },
+);
+const photos: Record<string, ImageMetadata> = {};
+for (const path in modules) {
+  const file = path.split('/').pop()!.replace(/\.[^.]+$/, '').toLowerCase();
+  photos[file] = modules[path].default;
+}
+const img = photos[id.toLowerCase()];
+const altText = alt || caption;
 ---
 
-<figure class:list={['photo', className]} style={`--ratio:${ratio}; --ptint:${tint}`}>
-  <div class="photo__inner">
-    <span class="photo__tag">PHOTO · {id}</span>
-    {caption && <span class="photo__cap">{caption}</span>}
-  </div>
+<figure class:list={['photo', { 'photo--live': img }, className]} style={`--ratio:${ratio}; --ptint:${tint}`}>
+  {
+    img ? (
+      <Image
+        class="photo__img"
+        src={img}
+        alt={altText}
+        widths={[480, 800, 1200]}
+        sizes="(max-width: 760px) 90vw, 40vw"
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <div class="photo__inner">
+        <span class="photo__tag">PHOTO · {id}</span>
+        {caption && <span class="photo__cap">{caption}</span>}
+      </div>
+    )
+  }
 </figure>
 
 <style>
   .photo { margin: 0; }
+  /* Shared frame so placeholder and real photo are pixel-identical in layout. */
+  .photo__inner,
+  .photo :global(.photo__img) {
+    aspect-ratio: var(--ratio);
+    border-radius: var(--radius);
+    width: 100%;
+  }
   .photo__inner {
     position: relative;
-    aspect-ratio: var(--ratio);
     border: 1px dashed var(--c-line);
-    border-radius: var(--radius);
     background: linear-gradient(140deg, var(--c-surface),
       color-mix(in srgb, var(--ptint) 14%, var(--c-surface)));
     display: flex;
@@ -36,6 +76,10 @@ const { id, caption = '', ratio = '4 / 5', tint = 'var(--c-light-dim)', class: c
     gap: 2px;
     padding: var(--space-3);
     overflow: hidden;
+  }
+  .photo :global(.photo__img) {
+    object-fit: cover;
+    border: 1px solid var(--c-line);
   }
   .photo__tag {
     font-family: var(--font-mono);
