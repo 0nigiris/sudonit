@@ -15,9 +15,12 @@ export interface ContactConfig {
   };
   /** Secondary action. */
   email: string;
+  /** Telegram username (no @). */
+  telegram: string;
+  /** Instagram username (no @). */
+  instagram: string;
   /** Public YouTube channel — the "follow along" heartbeat. */
   youtube: string;
-  // telegram?: string;  // <- future: uncomment + fill, then expose a button.
   // bookingUrl?: string; // <- future: tutoring booking.
 }
 
@@ -27,6 +30,8 @@ export const contact: ContactConfig = {
     defaultMessage: '',
   },
   email: 'fixkraftmine@gmail.com',
+  telegram: 'Sudo_OniT',
+  instagram: 'sudo_onit',
   youtube: 'https://youtube.com/@Sudo_0nigiri',
 };
 
@@ -41,4 +46,14 @@ export function whatsappLink(message?: string): string {
 export function emailLink(subject?: string): string {
   const base = `mailto:${contact.email}`;
   return subject ? `${base}?subject=${encodeURIComponent(subject)}` : base;
+}
+
+/** Telegram chat link. */
+export function telegramLink(): string {
+  return `https://t.me/${contact.telegram}`;
+}
+
+/** Instagram profile link. */
+export function instagramLink(): string {
+  return `https://instagram.com/${contact.instagram}`;
 }

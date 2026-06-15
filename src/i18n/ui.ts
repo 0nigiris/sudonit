@@ -12,6 +12,8 @@ type UIKey =
   | 'nav.contact'
   | 'contact.whatsapp'
   | 'contact.email'
+  | 'contact.telegram'
+  | 'contact.instagram'
   | 'contact.primaryRepair'
   | 'status.inProgress'
   | 'showcase.viewProject'
@@ -23,6 +25,8 @@ export const ui: Record<Locale, Record<UIKey, string>> = {
     'nav.contact': 'Связаться',
     'contact.whatsapp': 'Написать в WhatsApp',
     'contact.email': 'Почта',
+    'contact.telegram': 'Telegram',
+    'contact.instagram': 'Instagram',
     'contact.primaryRepair': 'Починить компьютер',
     'status.inProgress': 'В разработке',
     'showcase.viewProject': 'Открыть проект',
@@ -33,6 +37,8 @@ export const ui: Record<Locale, Record<UIKey, string>> = {
     'nav.contact': 'Contact',
     'contact.whatsapp': 'Message on WhatsApp',
     'contact.email': 'Email',
+    'contact.telegram': 'Telegram',
+    'contact.instagram': 'Instagram',
     'contact.primaryRepair': 'Fix my computer',
     'status.inProgress': 'In progress',
     'showcase.viewProject': 'View project',
@@ -43,6 +49,8 @@ export const ui: Record<Locale, Record<UIKey, string>> = {
     'nav.contact': 'Contacto',
     'contact.whatsapp': 'Escribir por WhatsApp',
     'contact.email': 'Correo',
+    'contact.telegram': 'Telegram',
+    'contact.instagram': 'Instagram',
     'contact.primaryRepair': 'Arreglar mi ordenador',
     'status.inProgress': 'En desarrollo',
     'showcase.viewProject': 'Ver proyecto',

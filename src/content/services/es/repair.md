@@ -1,13 +1,33 @@
 ---
 key: repair
-name: "Reparación de ordenadores"
+name: "Ayuda informática"
 verb: fix
-oneLine: "Reparo los ordenadores que otros te dicen que tires."
+oneLine: "Ordenadores, móviles, configuración — lo reparo, lo configuro, te lo explico."
 order: 1
 status: available
-pricing: quote
-problem: "Un portátil que no enciende, un móvil totalmente colgado, un ordenador tan lento que parece más fácil tirarlo. Suele ser el momento en que te dicen que compres uno nuevo. Yo prefiero mirar primero si se puede recuperar."
-approach: "No descarto un aparato sin intentar arreglarlo. Primero averiguo qué se ha roto y por qué — y luego te digo con honestidad: merece la pena repararlo, o te conviene más cambiarlo. Sin magia ni tecnicismos: te explico en palabras sencillas qué fallaba."
-whatYouGet: "Un aparato que funciona y una explicación clara de qué le pasaba. Si no se puede arreglar, o no compensa, te lo digo desde el principio y no te cobro por ello. Solo pagas cuando te lo devuelvo y funciona."
-howItWorks: "Tú describes el problema — yo te doy un precio aproximado. Después quedamos en persona: voy a donde estés. Lo miro allí mismo o, si hace falta, me lo llevo a casa. Te lo devuelvo funcionando — y solo entonces pagas."
+pricing: tiers
+tiers:
+  - name: "Limpieza y optimización"
+    detail: "ordenadores y móviles"
+    price: "desde 9.99€"
+  - name: "Reinstalar Windows"
+    detail: "con drivers y configuración"
+    price: "desde 29.99€"
+  - name: "Mejora y montaje de PC"
+    detail: "SSD, RAM, montaje completo"
+    price: "desde 14.99€"
+  - name: "Móviles y tablets"
+    detail: "traspaso de datos, batería, cristal"
+    price: "desde 9.99€"
+  - name: "Configuración"
+    detail: "correo, Wi-Fi, cuentas, dispositivos"
+    price: "desde 9.99€"
+  - name: "Digital y diseño"
+    detail: "fichas, banners, presentaciones"
+    price: "desde 14.99€"
+priceNote: "Son precios orientativos — el precio final depende del trabajo y se acuerda antes de empezar. El material se paga aparte."
+problem: "Algo se ha roto, va lento o simplemente no sabes cómo configurarlo — un ordenador, un móvil, el correo, una impresora, el Wi-Fi. Suele ser el momento en que es más fácil rendirse o comprar nuevo. Yo prefiero mirar primero si tiene solución."
+approach: "No descarto un aparato sin intentar arreglarlo, ni complico lo que se puede decir de forma sencilla. Averiguo qué falla y te lo digo con honestidad: se arregla, se configura — o te conviene más cambiarlo. Sin tecnicismos y sin pago por adelantado."
+whatYouGet: "Un dispositivo que funciona y está configurado, y una explicación clara de qué pasaba. Antes de cualquier trabajo serio hago una copia de seguridad — tus datos están protegidos. Si no tiene solución, te lo digo enseguida y no te cobro. Solo pagas cuando todo funciona."
+howItWorks: "Me cuentas qué ha pasado — te hago un par de preguntas y te doy un precio aproximado. Luego lo resuelvo en remoto (TeamViewer / AnyDesk) o en persona en Alicante. Revisamos el resultado juntos — y solo entonces pagas."
 ---

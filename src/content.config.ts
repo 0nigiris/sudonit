@@ -35,6 +35,9 @@ const services = defineCollection({
       // Repair = "quote"; Tutoring = "tiers" (placeholder until real pricing).
       pricing: z.enum(['quote', 'tiers']).default('quote'),
       tiers: z.array(tier).optional(),
+      // Small caveat shown under a tiers price list (e.g. "from-prices, final
+      // price discussed"). Falls back to the generic quote note.
+      priceNote: z.string().optional(),
       // Dedicated-page body (optional — falls back to a holding line until written).
       problem: z.string().optional(),
       approach: z.string().optional(),

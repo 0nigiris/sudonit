@@ -20,7 +20,7 @@ interface Props {
   locale: Locale;
 }
 const { entry, locale } = Astro.props;
-const { name, oneLine, verb, key, pricing, tiers, problem, approach, whatYouGet, howItWorks } =
+const { name, oneLine, verb, key, pricing, tiers, priceNote, problem, approach, whatYouGet, howItWorks } =
   entry.data;
 ---
 
@@ -62,15 +62,18 @@ const { name, oneLine, verb, key, pricing, tiers, problem, approach, whatYouGet,
       <h2>{pageT(locale, 'svc.pricing')}</h2>
 
       {pricing === 'tiers' && tiers && tiers.length > 0 ? (
-        <ul class="tiers" role="list">
-          {tiers.map((tier) => (
-            <li class="tier">
-              <span class="tier__name">{tier.name}</span>
-              {tier.detail && <span class="tier__detail">{tier.detail}</span>}
-              <span class="tier__price">{tier.price ?? '—'}</span>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul class="tiers" role="list">
+            {tiers.map((tier) => (
+              <li class="tier">
+                <span class="tier__name">{tier.name}</span>
+                {tier.detail && <span class="tier__detail">{tier.detail}</span>}
+                <span class="tier__price">{tier.price ?? '—'}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="svc__quote-note">{priceNote ?? pageT(locale, 'svc.quoteNote')}</p>
+        </>
       ) : (
         <p class="svc__quote-note">{pageT(locale, 'svc.quoteNote')}</p>
       )}

@@ -1,13 +1,33 @@
 ---
 key: repair
-name: "Computer Repair"
+name: "Computer help"
 verb: fix
-oneLine: "I fix the computers others tell you to throw away."
+oneLine: "Computers, phones, setup — I'll fix it, set it up, explain it."
 order: 1
 status: available
-pricing: quote
-problem: "A laptop that won't turn on, a phone frozen solid, a computer so slow it feels easier to bin it. That's usually the moment someone tells you to just buy a new one. I'd rather check first whether it can be brought back to life."
-approach: "I don't write a device off before trying to fix it. First I work out what actually broke and why — then I tell you honestly: it's worth repairing, or you're better off replacing it. No magic, no jargon — I'll explain in plain words what was wrong."
-whatYouGet: "A working device and a clear explanation of what happened to it. If it can't be fixed, or it isn't worth it, I'll say so up front and won't charge you for that. You only pay once I've returned it and it works."
-howItWorks: "You describe the problem — I give you a rough price. Then we meet in person: I come to you. I take a look on the spot, or take the device home if I need to. I bring it back working — and only then do you pay."
+pricing: tiers
+tiers:
+  - name: "Cleanup & optimization"
+    detail: "computers and phones"
+    price: "from 9.99€"
+  - name: "Windows reinstall"
+    detail: "with drivers and setup"
+    price: "from 29.99€"
+  - name: "PC upgrade & build"
+    detail: "SSD, RAM, full builds"
+    price: "from 14.99€"
+  - name: "Phones & tablets"
+    detail: "data transfer, battery, screen"
+    price: "from 9.99€"
+  - name: "Setup"
+    detail: "email, Wi-Fi, accounts, devices"
+    price: "from 9.99€"
+  - name: "Digital & design"
+    detail: "product cards, banners, decks"
+    price: "from 14.99€"
+priceNote: "These are ballpark figures — the final price depends on the job and is agreed before we start. Hardware is paid for separately."
+problem: "Something broke, runs slow, or you just can't work out how to set it up — a computer, a phone, email, a printer, Wi-Fi. That's usually the moment it feels easier to give up or buy new. I'd rather check first whether it can be sorted."
+approach: "I don't write a device off before trying to fix it, and I don't overcomplicate what can be said plainly. I work out what's wrong and tell you honestly: it can be fixed or set up — or you're better off replacing it. No jargon, no upfront payment."
+whatYouGet: "A working, set-up device and a clear explanation of what was wrong. Before any serious work I back your data up — it stays safe. If it can't be solved, I'll say so right away and won't charge you. You only pay once it all works."
+howItWorks: "You tell me what happened — I ask a couple of questions and give a rough price. Then I sort it remotely (TeamViewer / AnyDesk) or in person in Alicante. We check the result together — and only then do you pay."
 ---

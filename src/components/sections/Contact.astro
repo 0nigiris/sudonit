@@ -6,7 +6,7 @@
 import { type Locale } from '../../data/site';
 import { homeT } from '../../i18n/home';
 import { t } from '../../i18n/ui';
-import { whatsappLink, emailLink, contact } from '../../data/contact';
+import { whatsappLink, emailLink, telegramLink, instagramLink, contact } from '../../data/contact';
 import { SITE } from '../../data/site';
 import WarmMark from '../WarmMark.astro';
 
@@ -25,12 +25,19 @@ const { locale } = Astro.props;
       <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
         {t(locale, 'contact.whatsapp')}
       </a>
+      <a class="cta cta--ghost" href={telegramLink()} target="_blank" rel="noopener noreferrer">
+        {t(locale, 'contact.telegram')}
+      </a>
       <a class="cta cta--ghost" href={emailLink()}>
         {t(locale, 'contact.email')}
       </a>
     </div>
 
-    <a class="contact__yt" href={contact.youtube} target="_blank" rel="noopener noreferrer">@{SITE.youtubeHandle}</a>
+    <div class="contact__social">
+      <a href={instagramLink()} target="_blank" rel="noopener noreferrer">@{contact.instagram}</a>
+      <span class="contact__dot" aria-hidden="true">·</span>
+      <a href={contact.youtube} target="_blank" rel="noopener noreferrer">@{SITE.youtubeHandle}</a>
+    </div>
   </div>
 </section>
 
@@ -60,13 +67,23 @@ const { locale } = Astro.props;
     flex-wrap: wrap;
     justify-content: center;
   }
-  .contact__yt {
+  .contact__social {
+    display: inline-flex;
+    gap: var(--space-3);
+    align-items: center;
     margin-top: var(--space-5);
     font-family: var(--font-mono);
     font-size: var(--fs-small);
     color: var(--c-muted);
   }
-  .contact__yt:hover {
+  .contact__social a {
+    color: var(--c-muted);
+    transition: color var(--dur-micro) var(--ease-settle);
+  }
+  .contact__social a:hover {
     color: var(--c-text);
+  }
+  .contact__dot {
+    opacity: 0.5;
   }
 </style>
