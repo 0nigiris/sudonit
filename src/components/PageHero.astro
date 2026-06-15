@@ -23,7 +23,8 @@ const { locale, eyebrow, tint, name, oneLine, statusLabel, photoId, ratio = '3 /
 <header class="phero" style={`--tint:${tint}`}>
   <div class="container">
     <a class="phero__back" href={localePath(locale, '/')}>← {SITE.name}</a>
-    <div class="phero__grid" data-reveal-group>
+    {/* Above the fold = the LCP element; paint it instantly, no JS-gated fade. */}
+    <div class="phero__grid">
       <div class="phero__text">
         <p class="phero__eyebrow">
           {eyebrow}{statusLabel && <em class="phero__status"> · {statusLabel}</em>}

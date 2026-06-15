@@ -25,7 +25,7 @@
   --c-create: #8fcfbf;      /* CREATE — English */
 
   /* --- Typography ---
-     Display = Clash Display (personality). Body = General Sans. Mono = JetBrains
+     Display = Geologica (personality, Cyrillic). Body = Onest. Mono = JetBrains
      (tiny technical labels only, scarce — NOT a terminal aesthetic).
      Fallback stacks chosen so the site is fully legible before/without webfonts. */
   --font-display: 'Geologica', 'Space Grotesk', system-ui, sans-serif;

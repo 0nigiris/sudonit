@@ -13,7 +13,9 @@ const { locale } = Astro.props;
 ---
 
 <section class="hero">
-  <div class="container hero__grid" data-reveal-group>
+  {/* No reveal-gating here: the hero is above the fold and is the LCP element.
+      It must paint instantly, never wait for JS to fade in. Motion starts below. */}
+  <div class="container hero__grid">
     <div class="hero__text">
       <h1 class="hero__head">
         <span class="hero__l">{homeT(locale, 'hero.line1')}</span>
