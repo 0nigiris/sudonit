@@ -7,6 +7,6 @@ order: 3
 status: in-progress
 youtube: "https://youtube.com/@Sudo_0nigiri"
 nextSteps:
-  - "_Marcador — texto final en la Fase 6._"
+  - "El texto llega en la Fase 6."
 ---
 _Marcador — texto final en la Fase 6._

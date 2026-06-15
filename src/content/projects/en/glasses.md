@@ -7,6 +7,6 @@ order: 3
 status: in-progress
 youtube: "https://youtube.com/@Sudo_0nigiri"
 nextSteps:
-  - "_Placeholder — final copy in Phase 6._"
+  - "Copy lands in Phase 6."
 ---
 _Placeholder — final copy in Phase 6._

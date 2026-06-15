@@ -1,0 +1,115 @@
+---
+/**
+ * ProjectPage — dedicated page for a "what I'm building" project (Smart Glasses,
+ * English). Shown honestly as in-progress: the idea, why I'm building it, where
+ * it is now / what's next, and a follow-along (YouTube). Static, content-first.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { type Locale } from '../../data/site';
+import { VERB_META, tint } from '../../data/verbs';
+import { PHOTO_BY_KEY } from '../../lib/content';
+import { pageT } from '../../i18n/pages';
+import { t } from '../../i18n/ui';
+import PageHero from '../PageHero.astro';
+import ContactStrip from '../ContactStrip.astro';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+const { entry, locale } = Astro.props;
+const { name, oneLine, verb, key, status, youtube, nextSteps } = entry.data;
+const statusLabel = status === 'in-progress' ? t(locale, 'status.inProgress') : undefined;
+---
+
+<PageHero
+  locale={locale}
+  eyebrow={VERB_META[verb].label}
+  tint={tint(verb)}
+  name={name}
+  oneLine={oneLine}
+  statusLabel={statusLabel}
+  photoId={PHOTO_BY_KEY[key] ?? 'E1'}
+/>
+
+<section class="section">
+  <div class="container">
+    <div class="page-grid">
+      <div class="pblock">
+        <h2>{pageT(locale, 'prj.idea')}</h2>
+        <p>{pageT(locale, 'placeholder')}</p>
+      </div>
+      <div class="pblock">
+        <h2>{pageT(locale, 'prj.why')}</h2>
+        <p>{pageT(locale, 'placeholder')}</p>
+      </div>
+    </div>
+
+    <div class="prj__status" style={`--tint:${tint(verb)}`}>
+      <div class="pblock">
+        <h2>{pageT(locale, 'prj.now')}</h2>
+        <p>{pageT(locale, 'placeholder')}</p>
+      </div>
+      <div class="pblock">
+        <h2>{pageT(locale, 'prj.next')}</h2>
+        {nextSteps && nextSteps.length > 0 ? (
+          <ul class="prj__next" role="list">
+            {nextSteps.map((step) => <li>{step}</li>)}
+          </ul>
+        ) : (
+          <p>{pageT(locale, 'placeholder')}</p>
+        )}
+      </div>
+    </div>
+
+    {youtube && (
+      <div class="prj__follow">
+        <h2>{pageT(locale, 'prj.follow')}</h2>
+        <a class="cta cta--ghost" href={youtube} target="_blank" rel="noopener noreferrer">
+          {pageT(locale, 'prj.followCta')} →
+        </a>
+      </div>
+    )}
+  </div>
+</section>
+
+<ContactStrip locale={locale} />
+
+<style>
+  .prj__status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
+    border-top: 3px solid var(--tint);
+  }
+  .prj__next {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--c-muted);
+  }
+  .prj__next li {
+    padding-left: var(--space-3);
+    position: relative;
+  }
+  .prj__next li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--tint);
+  }
+  .prj__follow {
+    margin-top: var(--space-7);
+  }
+  .prj__follow h2 {
+    font-size: var(--fs-h2);
+    margin-bottom: var(--space-3);
+  }
+  @media (max-width: 760px) {
+    .prj__status {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+  }
+</style>

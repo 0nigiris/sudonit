@@ -1,0 +1,46 @@
+---
+/**
+ * Dedicated pages: /repair /tutoring /glasses /english (+ /en/… /es/…).
+ * Generated from the content collections — one real page per item per locale.
+ * Services -> ServicePage template, Projects -> ProjectPage template.
+ */
+import type { GetStaticPaths } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { DEFAULT_LOCALE, type Locale } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServicePage from '../components/templates/ServicePage.astro';
+import ProjectPage from '../components/templates/ProjectPage.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const entries = [
+    ...(await getCollection('services')),
+    ...(await getCollection('projects')),
+  ];
+  // Invariant: keys are unique across services + projects (repair/tutoring vs
+  // glasses/english). Two entries sharing a key would collide into one route.
+  return entries.map((entry) => {
+    // id is "<locale>/<key>"; keep the tail intact so nested keys never truncate.
+    const [loc, ...rest] = entry.id.split('/');
+    const key = rest.join('/');
+    const slug = loc === DEFAULT_LOCALE ? key : `${loc}/${key}`;
+    return { params: { slug }, props: { entry, locale: loc as Locale } };
+  });
+};
+
+type Props = {
+  entry: CollectionEntry<'services'> | CollectionEntry<'projects'>;
+  locale: Locale;
+};
+const { entry, locale } = Astro.props as Props;
+const isService = entry.collection === 'services';
+---
+
+<BaseLayout locale={locale} title={entry.data.name} description={entry.data.oneLine}>
+  {
+    isService ? (
+      <ServicePage entry={entry as CollectionEntry<'services'>} locale={locale} />
+    ) : (
+      <ProjectPage entry={entry as CollectionEntry<'projects'>} locale={locale} />
+    )
+  }
+</BaseLayout>

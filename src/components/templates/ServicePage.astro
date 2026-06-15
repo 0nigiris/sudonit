@@ -1,0 +1,135 @@
+---
+/**
+ * ServicePage — dedicated page for a "hire-me-now" service (Repair, Tutoring).
+ * Product-page feel: problem -> approach, what you get / how it works, then the
+ * action block (Repair = request a quote; Tutoring = pricing tiers placeholder).
+ * Static, content-first. Prose is placeholder until Phase 6.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { type Locale } from '../../data/site';
+import { VERB_META, tint } from '../../data/verbs';
+import { PHOTO_BY_KEY } from '../../lib/content';
+import { pageT } from '../../i18n/pages';
+import { t } from '../../i18n/ui';
+import { whatsappLink } from '../../data/contact';
+import PageHero from '../PageHero.astro';
+import ContactStrip from '../ContactStrip.astro';
+
+interface Props {
+  entry: CollectionEntry<'services'>;
+  locale: Locale;
+}
+const { entry, locale } = Astro.props;
+const { name, oneLine, verb, key, pricing, tiers } = entry.data;
+---
+
+<PageHero
+  locale={locale}
+  eyebrow={VERB_META[verb].label}
+  tint={tint(verb)}
+  name={name}
+  oneLine={oneLine}
+  photoId={PHOTO_BY_KEY[key] ?? 'B1'}
+/>
+
+<section class="section">
+  <div class="container">
+    <div class="page-grid">
+      <div class="pblock">
+        <h2>{pageT(locale, 'svc.problem')}</h2>
+        <p>{pageT(locale, 'placeholder')}</p>
+      </div>
+      <div class="pblock">
+        <h2>{pageT(locale, 'svc.approach')}</h2>
+        <p>{pageT(locale, 'placeholder')}</p>
+      </div>
+    </div>
+
+    <div class="page-grid svc__second">
+      <div class="pblock">
+        <h2>{pageT(locale, 'svc.whatYouGet')}</h2>
+        <p>{pageT(locale, 'placeholder')}</p>
+      </div>
+      <div class="pblock">
+        <h2>{pageT(locale, 'svc.howItWorks')}</h2>
+        <p>{pageT(locale, 'placeholder')}</p>
+      </div>
+    </div>
+
+    {/* Action block: quote vs pricing tiers */}
+    <div class="svc__action" style={`--tint:${tint(verb)}`}>
+      <h2>{pageT(locale, 'svc.pricing')}</h2>
+
+      {pricing === 'tiers' && tiers && tiers.length > 0 ? (
+        <ul class="tiers" role="list">
+          {tiers.map((tier) => (
+            <li class="tier">
+              <span class="tier__name">{tier.name}</span>
+              {tier.detail && <span class="tier__detail">{tier.detail}</span>}
+              <span class="tier__price">{tier.price ?? '—'}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="svc__quote-note">{pageT(locale, 'svc.quoteNote')}</p>
+      )}
+
+      <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+        {pricing === 'tiers' ? t(locale, 'contact.whatsapp') : pageT(locale, 'svc.requestQuote')} →
+      </a>
+    </div>
+  </div>
+</section>
+
+<ContactStrip locale={locale} />
+
+<style>
+  .svc__second {
+    margin-top: var(--space-6);
+  }
+  .svc__action {
+    margin-top: var(--space-7);
+    padding: var(--space-5);
+    border: 1px solid var(--c-line);
+    border-top: 3px solid var(--tint);
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+  }
+  .svc__action h2 {
+    font-size: var(--fs-h2);
+    margin-bottom: var(--space-4);
+  }
+  .svc__quote-note {
+    color: var(--c-muted);
+    max-width: var(--measure);
+    margin-bottom: var(--space-4);
+  }
+  .tiers {
+    display: grid;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .tier {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: var(--space-1) var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--c-line);
+  }
+  .tier__name {
+    font-family: var(--font-display);
+    font-size: var(--fs-lead);
+  }
+  .tier__detail {
+    grid-column: 1;
+    color: var(--c-muted);
+    font-size: var(--fs-small);
+  }
+  .tier__price {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    font-family: var(--font-mono);
+    color: var(--tint);
+  }
+</style>

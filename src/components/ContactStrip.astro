@@ -1,0 +1,61 @@
+---
+/**
+ * ContactStrip — slim contact close at the bottom of dedicated pages.
+ * WhatsApp primary, email secondary, plus a back-home link. No form.
+ */
+import { type Locale, SITE } from '../data/site';
+import { localePath } from '../lib/paths';
+import { whatsappLink, emailLink } from '../data/contact';
+import { t } from '../i18n/ui';
+import { pageT } from '../i18n/pages';
+import WarmMark from './WarmMark.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+
+<section class="section cstrip" id="contact">
+  <div class="container cstrip__inner">
+    <WarmMark size={28} glow={true} />
+    <h2 class="cstrip__title">{pageT(locale, 'contact.heading')}</h2>
+    <div class="cstrip__actions">
+      <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+        {t(locale, 'contact.whatsapp')}
+      </a>
+      <a class="cta cta--ghost" href={emailLink()}>{t(locale, 'contact.email')}</a>
+    </div>
+    <a class="cstrip__back" href={localePath(locale, '/')}>← {SITE.name}</a>
+  </div>
+</section>
+
+<style>
+  .cstrip {
+    border-top: 1px solid var(--c-line);
+  }
+  .cstrip__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-3);
+  }
+  .cstrip__title {
+    font-size: var(--fs-h1);
+  }
+  .cstrip__actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--space-2);
+  }
+  .cstrip__back {
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+  .cstrip__back:hover {
+    color: var(--c-text);
+  }
+</style>
