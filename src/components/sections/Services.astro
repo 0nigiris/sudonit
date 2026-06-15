@@ -18,10 +18,10 @@ const services = await getServices(locale);
 
 <section class="section" id="services">
   <div class="container">
-    <p class="eyebrow">{homeT(locale, 'services.eyebrow')}</p>
-    <h2 class="section__title">{homeT(locale, 'services.title')}</h2>
+    <p class="eyebrow" data-reveal>{homeT(locale, 'services.eyebrow')}</p>
+    <h2 class="section__title" data-reveal>{homeT(locale, 'services.title')}</h2>
 
-    <div class="cards2">
+    <div class="cards2" data-reveal-group>
       {
         services.map((s) => (
           <VerbCard
@@ -36,7 +36,7 @@ const services = await getServices(locale);
       }
     </div>
 
-    <p class="services__cta">
+    <p class="services__cta" data-reveal>
       <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
         {t(locale, 'contact.primaryRepair')} →
       </a>

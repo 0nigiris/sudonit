@@ -14,7 +14,7 @@ const { locale } = Astro.props;
 <section class="section about" id="about">
   <div class="container">
     {/* WHO */}
-    <div class="about__who">
+    <div class="about__who" data-reveal>
       <PhotoFrame id="A2" ratio="4 / 5" class="about__photo" />
       <div>
         <p class="eyebrow">{homeT(locale, 'who.eyebrow')}</p>
@@ -24,7 +24,7 @@ const { locale } = Astro.props;
     </div>
 
     {/* WHY — the pull-quote */}
-    <div class="about__why">
+    <div class="about__why" data-reveal>
       <p class="eyebrow">{homeT(locale, 'why.eyebrow')}</p>
       <blockquote class="about__quote">{homeT(locale, 'why.quote')}</blockquote>
       <p class="about__body">{homeT(locale, 'why.body')}</p>

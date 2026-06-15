@@ -1,0 +1,58 @@
+/* ============================================================
+   Motion — reveal-on-scroll. Premium and almost-invisible.
+
+   Principle: you barely notice it, but the page feels dead without it.
+   transform + opacity ONLY (GPU-composited; cheap on mobile).
+
+   Baseline contract:
+   - No JS  -> nothing is ever hidden (these rules are gated behind `.js`,
+               which is only set by the inline head script when JS runs).
+   - JS     -> the hidden state is "armed"; the IntersectionObserver reveals
+               each block as it scrolls into view (or immediately if in view).
+   - Reduced motion -> content simply appears. No movement, no fade timing.
+   ============================================================ */
+
+/* Single block fades up. Armed only when JS is present. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--reveal-shift, 18px));
+  transition:
+    opacity var(--dur-reveal) var(--ease-settle),
+    transform var(--dur-reveal) var(--ease-settle);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Group: direct children fade up in a gentle sequence (one observed target). */
+.js [data-reveal-group] > * {
+  opacity: 0;
+  transform: translateY(var(--reveal-shift, 18px));
+  transition:
+    opacity var(--dur-reveal) var(--ease-settle),
+    transform var(--dur-reveal) var(--ease-settle);
+}
+.js [data-reveal-group].is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+/* Soft stagger — small steps so it never feels like a "show". */
+.js [data-reveal-group].is-visible > *:nth-child(2) { transition-delay: 70ms; }
+.js [data-reveal-group].is-visible > *:nth-child(3) { transition-delay: 140ms; }
+.js [data-reveal-group].is-visible > *:nth-child(4) { transition-delay: 210ms; }
+.js [data-reveal-group].is-visible > *:nth-child(5) { transition-delay: 280ms; }
+.js [data-reveal-group].is-visible > *:nth-child(6) { transition-delay: 350ms; }
+
+/* Reduced motion = a complete mode: content is present, instant, unmoved. */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-reveal].is-visible,
+  .js [data-reveal-group] > *,
+  .js [data-reveal-group].is-visible > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

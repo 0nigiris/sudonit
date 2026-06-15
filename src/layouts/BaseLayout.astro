@@ -36,6 +36,11 @@ const fullTitle = title ? `${title} — ${SITE.name}` : SITE.name;
         RU is the primary language, so preload both Cyrillic + Latin display subsets. */}
     <link rel="preload" href={`/fonts/geologica-${locale === 'ru' ? 'cyrillic' : 'latin'}.woff2`}
       as="font" type="font/woff2" crossorigin />
+
+    {/* Arm reveal-on-scroll BEFORE paint, so content is only ever hidden when
+        JS is actually running (no-JS users get the fully-visible baseline,
+        and there's no flash of hidden content). */}
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -45,5 +50,48 @@ const fullTitle = title ? `${title} — ${SITE.name}` : SITE.name;
     </main>
     <Footer locale={locale} />
     <MobileStickyBar locale={locale} />
+
+    <script>
+      // Reveal-on-scroll: the only motion island. Reveals each block once as it
+      // enters view; under reduced-motion or no IntersectionObserver, everything
+      // is shown immediately. transform/opacity only — kept tiny for mobile.
+      const els = document.querySelectorAll('[data-reveal], [data-reveal-group]');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const showAll = () => els.forEach((el) => el.classList.add('is-visible'));
+
+      try {
+        if (reduce || !('IntersectionObserver' in window)) {
+          showAll();
+        } else {
+          const io = new IntersectionObserver(
+            (entries, obs) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-visible');
+                  obs.unobserve(entry.target);
+                }
+              }
+            },
+            { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
+          );
+          els.forEach((el) => {
+            io.observe(el);
+            // A11y: if keyboard focus lands inside a block before it has scrolled
+            // into view, reveal it immediately so focus is never on hidden content.
+            el.addEventListener(
+              'focusin',
+              () => {
+                el.classList.add('is-visible');
+                io.unobserve(el);
+              },
+              { once: true }
+            );
+          });
+        }
+      } catch {
+        // Never leave content hidden if anything goes wrong.
+        showAll();
+      }
+    </script>
   </body>
 </html>

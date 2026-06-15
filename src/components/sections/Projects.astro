@@ -17,10 +17,10 @@ const projects = await getProjects(locale);
 
 <section class="section" id="projects">
   <div class="container">
-    <p class="eyebrow">{homeT(locale, 'projects.eyebrow')}</p>
-    <h2 class="section__title">{homeT(locale, 'projects.title')}</h2>
+    <p class="eyebrow" data-reveal>{homeT(locale, 'projects.eyebrow')}</p>
+    <h2 class="section__title" data-reveal>{homeT(locale, 'projects.title')}</h2>
 
-    <div class="cards2">
+    <div class="cards2" data-reveal-group>
       {
         projects.map((p) => (
           <VerbCard

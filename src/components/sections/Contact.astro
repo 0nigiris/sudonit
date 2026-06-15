@@ -15,7 +15,7 @@ const { locale } = Astro.props;
 ---
 
 <section class="section contact" id="contact">
-  <div class="container contact__inner">
+  <div class="container contact__inner" data-reveal>
     <WarmMark size={40} glow={true} class="contact__mark" />
     <p class="eyebrow">{homeT(locale, 'contact.eyebrow')}</p>
     <h2 class="contact__title">{homeT(locale, 'contact.title')}</h2>

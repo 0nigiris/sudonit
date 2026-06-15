@@ -34,7 +34,7 @@ const { name, oneLine, verb, key, pricing, tiers } = entry.data;
 
 <section class="section">
   <div class="container">
-    <div class="page-grid">
+    <div class="page-grid" data-reveal-group>
       <div class="pblock">
         <h2>{pageT(locale, 'svc.problem')}</h2>
         <p>{pageT(locale, 'placeholder')}</p>
@@ -45,7 +45,7 @@ const { name, oneLine, verb, key, pricing, tiers } = entry.data;
       </div>
     </div>
 
-    <div class="page-grid svc__second">
+    <div class="page-grid svc__second" data-reveal-group>
       <div class="pblock">
         <h2>{pageT(locale, 'svc.whatYouGet')}</h2>
         <p>{pageT(locale, 'placeholder')}</p>
@@ -57,7 +57,7 @@ const { name, oneLine, verb, key, pricing, tiers } = entry.data;
     </div>
 
     {/* Action block: quote vs pricing tiers */}
-    <div class="svc__action" style={`--tint:${tint(verb)}`}>
+    <div class="svc__action" style={`--tint:${tint(verb)}`} data-reveal>
       <h2>{pageT(locale, 'svc.pricing')}</h2>
 
       {pricing === 'tiers' && tiers && tiers.length > 0 ? (

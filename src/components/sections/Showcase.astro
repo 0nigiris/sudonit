@@ -21,10 +21,10 @@ const items = await getShowcaseItems(locale);
 
 <section class="section showcase" id="showcase">
   <div class="container">
-    <p class="eyebrow">{homeT(locale, 'showcase.eyebrow')}</p>
-    <h2 class="section__title">{homeT(locale, 'showcase.title')}</h2>
+    <p class="eyebrow" data-reveal>{homeT(locale, 'showcase.eyebrow')}</p>
+    <h2 class="section__title" data-reveal>{homeT(locale, 'showcase.title')}</h2>
 
-    <ul class="showcase__grid" role="list">
+    <ul class="showcase__grid" role="list" data-reveal-group>
       {
         items.map((it, i) => (
           <li class="scard" style={`--tint:${tint(it.verb)}`}>

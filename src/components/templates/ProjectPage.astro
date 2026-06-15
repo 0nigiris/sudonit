@@ -34,7 +34,7 @@ const statusLabel = status === 'in-progress' ? t(locale, 'status.inProgress') : 
 
 <section class="section">
   <div class="container">
-    <div class="page-grid">
+    <div class="page-grid" data-reveal-group>
       <div class="pblock">
         <h2>{pageT(locale, 'prj.idea')}</h2>
         <p>{pageT(locale, 'placeholder')}</p>
@@ -45,7 +45,7 @@ const statusLabel = status === 'in-progress' ? t(locale, 'status.inProgress') : 
       </div>
     </div>
 
-    <div class="prj__status" style={`--tint:${tint(verb)}`}>
+    <div class="prj__status" style={`--tint:${tint(verb)}`} data-reveal-group>
       <div class="pblock">
         <h2>{pageT(locale, 'prj.now')}</h2>
         <p>{pageT(locale, 'placeholder')}</p>
@@ -63,7 +63,7 @@ const statusLabel = status === 'in-progress' ? t(locale, 'status.inProgress') : 
     </div>
 
     {youtube && (
-      <div class="prj__follow">
+      <div class="prj__follow" data-reveal>
         <h2>{pageT(locale, 'prj.follow')}</h2>
         <a class="cta cta--ghost" href={youtube} target="_blank" rel="noopener noreferrer">
           {pageT(locale, 'prj.followCta')} →
