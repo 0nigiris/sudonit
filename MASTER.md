@@ -445,7 +445,7 @@ src/
   layouts/     BaseLayout.astro (+ PageLayout later)
   pages/       index(ru) en/ es/  (+ repair tutoring glasses english — Phase 3)
   styles/      tokens.css fonts.css base.css
-public/        fonts/ favicon.svg onit-logo.jpg
+public/        fonts/ favicon.svg og-card.png
 ```
 
 ---
@@ -598,7 +598,7 @@ Files in place: `package.json`, `astro.config.mjs`, `tsconfig.json`, `.gitignore
 `src/styles/{tokens,fonts,base}.css`,
 `src/components/{WarmMark,LanguageSwitch,Header,Footer}.astro`,
 `src/layouts/BaseLayout.astro`, `src/pages/{index,en/index,es/index}.astro`,
-`public/{favicon.svg,onit-logo.jpg,fonts/README.md}`.
+`public/{favicon.svg,og-card.png,fonts/README.md}`.
 
 Known notes: font `.woff2` files not yet added (fallbacks active); WhatsApp number is a
 placeholder; `npm audit` shows 3 high-severity issues in dev-only esbuild/vite (not in
