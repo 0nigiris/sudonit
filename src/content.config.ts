@@ -35,6 +35,11 @@ const services = defineCollection({
       // Repair = "quote"; Tutoring = "tiers" (placeholder until real pricing).
       pricing: z.enum(['quote', 'tiers']).default('quote'),
       tiers: z.array(tier).optional(),
+      // Dedicated-page body (optional — falls back to a holding line until written).
+      problem: z.string().optional(),
+      approach: z.string().optional(),
+      whatYouGet: z.string().optional(),
+      howItWorks: z.string().optional(),
     }),
 });
 
@@ -52,6 +57,10 @@ const projects = defineCollection({
       gallery: z.array(image()).optional(),
       youtube: z.string().url().optional(),
       nextSteps: z.array(z.string()).optional(),
+      // Dedicated-page body (optional — "next" is nextSteps above).
+      idea: z.string().optional(),
+      why: z.string().optional(),
+      now: z.string().optional(),
     }),
 });
 

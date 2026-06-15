@@ -33,16 +33,24 @@ for (const path in modules) {
 }
 const img = photos[id.toLowerCase()];
 const altText = alt || caption;
+// Don't ask Astro to upscale: keep only widths the source can actually serve
+// (Astro 5 silently upscales otherwise). Always leave at least one width.
+const widths = img
+  ? (() => {
+      const w = [480, 800, 1200].filter((n) => n <= img.width);
+      return w.length ? w : [img.width];
+    })()
+  : [];
 ---
 
-<figure class:list={['photo', { 'photo--live': img }, className]} style={`--ratio:${ratio}; --ptint:${tint}`}>
+<figure class:list={['photo', className]} style={`--ratio:${ratio}; --ptint:${tint}`}>
   {
     img ? (
       <Image
         class="photo__img"
         src={img}
         alt={altText}
-        widths={[480, 800, 1200]}
+        widths={widths}
         sizes="(max-width: 760px) 90vw, 40vw"
         loading="lazy"
         decoding="async"

@@ -23,7 +23,7 @@ const { locale } = Astro.props;
       </h1>
       <p class="hero__sub">{homeT(locale, 'hero.sub')}</p>
     </div>
-    <PhotoFrame id="A1" ratio="4 / 5" tint="var(--c-light)" class="hero__photo" />
+    <PhotoFrame id="A1" ratio="4 / 5" tint="var(--c-light)" alt={homeT(locale, 'hero.portraitAlt')} class="hero__photo" />
   </div>
 </section>
 

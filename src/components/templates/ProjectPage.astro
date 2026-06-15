@@ -18,7 +18,7 @@ interface Props {
   locale: Locale;
 }
 const { entry, locale } = Astro.props;
-const { name, oneLine, verb, key, status, youtube, nextSteps } = entry.data;
+const { name, oneLine, verb, key, status, youtube, nextSteps, idea, why, now } = entry.data;
 const statusLabel = status === 'in-progress' ? t(locale, 'status.inProgress') : undefined;
 ---
 
@@ -37,18 +37,18 @@ const statusLabel = status === 'in-progress' ? t(locale, 'status.inProgress') : 
     <div class="page-grid" data-reveal-group>
       <div class="pblock">
         <h2>{pageT(locale, 'prj.idea')}</h2>
-        <p>{pageT(locale, 'placeholder')}</p>
+        <p>{idea ?? pageT(locale, 'placeholder')}</p>
       </div>
       <div class="pblock">
         <h2>{pageT(locale, 'prj.why')}</h2>
-        <p>{pageT(locale, 'placeholder')}</p>
+        <p>{why ?? pageT(locale, 'placeholder')}</p>
       </div>
     </div>
 
     <div class="prj__status" style={`--tint:${tint(verb)}`} data-reveal-group>
       <div class="pblock">
         <h2>{pageT(locale, 'prj.now')}</h2>
-        <p>{pageT(locale, 'placeholder')}</p>
+        <p>{now ?? pageT(locale, 'placeholder')}</p>
       </div>
       <div class="pblock">
         <h2>{pageT(locale, 'prj.next')}</h2>

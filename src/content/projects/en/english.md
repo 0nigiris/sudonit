@@ -6,7 +6,5 @@ oneLine: "A new way to learn English — in the making."
 order: 4
 status: in-progress
 youtube: "https://youtube.com/@Sudo_0nigiri"
-nextSteps:
-  - "Copy lands in Phase 6."
+idea: "A new way to learn English. I'm still shaping the idea — more on exactly what it is very soon."
 ---
-_Placeholder — final copy in Phase 6._

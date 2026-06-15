@@ -1,5 +1,5 @@
 // Section labels for the dedicated service/project pages (localized).
-// Headings + a marked placeholder for body prose (final copy in Phase 6).
+// Headings + a holding line shown when a body field hasn't been written yet.
 // RU is the source of truth.
 
 import type { Locale } from '../data/site';
@@ -26,7 +26,7 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'prj.follow': 'Следите за процессом',
     'prj.followCta': 'Смотреть на YouTube',
     'contact.heading': 'Обсудим?',
-    'placeholder': 'Текст появится в Фазе 6.',
+    'placeholder': 'Скоро расскажу подробнее.',
   },
   en: {
     'svc.problem': 'The problem',
@@ -43,7 +43,7 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'prj.follow': 'Follow along',
     'prj.followCta': 'Watch on YouTube',
     'contact.heading': "Let's talk?",
-    'placeholder': 'Copy lands in Phase 6.',
+    'placeholder': 'More on this soon.',
   },
   es: {
     'svc.problem': 'El problema',
@@ -60,7 +60,7 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'prj.follow': 'Sigue el proceso',
     'prj.followCta': 'Ver en YouTube',
     'contact.heading': '¿Hablamos?',
-    'placeholder': 'El texto llega en la Fase 6.',
+    'placeholder': 'Pronto, más detalles.',
   },
 };
 

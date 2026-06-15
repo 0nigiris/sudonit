@@ -6,7 +6,5 @@ oneLine: "Una nueva forma de aprender inglés — en construcción."
 order: 4
 status: in-progress
 youtube: "https://youtube.com/@Sudo_0nigiri"
-nextSteps:
-  - "El texto llega en la Fase 6."
+idea: "Una nueva forma de aprender inglés. Todavía estoy puliendo la idea — pronto cuento en qué consiste exactamente."
 ---
-_Marcador — texto final en la Fase 6._

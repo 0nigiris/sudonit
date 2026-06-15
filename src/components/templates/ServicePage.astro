@@ -3,7 +3,7 @@
  * ServicePage — dedicated page for a "hire-me-now" service (Repair, Tutoring).
  * Product-page feel: problem -> approach, what you get / how it works, then the
  * action block (Repair = request a quote; Tutoring = pricing tiers placeholder).
- * Static, content-first. Prose is placeholder until Phase 6.
+ * Static, content-first. Body prose comes from the content collection.
  */
 import type { CollectionEntry } from 'astro:content';
 import { type Locale } from '../../data/site';
@@ -20,7 +20,8 @@ interface Props {
   locale: Locale;
 }
 const { entry, locale } = Astro.props;
-const { name, oneLine, verb, key, pricing, tiers } = entry.data;
+const { name, oneLine, verb, key, pricing, tiers, problem, approach, whatYouGet, howItWorks } =
+  entry.data;
 ---
 
 <PageHero
@@ -37,22 +38,22 @@ const { name, oneLine, verb, key, pricing, tiers } = entry.data;
     <div class="page-grid" data-reveal-group>
       <div class="pblock">
         <h2>{pageT(locale, 'svc.problem')}</h2>
-        <p>{pageT(locale, 'placeholder')}</p>
+        <p>{problem ?? pageT(locale, 'placeholder')}</p>
       </div>
       <div class="pblock">
         <h2>{pageT(locale, 'svc.approach')}</h2>
-        <p>{pageT(locale, 'placeholder')}</p>
+        <p>{approach ?? pageT(locale, 'placeholder')}</p>
       </div>
     </div>
 
     <div class="page-grid svc__second" data-reveal-group>
       <div class="pblock">
         <h2>{pageT(locale, 'svc.whatYouGet')}</h2>
-        <p>{pageT(locale, 'placeholder')}</p>
+        <p>{whatYouGet ?? pageT(locale, 'placeholder')}</p>
       </div>
       <div class="pblock">
         <h2>{pageT(locale, 'svc.howItWorks')}</h2>
-        <p>{pageT(locale, 'placeholder')}</p>
+        <p>{howItWorks ?? pageT(locale, 'placeholder')}</p>
       </div>
     </div>
 
