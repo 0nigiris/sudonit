@@ -1,11 +1,16 @@
 ---
 /**
- * Showcase — Tier 0 baseline: a clean, fully legible set of all four project
- * cards (name + one-line always visible), each a plain link. This is the
- * no-JS / reduced-motion fallback AND what ships in the HTML.
- * Phase 5 progressively ENHANCES this into the angled rotating ring — it never
- * replaces this baseline. GUARDRAIL: this is a showcase of PROJECTS, never the
- * rotation; a screenshot must always explain the projects.
+ * Showcase — the ONE "wow", scoped as a SHOWCASE OF PROJECTS (never navigation,
+ * never the rotation itself). Three tiers, progressively enhanced:
+ *
+ *   Tier 0 (ships in HTML, no JS / reduced-motion): a clean grid of all four
+ *           project cards — name + one-line + link always legible.
+ *   Tier 1 desktop (JS, motion ok): scroll-driven coverflow ring — front card
+ *           large + fully readable, others recede behind it; one pass then it
+ *           releases. NOT scroll-hijacked (a normal sticky section).
+ *   Tier 1 mobile  (JS, motion ok): native swipe carousel (scroll-snap).
+ *
+ * GUARDRAIL: every card stays a real, legible project link in every tier.
  */
 import { type Locale } from '../../data/site';
 import { getShowcaseItems } from '../../lib/content';
@@ -19,40 +24,53 @@ const { locale } = Astro.props;
 const items = await getShowcaseItems(locale);
 ---
 
-<section class="section showcase" id="showcase">
-  <div class="container">
-    <p class="eyebrow" data-reveal>{homeT(locale, 'showcase.eyebrow')}</p>
-    <h2 class="section__title" data-reveal>{homeT(locale, 'showcase.title')}</h2>
+<section class="section showcase" id="showcase" data-showcase>
+  <div class="showcase__track">
+    <div class="showcase__stage">
+      <div class="container">
+        <p class="eyebrow" data-reveal>{homeT(locale, 'showcase.eyebrow')}</p>
+        <h2 class="section__title" data-reveal>{homeT(locale, 'showcase.title')}</h2>
 
-    <ul class="showcase__grid" role="list" data-reveal-group>
-      {
-        items.map((it, i) => (
-          <li class="scard" style={`--tint:${tint(it.verb)}`}>
-            <a class="scard__link" href={localePath(locale, it.key)}>
-              <span class="scard__num">{String(i + 1).padStart(2, '0')}</span>
-              <span class="scard__name">{it.name}</span>
-              <span class="scard__line">{it.oneLine}</span>
-              {it.status === 'in-progress' && (
-                <span class="scard__badge">{t(locale, 'status.inProgress')}</span>
-              )}
-              <span class="scard__cta">{t(locale, 'showcase.viewProject')} →</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+        <div class="showcase__viewport">
+          <ul class="showcase__grid" role="list">
+            {
+              items.map((it, i) => (
+                <li class="scard" style={`--tint:${tint(it.verb)}`} data-scard>
+                  <a class="scard__link" href={localePath(locale, it.key)}>
+                    <span class="scard__num">{String(i + 1).padStart(2, '0')}</span>
+                    <span class="scard__name">{it.name}</span>
+                    <span class="scard__line">{it.oneLine}</span>
+                    {it.status === 'in-progress' && (
+                      <span class="scard__badge">{t(locale, 'status.inProgress')}</span>
+                    )}
+                    <span class="scard__cta">{t(locale, 'showcase.viewProject')} →</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        {/* Decorative counter — reinforces "a showcase of N projects". The cards
+            carry the real info, so this is aria-hidden. Enhanced tiers only. */}
+        <p class="showcase__counter" aria-hidden="true" data-showcase-counter>
+          <span data-showcase-index>01</span> / {String(items.length).padStart(2, '0')}
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
+  /* ---- Tier 0: baseline grid (ships in HTML; no-JS / reduced-motion) ---- */
+  .showcase__track { position: relative; }
+  .showcase__viewport { position: relative; }
   .showcase__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-3);
   }
-  .scard {
-    list-style: none;
-  }
+  .scard { list-style: none; }
   .scard__link {
     display: flex;
     flex-direction: column;
@@ -100,14 +118,244 @@ const items = await getShowcaseItems(locale);
     font-size: var(--fs-small);
     color: var(--c-text);
   }
+  .showcase__counter { display: none; }
+
   @media (max-width: 900px) {
-    .showcase__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .showcase__grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 520px) {
-    .showcase__grid {
-      grid-template-columns: 1fr;
-    }
+    .showcase__grid { grid-template-columns: 1fr; }
+  }
+
+  /* ================================================================
+     Tier 1 — DESKTOP RING (coverflow). Enabled only by JS via data-mode.
+     ================================================================ */
+  .showcase[data-mode='ring'] { padding-block: 0; }
+  .showcase[data-mode='ring'] .showcase__track {
+    /* scroll distance for the single pass; modest so it never feels trapped */
+    height: 220vh;
+  }
+  .showcase[data-mode='ring'] .showcase__stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .showcase[data-mode='ring'] .showcase__viewport {
+    height: 56vh;
+    perspective: 1400px;
+    margin-top: var(--space-4);
+    /* Cards rotate/translate past the edges — clip so the page never scrolls
+       sideways. Clip is on the viewport (not an ancestor of the sticky stage),
+       so it can't break the pin. */
+    overflow: hidden;
+  }
+  .showcase[data-mode='ring'] .showcase__grid {
+    display: block;
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+  }
+  .showcase[data-mode='ring'] .scard {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(360px, 78vw);
+    /* JS owns transform/opacity each frame; no transition while scrubbing. */
+    will-change: transform, opacity;
+    transform: translate(-50%, -50%);
+  }
+  /* Focus-driven (keyboard) changes get a brief glide; scroll scrubbing doesn't. */
+  .showcase[data-mode='ring'].is-gliding .scard {
+    transition: transform var(--dur-entrance) var(--ease-settle),
+      opacity var(--dur-entrance) var(--ease-settle);
+  }
+  .showcase[data-mode='ring'] .scard__link {
+    height: auto;
+    min-height: 13rem;
+  }
+  /* Only the front card is interactive to the pointer; back cards can't be
+     mis-clicked. All cards remain keyboard-reachable (focus brings them front). */
+  .showcase[data-mode='ring'] .scard { pointer-events: none; }
+  .showcase[data-mode='ring'] .scard.is-front { pointer-events: auto; }
+  .showcase[data-mode='ring'] .scard__link:focus-visible { pointer-events: auto; }
+
+  .showcase[data-mode='ring'] .showcase__counter {
+    display: block;
+    text-align: center;
+    margin-top: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    color: var(--c-muted);
+  }
+
+  /* ================================================================
+     Tier 1 — MOBILE swipe carousel (native scroll-snap). JS via data-mode.
+     ================================================================ */
+  .showcase[data-mode='carousel'] .showcase__grid {
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: var(--space-3);
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+  }
+  .showcase[data-mode='carousel'] .showcase__grid::-webkit-scrollbar { display: none; }
+  .showcase[data-mode='carousel'] .scard {
+    scroll-snap-align: center;
+    flex: 0 0 min(78vw, 320px);
+  }
+  .showcase[data-mode='carousel'] .showcase__counter {
+    display: block;
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    color: var(--c-muted);
   }
 </style>
+
+<script>
+  // Showcase enhancement island. Bails out completely (leaving the Tier-0 grid)
+  // under reduced-motion or no JS. transform/opacity only. Scroll work is
+  // rAF-batched and only runs while the section is near the viewport.
+  type Mode = 'ring' | 'carousel' | null;
+
+  const section = document.querySelector<HTMLElement>('[data-showcase]');
+  if (section) {
+    const track = section.querySelector<HTMLElement>('.showcase__track')!;
+    const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-scard]'));
+    const indexLabel = section.querySelector<HTMLElement>('[data-showcase-index]');
+    const N = cards.length;
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    const wide = matchMedia('(min-width: 900px)');
+
+    const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+    let mode: Mode = null;
+    let inView = false;
+    let raf = 0;
+
+    // ---- Ring (coverflow) -------------------------------------------------
+    function layout(active: number) {
+      let front = 0;
+      let best = Infinity;
+      cards.forEach((card, i) => {
+        const offset = i - active;
+        const abs = Math.abs(offset);
+        const sign = Math.sign(offset);
+        // Spread neighbours well clear of the front card so its text never
+        // competes; push them back + dim them so the front card dominates.
+        const tx = offset * 66; // % of card width
+        const tz = -Math.min(abs, 3) * 170;
+        const ry = -sign * Math.min(abs, 1) * 32;
+        const scale = Math.max(0.62, 1 - abs * 0.14);
+        const opacity = abs > 2.6 ? 0 : Math.max(0.14, 1 - abs * 0.55);
+        card.style.transform =
+          `translate(-50%, -50%) translateX(${tx}%) translateZ(${tz}px) rotateY(${ry}deg) scale(${scale})`;
+        card.style.opacity = String(opacity);
+        card.style.zIndex = String(100 - Math.round(abs * 10));
+        if (abs < best) { best = abs; front = i; }
+      });
+      cards.forEach((card, i) => card.classList.toggle('is-front', i === front));
+      if (indexLabel) indexLabel.textContent = String(front + 1).padStart(2, '0');
+    }
+
+    function ringProgress() {
+      const rect = track.getBoundingClientRect();
+      const dist = rect.height - window.innerHeight;
+      const scrolled = clamp(-rect.top, 0, Math.max(dist, 1));
+      return dist > 0 ? scrolled / dist : 0;
+    }
+
+    // Dwell on each card as a clear, full-opacity front, then transition fast:
+    // smoothstep the fractional progress between adjacent cards.
+    function easedActive(p: number) {
+      const x = p * (N - 1);
+      const i = Math.floor(x);
+      const f = x - i;
+      return i + f * f * (3 - 2 * f);
+    }
+
+    function updateRing() {
+      raf = 0;
+      if (mode !== 'ring') return;
+      layout(easedActive(ringProgress()));
+    }
+
+    function onScroll() {
+      if (mode === 'ring' && inView && !raf) raf = requestAnimationFrame(updateRing);
+    }
+
+    // Keyboard a11y: every card stays a real, tab-reachable link. Off-stage
+    // cards may sit at opacity 0, so focusing one glides the ring to bring it
+    // to the front (where it's full-opacity and pointer-interactive) — focus is
+    // never left stranded on a card the user can't see or act on.
+    let glideTimer = 0;
+    function glideTo(i: number) {
+      section!.classList.add('is-gliding');
+      layout(i);
+      clearTimeout(glideTimer);
+      glideTimer = window.setTimeout(() => section!.classList.remove('is-gliding'), 480);
+    }
+    cards.forEach((card, i) => {
+      card.addEventListener('focusin', () => { if (mode === 'ring') glideTo(i); });
+    });
+
+    // ---- Mode switching ---------------------------------------------------
+    function clearInline() {
+      cards.forEach((card) => {
+        card.style.transform = '';
+        card.style.opacity = '';
+        card.style.zIndex = '';
+        card.classList.remove('is-front');
+      });
+    }
+
+    function setMode() {
+      const next: Mode = reduce.matches ? null : wide.matches ? 'ring' : 'carousel';
+      if (next === mode) return;
+      mode = next;
+      clearInline();
+      if (mode) section!.dataset.mode = mode;
+      else delete section!.dataset.mode;
+      if (mode === 'ring') updateRing();
+    }
+
+    // Resize can change mode OR just the viewport height while staying in ring;
+    // either way the ring must reflow against the new track/viewport metrics.
+    function onResize() {
+      setMode();
+      if (mode === 'ring') updateRing();
+    }
+
+    // Only listen to scroll while the section is near the viewport.
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) inView = e.isIntersecting;
+        if (inView) onScroll();
+      },
+      { rootMargin: '20% 0px 20% 0px' }
+    );
+
+    try {
+      io.observe(section);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onResize, { passive: true });
+      reduce.addEventListener('change', setMode);
+      wide.addEventListener('change', setMode);
+      setMode();
+    } catch {
+      // Any failure: drop back to the Tier-0 grid.
+      clearInline();
+      delete section.dataset.mode;
+    }
+  }
+</script>
