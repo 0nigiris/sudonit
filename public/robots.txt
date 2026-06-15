@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Sitemap: add the real URL here once the custom domain is live
-# (then wire @astrojs/sitemap, which reads `site` in astro.config).
+Sitemap: https://sudonit.com/sitemap-index.xml
