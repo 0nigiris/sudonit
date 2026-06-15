@@ -9,6 +9,7 @@ type HomeKey =
   | 'hero.line1' | 'hero.line2' | 'hero.sub' | 'hero.portraitAlt'
   | 'who.eyebrow' | 'who.lead' | 'who.body' | 'who.portraitAlt'
   | 'why.eyebrow' | 'why.quote' | 'why.body'
+  | 'life.eyebrow' | 'life.body' | 'life.youtube'
   | 'services.eyebrow' | 'services.title'
   | 'showcase.eyebrow' | 'showcase.title'
   | 'projects.eyebrow' | 'projects.title'
@@ -22,11 +23,14 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'hero.portraitAlt': 'Александр — портрет',
     'who.eyebrow': 'Кто',
     'who.lead': 'Я — Александр. Делаю так, чтобы вещи работали — и были понятными.',
-    'who.body': 'Живу в Аликанте, говорю на трёх языках. Чиню, учу и строю свои проекты. Честно сразу: мне 15 и я только начинаю — большого опыта пока нет. Поэтому и цены честные, и денег я не беру, пока не сделаю работу.',
+    'who.body': 'Родом из Москвы, последние года четыре живу в Аликанте и учусь в школе. Говорю на трёх языках: по-русски — свободно, по-английски и по-испански — почти свободно (с каждым месяцем «почти» всё короче). Технику люблю с детства — даже не вспомню, с чего началось. Просто всю жизнь чиню всё и всем. И честно сразу: мне 15 и я только начинаю — большого опыта пока нет. Поэтому и цены честные, и денег не беру, пока не сделаю работу.',
     'who.portraitAlt': 'Александр за работой',
     'why.eyebrow': 'Почему',
     'why.quote': 'Мне нравится понимать, как всё устроено. И я не выбрасываю вещь, не попробовав её починить.',
-    'why.body': 'Учусь, создавая. И больше ценю полезные вещи, чем красивую витрину успеха.',
+    'why.body': 'Учусь, создавая. Отдельный кайф — копаться в Linux (кажется, я там уже всё перекопал, но всегда находится ещё). Зачем мне всё это? Честно — всё сразу: деньги, опыт, мечта и просто потому что нравится. Хочу научиться строить своё дело — пока не решил, какое именно, но точно своё.',
+    'life.eyebrow': 'Вне техники',
+    'life.body': 'Когда не вожусь с железом — рисую (только начал), смотрю аниме и слушаю музыку. Я меломан без жанра: понравилось — сохранил. А ещё веду YouTube-канал — пока пустой, но скоро будут гайды, полезные штуки и просто мои мысли. Канал свободный, без рамок.',
+    'life.youtube': 'Мой YouTube',
     'services.eyebrow': 'Доступно сейчас',
     'services.title': 'Чем могу помочь',
     'showcase.eyebrow': 'Проекты',
@@ -44,11 +48,14 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'hero.portraitAlt': 'Alexander — portrait',
     'who.eyebrow': 'Who',
     'who.lead': "I'm Alexander. I make things work — and make them make sense.",
-    'who.body': "Based in Alicante, working in three languages. I fix, I teach, and I build my own projects. Honestly, upfront: I'm 15 and just starting out — I don't have much experience yet. That's why my prices are fair and I don't take payment until the job is done.",
+    'who.body': "Originally from Moscow, I've been living in Alicante for about four years and I'm still in school. I speak three languages: Russian fluently, English and Spanish almost fluently (the \"almost\" gets shorter every month). I've loved tech since I was a kid — I can't even remember how it started. I've just been fixing everything for everyone my whole life. And honestly, upfront: I'm 15 and just starting out — I don't have much experience yet. That's why my prices are fair and I don't take payment until the job is done.",
     'who.portraitAlt': 'Alexander at work',
     'why.eyebrow': 'Why',
     'why.quote': "I like understanding how things work. And I don't throw something away before trying to fix it.",
-    'why.body': 'I learn by building. And I care more about making useful things than looking successful.',
+    'why.body': "I learn by building. Linux is its own kind of fun — I feel like I've already dug through all of it, yet there's always more. Why do I do all this? Honestly — all of it at once: money, experience, a dream, and just because I love it. I want to learn to build my own thing — I haven't decided what exactly, but it'll be mine.",
+    'life.eyebrow': 'Beyond tech',
+    'life.body': "When I'm not buried in hardware, I draw (just getting started), watch anime, and listen to a lot of music. I'm a genre-less music lover: if I like it, I save it. I also run a YouTube channel — empty for now, but soon it'll have guides, useful bits, and just my thoughts. A free channel, no rules.",
+    'life.youtube': 'My YouTube',
     'services.eyebrow': 'Available now',
     'services.title': 'How I can help',
     'showcase.eyebrow': 'Projects',
@@ -66,11 +73,14 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'hero.portraitAlt': 'Alexander — retrato',
     'who.eyebrow': 'Quién',
     'who.lead': 'Soy Alexander. Hago que las cosas funcionen — y que tengan sentido.',
-    'who.body': 'En Alicante, trabajo en tres idiomas. Reparo, enseño y construyo mis proyectos. Con honestidad, desde el principio: tengo 15 años y estoy empezando — todavía no tengo mucha experiencia. Por eso mis precios son honestos y no cobro hasta terminar el trabajo.',
+    'who.body': 'Originario de Moscú, llevo unos cuatro años viviendo en Alicante y todavía estoy en el colegio. Hablo tres idiomas: ruso con fluidez, inglés y español casi con fluidez (el «casi» se acorta cada mes). Me encanta la tecnología desde pequeño — ni recuerdo cómo empezó. Llevo toda la vida arreglándolo todo a todo el mundo. Y con honestidad, desde el principio: tengo 15 años y estoy empezando — todavía no tengo mucha experiencia. Por eso mis precios son honestos y no cobro hasta terminar el trabajo.',
     'who.portraitAlt': 'Alexander trabajando',
     'why.eyebrow': 'Por qué',
     'why.quote': 'Me gusta entender cómo funcionan las cosas. Y no tiro algo sin intentar arreglarlo antes.',
-    'why.body': 'Aprendo construyendo. Y me importa más hacer cosas útiles que aparentar éxito.',
+    'why.body': 'Aprendo construyendo. Linux es una diversión aparte — siento que ya lo he revuelto todo, pero siempre hay más. ¿Por qué hago todo esto? Con honestidad — todo a la vez: dinero, experiencia, un sueño y simplemente porque me gusta. Quiero aprender a construir lo mío — aún no he decidido qué exactamente, pero será mío.',
+    'life.eyebrow': 'Más allá de la tecnología',
+    'life.body': 'Cuando no estoy metido en el hardware, dibujo (acabo de empezar), veo anime y escucho mucha música. Soy melómano sin género: si me gusta, lo guardo. También tengo un canal de YouTube — vacío por ahora, pero pronto habrá guías, cosas útiles y simplemente mis ideas. Un canal libre, sin reglas.',
+    'life.youtube': 'Mi YouTube',
     'services.eyebrow': 'Disponible ahora',
     'services.title': 'Cómo puedo ayudar',
     'showcase.eyebrow': 'Proyectos',
