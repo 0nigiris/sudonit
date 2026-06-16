@@ -64,12 +64,17 @@ const { name, oneLine, verb, key, pricing, tiers, priceNote, problem, approach, 
       {pricing === 'tiers' && tiers && tiers.length > 0 ? (
         <>
           <ul class="tiers" role="list">
-            {tiers.map((tier) => (
-              <li class="tier">
-                <span class="tier__name">{tier.name}</span>
-                {tier.detail && <span class="tier__detail">{tier.detail}</span>}
-                <span class="tier__price">{tier.price ?? '—'}</span>
-              </li>
+            {tiers.map((tier, i) => (
+              <>
+                {tier.group && tier.group !== tiers[i - 1]?.group && (
+                  <li class="tier__group">{tier.group}</li>
+                )}
+                <li class="tier">
+                  <span class="tier__name">{tier.name}</span>
+                  {tier.detail && <span class="tier__detail">{tier.detail}</span>}
+                  <span class="tier__price">{tier.price ?? '—'}</span>
+                </li>
+              </>
             ))}
           </ul>
           <p class="svc__quote-note">{priceNote ?? pageT(locale, 'svc.quoteNote')}</p>
@@ -113,6 +118,16 @@ const { name, oneLine, verb, key, pricing, tiers, priceNote, problem, approach, 
     gap: var(--space-3);
     margin-bottom: var(--space-4);
   }
+  .tier__group {
+    grid-column: 1 / -1;
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--tint);
+  }
+  .tier__group:first-child { margin-top: 0; }
   .tier {
     display: grid;
     grid-template-columns: 1fr auto;

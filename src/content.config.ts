@@ -19,6 +19,7 @@ const tier = z.object({
   name: z.string(),
   detail: z.string().optional(),
   price: z.string().optional(),
+  group: z.string().optional(), // optional category heading (e.g. "Phones & tablets")
 });
 
 const services = defineCollection({
