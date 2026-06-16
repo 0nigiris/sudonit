@@ -16,3 +16,6 @@ npm-debug.log*
 # browser screenshots / playwright MCP artifacts (local QA only)
 /*.png
 .playwright-mcp/
+
+# Local-only: the previous site, kept for content reference
+Old_web.html

@@ -1,7 +1,10 @@
 ---
 /**
  * VerbCard — a service or project card (Services + Projects sections).
- * Whole card is a single link. Verb tint as accent; status badge when building.
+ * Whole card is a single link. The verb is the identity: it sets the accent
+ * tint, prints as a quiet label, and ghosts large in the background. Hover
+ * lifts the card, warms the border, blooms a soft tint glow, slides the arrow.
+ * No JS — pure CSS, every card always fully clickable.
  */
 import { type Verb, VERB_META, tint } from '../data/verbs';
 import PhotoFrame from './PhotoFrame.astro';
@@ -19,6 +22,8 @@ const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
 ---
 
 <a class="vcard" href={href} style={`--tint:${tint(verb)}`}>
+  {/* The verb ghosted large — identity, not noise (aria-hidden, decorative). */}
+  <span class="vcard__ghost" aria-hidden="true">{VERB_META[verb].label}</span>
   {photoId && <PhotoFrame id={photoId} ratio="3 / 2" tint={tint(verb)} alt={name} placeholder={false} />}
   <div class="vcard__body">
     <span class="vcard__verb">
@@ -27,31 +32,74 @@ const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
     </span>
     <h3 class="vcard__name">{name}</h3>
     <p class="vcard__line">{oneLine}</p>
-    {cta && <span class="vcard__cta">{cta} →</span>}
+    {cta && <span class="vcard__cta">{cta} <span class="vcard__arrow" aria-hidden="true">→</span></span>}
   </div>
 </a>
 
 <style>
   .vcard {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-    padding: var(--space-3);
+    padding: var(--space-4) var(--space-4) var(--space-5);
     background: var(--c-surface);
     border: 1px solid var(--c-line);
+    border-top: 2px solid color-mix(in srgb, var(--tint) 60%, var(--c-line));
     border-radius: var(--radius-lg);
-    transition: border-color var(--dur-micro) var(--ease-settle),
-      transform var(--dur-micro) var(--ease-settle);
+    transition:
+      border-color var(--dur-micro) var(--ease-settle),
+      transform var(--dur-reveal) var(--ease-settle),
+      box-shadow var(--dur-reveal) var(--ease-settle);
+  }
+  /* Soft tint bloom from the top edge — invisible at rest, warms on hover. */
+  .vcard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+      120% 80% at 80% -10%,
+      color-mix(in srgb, var(--tint) 22%, transparent),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity var(--dur-reveal) var(--ease-settle);
   }
   .vcard:hover {
-    border-color: color-mix(in srgb, var(--tint) 50%, var(--c-line));
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--tint) 55%, var(--c-line));
+    box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--tint) 70%, transparent);
   }
+  .vcard:hover::before { opacity: 1; }
+
+  /* The big ghosted verb word. */
+  .vcard__ghost {
+    position: absolute;
+    z-index: -1;
+    top: -0.18em;
+    right: 0.08em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(4.5rem, 12vw, 7rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: color-mix(in srgb, var(--tint) 12%, transparent);
+    pointer-events: none;
+    transition: color var(--dur-reveal) var(--ease-settle),
+      transform var(--dur-reveal) var(--ease-settle);
+  }
+  .vcard:hover .vcard__ghost {
+    color: color-mix(in srgb, var(--tint) 20%, transparent);
+    transform: translateX(-4px);
+  }
+
   .vcard__body {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    padding: var(--space-2) var(--space-2) var(--space-3);
   }
   .vcard__verb {
     font-family: var(--font-mono);
@@ -69,10 +117,25 @@ const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
   }
   .vcard__line {
     color: var(--c-muted);
+    max-width: 36ch;
   }
   .vcard__cta {
-    margin-top: var(--space-1);
+    margin-top: var(--space-2);
     font-size: var(--fs-small);
     color: var(--c-text);
+  }
+  .vcard__arrow {
+    display: inline-block;
+    transition: transform var(--dur-micro) var(--ease-settle);
+  }
+  .vcard:hover .vcard__arrow { transform: translateX(4px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vcard,
+    .vcard__ghost,
+    .vcard__arrow { transition: none; }
+    .vcard:hover { transform: none; }
+    .vcard:hover .vcard__ghost,
+    .vcard:hover .vcard__arrow { transform: none; }
   }
 </style>
