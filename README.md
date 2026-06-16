@@ -1,58 +1,56 @@
-# OniT
+# sudonit.com
 
-Personal website for **Alexander** (OniT) — Alicante.
+Personal website for **Alexander (OniT)** — a maker in Alicante who fixes
+computers, tutors, and builds his own projects.
 
-> Alexander is the main character. The identity is **Fix · Teach · Build · Create**.
-> Scroll-first, story-first. The project showcase is a *showcase*, not navigation.
-> Personality comes from typography, photography, storytelling and voice.
-> Simpler maintenance is preferred over cooler effects. **Everything works without JavaScript.**
+🌐 **Live:** [sudonit.com](https://sudonit.com)
 
-See `CLAUDE.md`, `VISION.md`, `REFERENCES.md`, `OPUS_BRIEF.md` for the full brief.
+The site is built around four things he does: **Fix · Teach · Build · Create**.
+It's scroll-first and story-first — you read about Alexander, then his work, then
+how to reach him. No dashboards, no command palettes, nothing to "learn."
+
+Available in **Russian · English · Spanish**.
 
 ## Stack
 
-- **Astro** (static-first; ships ~0 JS by default)
-- **Vanilla TypeScript islands** (only the project showcase is interactive)
-- **Plain CSS + design tokens** (`src/styles/tokens.css`) — no Tailwind
-- **i18n**: RU (default, source of truth) · EN · ES
+- **[Astro](https://astro.build)** — static-first, ships almost no JavaScript
+- **Plain CSS + design tokens** — no Tailwind, no UI framework
+- **Content collections** — each service/project is a Markdown file per language
+- **i18n** — RU (default), EN (`/en/`), ES (`/es/`)
 
-## Commands
+The whole site is static HTML/CSS and works without JavaScript.
+
+## Develop
 
 ```sh
 npm install      # install dependencies
-npm run dev      # local dev server
+npm run dev      # local dev server at localhost:4321
 npm run build    # static build -> dist/
 npm run preview  # preview the built site
 ```
 
-## Structure
+## Project layout
 
 ```
 src/
-  components/   Header, Footer, WarmMark, LanguageSwitch (+ Showcase, VerbCard… later)
-  data/         contact.ts (WhatsApp/email — single source) · site.ts
-  i18n/         ui.ts (UI strings; long-form content -> collections in Phase 1)
-  layouts/      BaseLayout.astro
-  pages/        index (ru) · en/ · es/  (story sections added Phase 2)
-  styles/       tokens.css · fonts.css · base.css
+  components/   sections (Hero, About, Services, Projects, Contact) + UI pieces
+  content/      services & projects as Markdown, in ru/ en/ es/
+  data/         site config, contact details, verb definitions
+  i18n/         interface strings
+  layouts/      page shell
+  pages/        routes — / (ru), /en/, /es/
+  styles/       design tokens, fonts, base styles
 public/
-  fonts/        self-hosted webfonts (see fonts/README.md)
-  favicon.svg
+  fonts/        self-hosted webfonts
+  CNAME         custom domain
 ```
 
-## Build phases (each stops at a review gate)
+## Deploy
 
-0. **Scaffold** ✅ — stack, tokens, fonts, layout, header/footer, i18n, contact config
-1. Content model (collections: services / projects / future blog)
-2. Homepage — static, zero-JS, full story
-3. Service + project pages from collections
-4. Motion layer + complete reduced-motion mode
-5. Showcase enhancement (desktop ring scrub · mobile carousel) over a static fan
-6. Real copy (Alexander's voice) + photography
-7. A11y audit · performance gates · self-host docs · final QA
+Pushing to `master` triggers a GitHub Actions workflow
+([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) that builds the
+site and publishes it to GitHub Pages on the custom domain.
 
-## Future (architected for, not built yet)
+---
 
-Stripe payments · Telegram bot · self-hosting (static or Node adapter, Dockerizable)
-· custom domain. None of these require a rewrite — see `astro.config.mjs` and
-`src/data/contact.ts`.
+© Alexander (OniT)

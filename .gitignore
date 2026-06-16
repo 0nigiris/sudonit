@@ -11,8 +11,14 @@ npm-debug.log*
 .env.production
 # os / editor
 .DS_Store
-# local-only Claude Code settings (personal permissions etc.)
-.claude/settings.local.json
+# local-only Claude Code settings + internal briefs (personal, never public)
+.claude/
+CLAUDE.md
+MASTER.md
+OPUS_BRIEF.md
+REFERENCES.md
+VISION.md
+docs/
 # browser screenshots / playwright MCP artifacts (local QA only)
 /*.png
 .playwright-mcp/
