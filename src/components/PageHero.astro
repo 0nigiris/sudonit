@@ -32,7 +32,7 @@ const { locale, eyebrow, tint, name, oneLine, statusLabel, photoId, ratio = '3 /
         <h1 class="phero__name">{name}</h1>
         <p class="phero__line">{oneLine}</p>
       </div>
-      <PhotoFrame id={photoId} ratio={ratio} tint={tint} alt={name} class="phero__photo" />
+      <PhotoFrame id={photoId} ratio={ratio} tint={tint} alt={name} placeholder={false} class="phero__photo" />
     </div>
   </div>
 </header>
@@ -55,9 +55,13 @@ const { locale, eyebrow, tint, name, oneLine, statusLabel, photoId, ratio = '3 /
   }
   .phero__grid {
     display: grid;
-    grid-template-columns: 1.3fr 0.9fr;
+    grid-template-columns: 1fr; /* text-only until the page photo exists */
     gap: var(--space-6);
     align-items: center;
+  }
+  /* Two columns only once a real photo is present. */
+  .phero__grid:has(.photo) {
+    grid-template-columns: 1.3fr 0.9fr;
   }
   .phero__eyebrow {
     font-family: var(--font-mono);

@@ -15,7 +15,7 @@ const { locale } = Astro.props;
   <div class="container">
     {/* WHO */}
     <div class="about__who" data-reveal>
-      <PhotoFrame id="A2" ratio="4 / 5" alt={homeT(locale, 'who.portraitAlt')} class="about__photo" />
+      <PhotoFrame id="A2" ratio="4 / 5" alt={homeT(locale, 'who.portraitAlt')} placeholder={false} class="about__photo" />
       <div>
         <p class="eyebrow">{homeT(locale, 'who.eyebrow')}</p>
         <p class="about__lead">{homeT(locale, 'who.lead')}</p>
@@ -35,9 +35,13 @@ const { locale } = Astro.props;
 <style>
   .about__who {
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns: 1fr; /* text-only until the A2 photo exists */
     gap: var(--space-6);
     align-items: center;
+  }
+  /* Two columns only once a real photo is present (PhotoFrame renders .photo). */
+  .about__who:has(.photo) {
+    grid-template-columns: 0.8fr 1.2fr;
   }
   .about__photo {
     max-width: 360px;

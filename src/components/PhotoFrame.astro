@@ -17,6 +17,7 @@ interface Props {
   ratio?: string;      // CSS aspect-ratio, e.g. "3 / 2", "4 / 5"
   tint?: string;
   priority?: boolean;  // above-the-fold (hero) — load eagerly for LCP
+  placeholder?: boolean; // false => render nothing until the real photo exists
   class?: string;
 }
 const {
@@ -26,6 +27,7 @@ const {
   ratio = '4 / 5',
   tint = 'var(--c-light-dim)',
   priority = false,
+  placeholder = true,
   class: className = '',
 } = Astro.props;
 
@@ -51,27 +53,33 @@ const widths = img
   : [];
 ---
 
-<figure class:list={['photo', className]} style={`--ratio:${ratio}; --ptint:${tint}`}>
-  {
-    img ? (
-      <Image
-        class="photo__img"
-        src={img}
-        alt={altText}
-        widths={widths}
-        sizes="(max-width: 760px) 90vw, 40vw"
-        loading={priority ? 'eager' : 'lazy'}
-        fetchpriority={priority ? 'high' : 'auto'}
-        decoding="async"
-      />
-    ) : (
-      <div class="photo__inner">
-        <span class="photo__tag">PHOTO · {id}</span>
-        {caption && <span class="photo__cap">{caption}</span>}
-      </div>
-    )
-  }
-</figure>
+{
+  /* No real photo + placeholder disabled => render nothing. The slot returns
+     automatically once the file lands in src/assets/photos/<id>.*. */
+  (img || placeholder) && (
+    <figure class:list={['photo', className]} style={`--ratio:${ratio}; --ptint:${tint}`}>
+      {
+        img ? (
+          <Image
+            class="photo__img"
+            src={img}
+            alt={altText}
+            widths={widths}
+            sizes="(max-width: 760px) 90vw, 40vw"
+            loading={priority ? 'eager' : 'lazy'}
+            fetchpriority={priority ? 'high' : 'auto'}
+            decoding="async"
+          />
+        ) : (
+          <div class="photo__inner">
+            <span class="photo__tag">PHOTO · {id}</span>
+            {caption && <span class="photo__cap">{caption}</span>}
+          </div>
+        )
+      }
+    </figure>
+  )
+}
 
 <style>
   .photo { margin: 0; }

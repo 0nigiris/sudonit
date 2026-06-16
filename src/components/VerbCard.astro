@@ -19,7 +19,7 @@ const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
 ---
 
 <a class="vcard" href={href} style={`--tint:${tint(verb)}`}>
-  {photoId && <PhotoFrame id={photoId} ratio="3 / 2" tint={tint(verb)} alt={name} />}
+  {photoId && <PhotoFrame id={photoId} ratio="3 / 2" tint={tint(verb)} alt={name} placeholder={false} />}
   <div class="vcard__body">
     <span class="vcard__verb">
       {VERB_META[verb].label}
