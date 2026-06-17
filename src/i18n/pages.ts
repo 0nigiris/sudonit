@@ -7,6 +7,7 @@ import type { Locale } from '../data/site';
 type PageKey =
   | 'svc.problem' | 'svc.approach' | 'svc.whatYouGet' | 'svc.howItWorks' | 'svc.pricing'
   | 'svc.requestQuote' | 'svc.quoteNote'
+  | 'svc.detailHint' | 'svc.detailWhen' | 'svc.detailWhat' | 'svc.detailGives'
   | 'prj.idea' | 'prj.why' | 'prj.now' | 'prj.next' | 'prj.follow' | 'prj.followCta'
   | 'contact.heading' | 'placeholder';
 
@@ -19,6 +20,10 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'svc.pricing': 'Стоимость',
     'svc.requestQuote': 'Запросить цену',
     'svc.quoteNote': 'Стоимость зависит от задачи — напишите, и я оценю.',
+    'svc.detailHint': 'Нажмите на пункт — расскажу подробнее',
+    'svc.detailWhen': 'Когда это про вас',
+    'svc.detailWhat': 'Что я сделаю',
+    'svc.detailGives': 'Что вы получите',
     'prj.idea': 'Идея',
     'prj.why': 'Почему я это делаю',
     'prj.now': 'Где сейчас',
@@ -36,6 +41,10 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'svc.pricing': 'Pricing',
     'svc.requestQuote': 'Request a quote',
     'svc.quoteNote': "Pricing depends on the job — message me and I'll quote it.",
+    'svc.detailHint': "Tap an item — I'll explain in detail",
+    'svc.detailWhen': 'When this is you',
+    'svc.detailWhat': "What I'll do",
+    'svc.detailGives': 'What you get',
     'prj.idea': 'The idea',
     'prj.why': "Why I'm building it",
     'prj.now': 'Where it is now',
@@ -53,6 +62,10 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'svc.pricing': 'Precio',
     'svc.requestQuote': 'Pedir presupuesto',
     'svc.quoteNote': 'El precio depende del trabajo — escríbeme y te lo digo.',
+    'svc.detailHint': 'Toca un punto — te lo explico en detalle',
+    'svc.detailWhen': 'Cuándo es tu caso',
+    'svc.detailWhat': 'Qué haré',
+    'svc.detailGives': 'Qué obtienes',
     'prj.idea': 'La idea',
     'prj.why': 'Por qué lo construyo',
     'prj.now': 'En qué punto está',

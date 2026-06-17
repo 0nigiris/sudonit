@@ -20,6 +20,11 @@ const tier = z.object({
   detail: z.string().optional(),
   price: z.string().optional(),
   group: z.string().optional(), // optional category heading (e.g. "Phones & tablets")
+  // Optional expandable detail (click a tier to reveal it). All optional, so a
+  // tier without these simply renders as a plain, non-expandable row.
+  when: z.array(z.string()).optional(), // "when this is you"
+  what: z.array(z.string()).optional(), // "what I'll do"
+  gives: z.array(z.object({ t: z.string(), d: z.string() })).optional(), // "what you get"
 });
 
 const services = defineCollection({

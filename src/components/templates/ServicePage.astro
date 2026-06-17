@@ -22,6 +22,11 @@ interface Props {
 const { entry, locale } = Astro.props;
 const { name, oneLine, verb, key, pricing, tiers, priceNote, problem, approach, whatYouGet, howItWorks } =
   entry.data;
+
+// A tier is expandable if it carries any detail to reveal on click.
+const isExpandable = (tr: (typeof tiers extends undefined ? never : NonNullable<typeof tiers>)[number]) =>
+  !!(tr.when?.length || tr.what?.length || tr.gives?.length);
+const hasExpandable = pricing === 'tiers' && !!tiers?.some(isExpandable);
 ---
 
 <PageHero
@@ -63,17 +68,59 @@ const { name, oneLine, verb, key, pricing, tiers, priceNote, problem, approach, 
 
       {pricing === 'tiers' && tiers && tiers.length > 0 ? (
         <>
+          {hasExpandable && <p class="tiers__hint">{pageT(locale, 'svc.detailHint')}</p>}
           <ul class="tiers" role="list">
             {tiers.map((tier, i) => (
               <>
                 {tier.group && tier.group !== tiers[i - 1]?.group && (
                   <li class="tier__group">{tier.group}</li>
                 )}
-                <li class="tier">
-                  <span class="tier__name">{tier.name}</span>
-                  {tier.detail && <span class="tier__detail">{tier.detail}</span>}
-                  <span class="tier__price">{tier.price ?? '—'}</span>
-                </li>
+                {isExpandable(tier) ? (
+                  <li class="tier tier--exp">
+                    <details class="tdet">
+                      <summary class="tdet__sum">
+                        <span class="tier__name">{tier.name}</span>
+                        <span class="tdet__meta">
+                          <span class="tier__price">{tier.price ?? '—'}</span>
+                          <span class="tdet__chev" aria-hidden="true">›</span>
+                        </span>
+                      </summary>
+                      <div class="tdet__body">
+                        {tier.when && tier.when.length > 0 && (
+                          <div class="tdet__col">
+                            <h4 class="tdet__h">{pageT(locale, 'svc.detailWhen')}</h4>
+                            <ul class="tdet__list">{tier.when.map((x) => <li>{x}</li>)}</ul>
+                          </div>
+                        )}
+                        {tier.what && tier.what.length > 0 && (
+                          <div class="tdet__col">
+                            <h4 class="tdet__h">{pageT(locale, 'svc.detailWhat')}</h4>
+                            <ul class="tdet__list">{tier.what.map((x) => <li>{x}</li>)}</ul>
+                          </div>
+                        )}
+                        {tier.gives && tier.gives.length > 0 && (
+                          <div class="tdet__col">
+                            <h4 class="tdet__h">{pageT(locale, 'svc.detailGives')}</h4>
+                            <ul class="tdet__gives">
+                              {tier.gives.map((g) => (
+                                <li>
+                                  <span class="tdet__gt">{g.t}</span>
+                                  <span class="tdet__gd">{g.d}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </details>
+                  </li>
+                ) : (
+                  <li class="tier">
+                    <span class="tier__name">{tier.name}</span>
+                    {tier.detail && <span class="tier__detail">{tier.detail}</span>}
+                    <span class="tier__price">{tier.price ?? '—'}</span>
+                  </li>
+                )}
               </>
             ))}
           </ul>
@@ -150,5 +197,87 @@ const { name, oneLine, verb, key, pricing, tiers, priceNote, problem, approach, 
     grid-row: 1 / span 2;
     font-family: var(--font-mono);
     color: var(--tint);
+  }
+
+  /* Expandable tier (click to reveal detail) */
+  .tiers__hint {
+    color: var(--c-muted);
+    font-size: var(--fs-small);
+    margin-bottom: var(--space-4);
+  }
+  .tier--exp {
+    display: block;
+    padding-bottom: 0;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .tdet__sum {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-2) 0 var(--space-3);
+    cursor: pointer;
+    list-style: none;
+  }
+  .tdet__sum::-webkit-details-marker { display: none; }
+  .tdet__sum:hover .tier__name,
+  .tdet__sum:focus-visible .tier__name { color: var(--tint); }
+  .tdet__sum .tier__price { grid-row: auto; }
+  .tdet__meta {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+  .tdet__chev {
+    font-family: var(--font-mono);
+    color: var(--c-muted);
+    transition: transform 0.2s ease;
+  }
+  .tdet[open] .tdet__chev { transform: rotate(90deg); }
+  .tdet__body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: var(--space-4);
+    padding: var(--space-2) 0 var(--space-4);
+  }
+  .tdet__h {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--tint);
+    margin-bottom: var(--space-2);
+  }
+  .tdet__list,
+  .tdet__gives {
+    list-style: none;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .tdet__gives { gap: var(--space-2); }
+  .tdet__list li {
+    position: relative;
+    padding-left: 1.1em;
+    color: var(--c-muted);
+    font-size: var(--fs-small);
+  }
+  .tdet__list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--tint);
+  }
+  .tdet__gt {
+    display: block;
+    color: var(--c-text);
+    font-weight: 600;
+  }
+  .tdet__gd {
+    display: block;
+    color: var(--c-muted);
+    font-size: var(--fs-small);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tdet__chev { transition: none; }
   }
 </style>

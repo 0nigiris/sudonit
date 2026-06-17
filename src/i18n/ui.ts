@@ -27,7 +27,7 @@ export const ui: Record<Locale, Record<UIKey, string>> = {
     'contact.email': 'Почта',
     'contact.telegram': 'Telegram',
     'contact.instagram': 'Instagram',
-    'contact.primaryRepair': 'Починить компьютер',
+    'contact.primaryRepair': 'Ремонт компьютера',
     'status.inProgress': 'В разработке',
     'showcase.viewProject': 'Открыть проект',
     'common.backHome': 'На главную',

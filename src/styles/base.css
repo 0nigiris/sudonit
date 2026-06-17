@@ -31,6 +31,22 @@ body {
   min-height: 100svh;
 }
 
+/* Ambient warmth — a barely-there glow pooled in the corners so the empty
+   edges/gutters aren't dead space. Fixed, behind everything, never interactive.
+   Kept very low-opacity on purpose: atmosphere, not decoration you notice. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60vw 60vw at 6% -8%,
+      color-mix(in srgb, var(--c-light) 5%, transparent), transparent 60%),
+    radial-gradient(55vw 55vw at 104% 108%,
+      color-mix(in srgb, var(--c-light) 4%, transparent), transparent 55%);
+}
+
 h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 600;
