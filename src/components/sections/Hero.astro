@@ -1,6 +1,6 @@
 ---
 /**
- * Hero — understand Alexander in one breath. The four verbs + name + portrait.
+ * Hero — understand Alexander in one breath. What he offers + name + portrait.
  * Static (no motion in Phase 2). WarmMark is dim/static here.
  */
 import { type Locale } from '../../data/site';
@@ -19,8 +19,9 @@ const { locale } = Astro.props;
     <div class="hero__text">
       <h1 class="hero__head">
         <span class="hero__l">{homeT(locale, 'hero.line1')}</span>
+        <span class="hero__l">{homeT(locale, 'hero.line2')}</span>
         <span class="hero__l">
-          {homeT(locale, 'hero.line2')}<WarmMark size={30} class="hero__mark" />
+          {homeT(locale, 'hero.line3')}<WarmMark size={30} class="hero__mark" />
         </span>
       </h1>
       <p class="hero__sub">{homeT(locale, 'hero.sub')}</p>

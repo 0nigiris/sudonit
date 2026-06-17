@@ -6,7 +6,7 @@
 import type { Locale } from '../data/site';
 
 type HomeKey =
-  | 'hero.line1' | 'hero.line2' | 'hero.sub' | 'hero.portraitAlt'
+  | 'hero.line1' | 'hero.line2' | 'hero.line3' | 'hero.sub' | 'hero.portraitAlt'
   | 'who.eyebrow' | 'who.lead' | 'who.body' | 'who.portraitAlt'
   | 'why.eyebrow' | 'why.quote' | 'why.body'
   | 'life.eyebrow' | 'life.body' | 'life.youtube'
@@ -17,8 +17,9 @@ type HomeKey =
 
 export const home: Record<Locale, Record<HomeKey, string>> = {
   ru: {
-    'hero.line1': 'Чиню. Учу.',
-    'hero.line2': 'Строю. Создаю.',
+    'hero.line1': 'Ремонт техники.',
+    'hero.line2': 'Репетиторство.',
+    'hero.line3': 'Проекты.',
     'hero.sub': 'Александр · Аликанте · три языка',
     'hero.portraitAlt': 'Александр — портрет',
     'who.eyebrow': 'Кто',
@@ -42,8 +43,9 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'contact.note': 'Лучше всего — в WhatsApp. Отвечаю быстро.',
   },
   en: {
-    'hero.line1': 'I Fix. I Teach.',
-    'hero.line2': 'I Build. I Create.',
+    'hero.line1': 'Tech repair.',
+    'hero.line2': 'Tutoring.',
+    'hero.line3': 'Projects.',
     'hero.sub': 'Alexander · Alicante · three languages',
     'hero.portraitAlt': 'Alexander — portrait',
     'who.eyebrow': 'Who',
@@ -67,8 +69,9 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'contact.note': 'WhatsApp is best. I reply fast.',
   },
   es: {
-    'hero.line1': 'Reparo. Enseño.',
-    'hero.line2': 'Construyo. Creo.',
+    'hero.line1': 'Reparación.',
+    'hero.line2': 'Clases particulares.',
+    'hero.line3': 'Proyectos.',
     'hero.sub': 'Alexander · Alicante · tres idiomas',
     'hero.portraitAlt': 'Alexander — retrato',
     'who.eyebrow': 'Quién',
