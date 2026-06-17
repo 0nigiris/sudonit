@@ -36,7 +36,7 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'showcase.eyebrow': 'Проекты',
     'showcase.title': 'Над чем я работаю',
     'projects.eyebrow': 'В разработке',
-    'projects.title': 'Что я строю',
+    'projects.title': 'Над чем я работаю',
     'contact.eyebrow': 'Контакт',
     'contact.title': 'Напишите — разберёмся.',
     'contact.note': 'Лучше всего — в WhatsApp. Отвечаю быстро.',
