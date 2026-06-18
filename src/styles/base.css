@@ -47,25 +47,15 @@ body::before {
       color-mix(in srgb, var(--c-light) 4%, transparent), transparent 55%);
 }
 
-/* Faint dotted texture in the empty side gutters on wide screens — fills the
-   dead margins without drawing attention. Behind everything; opaque sections
-   cover it, so dots only show where the page is actually empty. */
-@media (min-width: 1100px) {
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: radial-gradient(
-      circle,
-      color-mix(in srgb, var(--c-light) 10%, transparent) 1px,
-      transparent 1.6px
-    );
-    background-size: 24px 24px;
-    -webkit-mask: linear-gradient(90deg, #000 0 11%, transparent 11% 89%, #000 89%);
-    mask: linear-gradient(90deg, #000 0 11%, transparent 11% 89%, #000 89%);
-  }
+/* Decorative drifting star-field that fills the empty side gutters on wide
+   screens. Drawn on a single fixed canvas behind everything (see the
+   #petal-field script in BaseLayout). Confined to the gutters by the script,
+   so it never sits behind the centred content. */
+#petal-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 h1, h2, h3 {

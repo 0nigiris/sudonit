@@ -81,6 +81,8 @@ const xDefault = noindex ? undefined : abs(localePath(DEFAULT_LOCALE, bare));
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
+    {/* Decorative gutter star-field — see the script + #petal-field rule in base.css */}
+    <canvas id="petal-field" aria-hidden="true"></canvas>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header locale={locale} />
     <main id="main">
@@ -132,6 +134,137 @@ const xDefault = noindex ? undefined : abs(localePath(DEFAULT_LOCALE, bare));
       }
     </script>
 
+    <script>
+      // Decorative gutter star-field. Tiny 4-pointed sparkles drift downward like
+      // falling petals through the empty side margins on wide screens. One fixed
+      // canvas, one rAF loop, capped particle count — atmosphere, never the point.
+      (() => {
+        const cv = document.getElementById('petal-field');
+        if (!(cv instanceof HTMLCanvasElement)) return;
+        const ctx = cv.getContext('2d');
+        if (!ctx) return;
+
+        const wide = matchMedia('(min-width: 1100px)');
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+        let W = 0, H = 0, dpr = 1;
+        let stars = [];
+        let raf = 0;
+        let last = 0;
+
+        // Side bands the stars live in. Slightly wider than the visual gutter so
+        // the field reaches a little toward the centre — but never behind content.
+        const BAND = 0.19;
+
+        const rnd = (a, b) => a + Math.random() * (b - a);
+
+        function spawn(initial) {
+          const left = Math.random() < 0.5;
+          const bw = W * BAND;
+          const x = left ? rnd(0, bw) : rnd(W - bw, W);
+          return {
+            x,
+            y: initial ? rnd(0, H) : rnd(-40, -8),
+            r: rnd(2.2, 6.5),
+            vy: rnd(14, 34),          // px/sec, downward
+            sway: rnd(8, 26),         // horizontal sine amplitude
+            sw: rnd(0.3, 0.9),        // sway speed
+            ph: rnd(0, Math.PI * 2),  // sway phase
+            rot: rnd(0, Math.PI * 2),
+            vr: rnd(-0.5, 0.5),       // rotation speed
+            a: rnd(0.05, 0.18),       // alpha
+          };
+        }
+
+        // 4-pointed concave sparkle: 8 vertices alternating outer/inner radius.
+        function drawStar(s) {
+          const inner = s.r * 0.32;
+          ctx.save();
+          ctx.translate(s.x + Math.sin(s.ph) * s.sway, s.y);
+          ctx.rotate(s.rot);
+          ctx.beginPath();
+          for (let i = 0; i < 8; i++) {
+            const rad = i % 2 === 0 ? s.r : inner;
+            const ang = (Math.PI / 4) * i;
+            const px = Math.cos(ang) * rad;
+            const py = Math.sin(ang) * rad;
+            i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(255, 157, 77, ' + s.a + ')';
+          ctx.fill();
+          ctx.restore();
+        }
+
+        function render() {
+          ctx.clearRect(0, 0, W, H);
+          for (const s of stars) drawStar(s);
+        }
+
+        function resize() {
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          W = window.innerWidth;
+          H = window.innerHeight;
+          cv.width = Math.round(W * dpr);
+          cv.height = Math.round(H * dpr);
+          cv.style.width = W + 'px';
+          cv.style.height = H + 'px';
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          const count = Math.min(56, Math.round(W / 28));
+          stars = Array.from({ length: count }, () => spawn(true));
+        }
+
+        function tick(now) {
+          const dt = Math.min((now - last) / 1000, 0.05);
+          last = now;
+          for (const s of stars) {
+            s.y += s.vy * dt;
+            s.ph += s.sw * dt;
+            s.rot += s.vr * dt;
+            if (s.y - s.r > H) Object.assign(s, spawn(false));
+          }
+          render();
+          raf = requestAnimationFrame(tick);
+        }
+
+        function start() {
+          if (raf) return;
+          last = performance.now();
+          raf = requestAnimationFrame(tick);
+        }
+        function stop() {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+
+        let rt = 0;
+        function onResize() {
+          clearTimeout(rt);
+          rt = window.setTimeout(() => {
+            if (!wide.matches) { stop(); ctx.clearRect(0, 0, W, H); return; }
+            resize();
+            if (reduce.matches) render();
+            else if (!document.hidden) start();
+          }, 150);
+        }
+
+        function init() {
+          if (!wide.matches) { stop(); ctx.clearRect(0, 0, W, H); return; }
+          resize();
+          if (reduce.matches) { render(); return; } // static single frame
+          if (!document.hidden) start();
+        }
+
+        document.addEventListener('visibilitychange', () => {
+          if (!wide.matches || reduce.matches) return;
+          document.hidden ? stop() : start();
+        });
+        window.addEventListener('resize', onResize, { passive: true });
+        (wide.addEventListener ? wide.addEventListener('change', init) : null);
+        init();
+      })();
+    </script>
+
     {/* A small wink for the curious who open DevTools — harmless, invisible to everyone else. */}
     <script is:inline>
       console.log(
@@ -140,7 +273,7 @@ const xDefault = noindex ? undefined : abs(localePath(DEFAULT_LOCALE, bare));
       );
       console.log(
         '%cО, привет 👋  Раз ты здесь — значит, любопытный. Мне нравится.\n' +
-          'Чиню · учу · строю · снимаю → youtube.com/@Sudo_0nigiri',
+          'Ремонт · репетиторство · проекты → youtube.com/@Sudo_0nigiri',
         'font:13px ui-monospace,monospace;color:#b9b2a6;line-height:1.5'
       );
     </script>
