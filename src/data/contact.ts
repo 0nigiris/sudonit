@@ -30,7 +30,7 @@ export const contact: ContactConfig = {
     defaultMessage: '',
   },
   email: 'fixkraftmine@gmail.com',
-  telegram: 'Sudo_OniT',
+  telegram: 'Sudonit',
   instagram: 'sudo_onit',
   youtube: 'https://youtube.com/@Sudo_0nigiri',
 };
