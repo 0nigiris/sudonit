@@ -1,7 +1,7 @@
 // Site-wide constants. Keep this small and boring — it's read everywhere.
 
 export const SITE = {
-  name: 'OniT',
+  name: 'Sudonit',
   /** Who the site is about. Alexander is the main character. */
   owner: 'Alexander',
   location: 'Alicante',

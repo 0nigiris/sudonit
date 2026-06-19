@@ -1,6 +1,6 @@
 # sudonit.com
 
-Personal website for **Alexander (OniT)** — a maker in Alicante who fixes
+Personal website for **Alexander (Sudonit)** — a maker in Alicante who fixes
 computers, tutors, and builds his own projects.
 
 🌐 **Live:** [sudonit.com](https://sudonit.com)
@@ -53,4 +53,4 @@ site and publishes it to GitHub Pages on the custom domain.
 
 ---
 
-© Alexander (OniT)
+© Alexander (Sudonit)
