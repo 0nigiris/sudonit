@@ -10,6 +10,7 @@ import { DEFAULT_LOCALE, type Locale } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServicePage from '../components/templates/ServicePage.astro';
 import ProjectPage from '../components/templates/ProjectPage.astro';
+import GlassesPage from '../components/templates/GlassesPage.astro';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = [
@@ -33,12 +34,16 @@ type Props = {
 };
 const { entry, locale } = Astro.props as Props;
 const isService = entry.collection === 'services';
+// The Smart Glasses project gets its own rich, scroll-first template.
+const isGlasses = entry.collection === 'projects' && entry.data.key === 'glasses';
 ---
 
 <BaseLayout locale={locale} title={entry.data.name} description={entry.data.oneLine}>
   {
     isService ? (
       <ServicePage entry={entry as CollectionEntry<'services'>} locale={locale} />
+    ) : isGlasses ? (
+      <GlassesPage entry={entry as CollectionEntry<'projects'>} locale={locale} />
     ) : (
       <ProjectPage entry={entry as CollectionEntry<'projects'>} locale={locale} />
     )

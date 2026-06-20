@@ -21,7 +21,13 @@ VISION.md
 docs/
 # browser screenshots / playwright MCP artifacts (local QA only)
 /*.png
+/*.jpg
+/*.jpeg
 .playwright-mcp/
 
 # Local-only: the previous site, kept for content reference
 Old_web.html
+
+# Local-only: internal product briefs for the glasses project (personal, never public)
+Glasses info/
+PROJECT_BRIEF_SUDONIT.md

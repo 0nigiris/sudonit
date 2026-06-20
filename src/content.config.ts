@@ -70,6 +70,25 @@ const projects = defineCollection({
       idea: z.string().optional(),
       why: z.string().optional(),
       now: z.string().optional(),
+
+      // Rich "deep project" page (currently only the Smart Glasses page uses
+      // these). All optional, so simpler projects (English) ignore them and keep
+      // the plain ProjectPage layout. Rendered by GlassesPage.astro.
+      lead: z.string().optional(), // what it is, leading paragraph(s)
+      points: z.array(z.object({ t: z.string(), d: z.string() })).optional(), // differentiators
+      howSteps: z.array(z.string()).optional(), // V1 camera -> AI -> audio loop
+      howNote: z.string().optional(), // "alive without a phone" note
+      v1Included: z.array(z.string()).optional(),
+      v1Excluded: z.array(z.string()).optional(),
+      v1Hardware: z.string().optional(),
+      principles: z.array(z.object({ t: z.string(), d: z.string() })).optional(),
+      aiLead: z.string().optional(),
+      aiOptions: z.array(z.object({ t: z.string(), d: z.string() })).optional(),
+      roadmap: z
+        .array(z.object({ ver: z.string(), title: z.string(), body: z.string() }))
+        .optional(),
+      ecosystem: z.array(z.string()).optional(),
+      faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
     }),
 });
 

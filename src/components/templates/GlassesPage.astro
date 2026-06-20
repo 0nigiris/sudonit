@@ -1,0 +1,523 @@
+---
+/**
+ * GlassesPage — the rich, scroll-first page for the Smart Glasses project.
+ * Honest and person-first: what it is, what makes it different, how the first
+ * version actually works today, the principles, your choice of AI, where it's
+ * going (clearly marked as vision), and why it exists. Content-driven from the
+ * project's frontmatter; every block renders only when its field is present.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { type Locale } from '../../data/site';
+import { VERB_META, tint } from '../../data/verbs';
+import { PHOTO_BY_KEY } from '../../lib/content';
+import { pageT } from '../../i18n/pages';
+import { t } from '../../i18n/ui';
+import PageHero from '../PageHero.astro';
+import ContactStrip from '../ContactStrip.astro';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+const { entry, locale } = Astro.props;
+const d = entry.data;
+const tc = tint(d.verb);
+const statusLabel = d.status === 'in-progress' ? t(locale, 'status.inProgress') : undefined;
+---
+
+<PageHero
+  locale={locale}
+  eyebrow={VERB_META[d.verb].label}
+  tint={tc}
+  name={d.name}
+  oneLine={d.oneLine}
+  statusLabel={statusLabel}
+  photoId={PHOTO_BY_KEY[d.key] ?? 'E1'}
+/>
+
+<article class="glx" style={`--tint:${tc}`}>
+  {/* What it is */}
+  {d.lead && (
+    <section class="section">
+      <div class="container glx__lead">
+        <h2 class="glx__h">{pageT(locale, 'glx.what')}</h2>
+        {d.lead.split('\n\n').map((p) => <p>{p}</p>)}
+      </div>
+    </section>
+  )}
+
+  {/* What makes it different — differentiator cards */}
+  {d.points && d.points.length > 0 && (
+    <section class="section glx__band">
+      <div class="container">
+        <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.diff')}</h2>
+        <ul class="glx__cards" role="list" data-reveal-group>
+          {d.points.map((p, i) => (
+            <li class="glx__card">
+              <span class="glx__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="glx__ct">{p.t}</h3>
+              <p class="glx__cd">{p.d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* How it works today — numbered loop */}
+  {d.howSteps && d.howSteps.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.how')}</h2>
+        <ol class="glx__steps" data-reveal-group>
+          {d.howSteps.map((s, i) => (
+            <li class="glx__step">
+              <span class="glx__step-n">{i + 1}</span>
+              <span>{s}</span>
+            </li>
+          ))}
+        </ol>
+        {d.howNote && <p class="glx__note" data-reveal>{d.howNote}</p>}
+      </div>
+    </section>
+  )}
+
+  {/* Honest V1 — what's in, what's not, hardware */}
+  {(d.v1Included?.length || d.v1Excluded?.length || d.v1Hardware) && (
+    <section class="section glx__band">
+      <div class="container">
+        <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.v1')}</h2>
+        <div class="glx__split" data-reveal-group>
+          {d.v1Included && d.v1Included.length > 0 && (
+            <div class="glx__col">
+              <h3 class="glx__colh">{pageT(locale, 'glx.v1included')}</h3>
+              <ul class="glx__list glx__list--yes" role="list">
+                {d.v1Included.map((x) => <li>{x}</li>)}
+              </ul>
+            </div>
+          )}
+          {d.v1Excluded && d.v1Excluded.length > 0 && (
+            <div class="glx__col">
+              <h3 class="glx__colh">{pageT(locale, 'glx.v1excluded')}</h3>
+              <ul class="glx__list glx__list--no" role="list">
+                {d.v1Excluded.map((x) => <li>{x}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+        {d.v1Hardware && (
+          <p class="glx__hw" data-reveal>
+            <span class="glx__hwlabel">{pageT(locale, 'glx.v1hardware')}</span>
+            {d.v1Hardware}
+          </p>
+        )}
+      </div>
+    </section>
+  )}
+
+  {/* Principles — your hardware */}
+  {d.principles && d.principles.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.principles')}</h2>
+        <ul class="glx__cards glx__cards--3" role="list" data-reveal-group>
+          {d.principles.map((p) => (
+            <li class="glx__card">
+              <h3 class="glx__ct">{p.t}</h3>
+              <p class="glx__cd">{p.d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* You choose the AI */}
+  {d.aiOptions && d.aiOptions.length > 0 && (
+    <section class="section glx__band">
+      <div class="container">
+        <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.ai')}</h2>
+        {d.aiLead && <p class="glx__lead-p" data-reveal>{d.aiLead}</p>}
+        <ul class="glx__options" role="list" data-reveal-group>
+          {d.aiOptions.map((o) => (
+            <li class="glx__opt">
+              <h3 class="glx__ct">{o.t}</h3>
+              <p class="glx__cd">{o.d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* Where it goes — roadmap (clearly vision) */}
+  {d.roadmap && d.roadmap.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.roadmap')}</h2>
+        <p class="glx__vision" data-reveal>{pageT(locale, 'glx.visionNote')}</p>
+        <ol class="glx__road" data-reveal-group>
+          {d.roadmap.map((r) => (
+            <li class="glx__road-item">
+              <span class="glx__ver">{r.ver}</span>
+              <div>
+                <h3 class="glx__ct">{r.title}</h3>
+                <p class="glx__cd">{r.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  {/* Modular ecosystem */}
+  {d.ecosystem && d.ecosystem.length > 0 && (
+    <section class="section glx__band">
+      <div class="container">
+        <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.ecosystem')}</h2>
+        <ul class="glx__eco" role="list" data-reveal-group>
+          {d.ecosystem.map((x) => <li>{x}</li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* Why it exists */}
+  {d.why && (
+    <section class="section">
+      <div class="container glx__lead">
+        <h2 class="glx__h">{pageT(locale, 'glx.why')}</h2>
+        {d.why.split('\n\n').map((p) => <p>{p}</p>)}
+      </div>
+    </section>
+  )}
+
+  {/* FAQ — native accordion, no JS */}
+  {d.faq && d.faq.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.faq')}</h2>
+        <ul class="glx__faq" role="list" data-reveal-group>
+          {d.faq.map((f) => (
+            <li>
+              <details class="glx__q">
+                <summary>
+                  <span>{f.q}</span>
+                  <span class="glx__q-chev" aria-hidden="true">›</span>
+                </summary>
+                <p>{f.a}</p>
+              </details>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* Where I am right now + next steps — honest, current */}
+  {(d.now || (d.nextSteps && d.nextSteps.length > 0)) && (
+    <section class="section glx__band">
+      <div class="container">
+        <div class="glx__status" data-reveal-group>
+          {d.now && (
+            <div>
+              <h2 class="glx__h">{pageT(locale, 'prj.now')}</h2>
+              <p class="glx__cd">{d.now}</p>
+            </div>
+          )}
+          {d.nextSteps && d.nextSteps.length > 0 && (
+            <div>
+              <h2 class="glx__h">{pageT(locale, 'prj.next')}</h2>
+              <ul class="glx__next" role="list">
+                {d.nextSteps.map((s) => <li>{s}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* Follow on YouTube */}
+  {d.youtube && (
+    <section class="section">
+      <div class="container glx__follow" data-reveal>
+        <h2 class="glx__h">{pageT(locale, 'prj.follow')}</h2>
+        <a class="cta cta--ghost" href={d.youtube} target="_blank" rel="noopener noreferrer">
+          {pageT(locale, 'prj.followCta')} →
+        </a>
+      </div>
+    </section>
+  )}
+</article>
+
+<ContactStrip locale={locale} />
+
+<style>
+  .glx__h {
+    font-size: var(--fs-h2);
+    margin-bottom: var(--space-4);
+    max-width: 24ch;
+  }
+  /* A faint tinted band to separate the alternating sections. */
+  .glx__band {
+    background: color-mix(in srgb, var(--c-light) 3%, var(--c-base));
+    border-block: 1px solid var(--c-line);
+  }
+
+  .glx__lead p,
+  .glx__lead-p,
+  .glx__vision {
+    color: var(--c-muted);
+    max-width: var(--measure);
+  }
+  .glx__lead p + p { margin-top: var(--space-3); }
+  .glx__vision {
+    font-size: var(--fs-small);
+    font-style: italic;
+    margin-bottom: var(--space-5);
+  }
+  .glx__lead-p { margin-bottom: var(--space-5); }
+
+  /* Card grids (differentiators, principles) */
+  .glx__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+  }
+  .glx__card {
+    padding: var(--space-4);
+    border: 1px solid var(--c-line);
+    border-top: 2px solid var(--tint);
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+  }
+  .glx__num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    color: var(--tint);
+  }
+  .glx__ct {
+    font-family: var(--font-display);
+    font-size: var(--fs-lead);
+    margin: var(--space-1) 0 var(--space-2);
+    overflow-wrap: anywhere;
+  }
+  .glx__cd {
+    color: var(--c-muted);
+    max-width: var(--measure);
+  }
+
+  /* Numbered "how it works" loop */
+  .glx__steps {
+    display: grid;
+    gap: var(--space-3);
+    counter-reset: none;
+    max-width: var(--measure);
+  }
+  .glx__step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: var(--space-3);
+    color: var(--c-muted);
+  }
+  .glx__step-n {
+    display: grid;
+    place-items: center;
+    width: 1.9em;
+    height: 1.9em;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tint) 18%, transparent);
+    color: var(--tint);
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+  }
+  .glx__note {
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-left: 2px solid var(--tint);
+    color: var(--c-text);
+    max-width: var(--measure);
+    background: color-mix(in srgb, var(--tint) 6%, transparent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  /* Honest V1 — included / excluded */
+  .glx__split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+  .glx__colh {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--c-muted);
+    margin-bottom: var(--space-3);
+  }
+  .glx__list {
+    display: grid;
+    gap: var(--space-2);
+  }
+  .glx__list li {
+    position: relative;
+    padding-left: 1.6em;
+    color: var(--c-muted);
+  }
+  .glx__list li::before {
+    position: absolute;
+    left: 0;
+    font-family: var(--font-mono);
+  }
+  .glx__list--yes li::before { content: '✓'; color: var(--tint); }
+  .glx__list--no li::before { content: '—'; color: var(--c-muted); }
+  .glx__hw {
+    margin-top: var(--space-5);
+    color: var(--c-muted);
+    max-width: var(--measure);
+  }
+  .glx__hwlabel {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--tint);
+    margin-bottom: var(--space-2);
+  }
+
+  /* AI options */
+  .glx__options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-4);
+  }
+  .glx__opt {
+    padding: var(--space-4);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Roadmap */
+  .glx__road {
+    display: grid;
+    gap: var(--space-4);
+    border-left: 2px solid var(--c-line);
+    padding-left: var(--space-5);
+  }
+  .glx__road-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    position: relative;
+  }
+  .glx__ver {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    color: var(--tint);
+    padding-top: 0.2em;
+    min-width: 2.5em;
+  }
+  .glx__road-item::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--space-5) - 5px);
+    top: 0.45em;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--tint);
+  }
+
+  /* Ecosystem */
+  .glx__eco {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-2) var(--space-5);
+  }
+  .glx__eco li {
+    position: relative;
+    padding-left: 1.2em;
+    color: var(--c-muted);
+  }
+  .glx__eco li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    font-size: 0.7em;
+    top: 0.35em;
+    color: var(--tint);
+  }
+
+  /* Status + next */
+  .glx__status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+  .glx__next {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--c-muted);
+  }
+  .glx__next li {
+    position: relative;
+    padding-left: var(--space-3);
+  }
+  .glx__next li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--tint);
+  }
+
+  /* FAQ accordion */
+  .glx__faq {
+    display: grid;
+    gap: 0;
+    max-width: 70ch;
+  }
+  .glx__q {
+    border-bottom: 1px solid var(--c-line);
+  }
+  .glx__q summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: var(--fs-lead);
+  }
+  .glx__q summary::-webkit-details-marker { display: none; }
+  .glx__q summary:hover { color: var(--tint); }
+  .glx__q-chev {
+    font-family: var(--font-mono);
+    color: var(--c-muted);
+    transition: transform 0.2s ease;
+  }
+  .glx__q[open] .glx__q-chev { transform: rotate(90deg); }
+  .glx__q p {
+    color: var(--c-muted);
+    max-width: var(--measure);
+    padding-bottom: var(--space-3);
+  }
+
+  .glx__follow h2 { margin-bottom: var(--space-3); }
+
+  @media (max-width: 760px) {
+    .glx__split,
+    .glx__status {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .glx__q-chev { transition: none; }
+  }
+</style>
