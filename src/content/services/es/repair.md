@@ -9,7 +9,7 @@ pricing: tiers
 tiers:
   - group: "💻 Ordenadores y portátiles"
     name: "El ordenador va lento — lo acelero"
-    price: "desde 15€"
+    price: "desde 25€"
     when:
       - "Tarda más de 5 minutos en arrancar"
       - "Los programas se abren lentos"
@@ -24,7 +24,7 @@ tiers:
       - { t: "Limpio", d: "Sin virus ni anuncios" }
   - group: "💻 Ordenadores y portátiles"
     name: "Limpieza y configuración completa"
-    price: "desde 20€"
+    price: "desde 35€"
     when:
       - "El ordenador es viejo y muy lento"
       - "Se ha acumulado de todo"
@@ -40,7 +40,7 @@ tiers:
       - { t: "Claro", d: "Te cuento qué hice" }
   - group: "💻 Ordenadores y portátiles"
     name: "Se ha colgado del todo — reinstalo"
-    price: "desde 30€"
+    price: "desde 45€"
     when:
       - "El ordenador no arranca"
       - "Pantalla azul"
@@ -56,7 +56,7 @@ tiers:
       - { t: "Limpio", d: "Solo lo necesario" }
   - group: "🔧 Reparación y piezas"
     name: "Arranca lento — le pongo un disco rápido"
-    price: "desde 15€"
+    price: "desde 30€"
     when:
       - "El ordenador tarda 10+ minutos en arrancar"
       - "Los archivos se abren lentos"
@@ -69,7 +69,7 @@ tiers:
       - { t: "Los archivos vuelan", d: "Se abren al instante" }
   - group: "🔧 Reparación y piezas"
     name: "Pantalla de portátil rota — la cambio"
-    price: "desde 30€"
+    price: "desde 45€"
     when:
       - "La pantalla está agrietada o rota"
       - "Líneas o manchas en la pantalla"
@@ -82,7 +82,7 @@ tiers:
       - { t: "Cuidado", d: "Todo en su sitio" }
   - group: "🔧 Reparación y piezas"
     name: "Hace ruido y se calienta — lo limpio"
-    price: "desde 15€"
+    price: "desde 30€"
     when:
       - "El ventilador suena muy fuerte"
       - "El portátil está muy caliente"
@@ -97,7 +97,7 @@ tiers:
       - { t: "Dura más", d: "El calor mata los componentes" }
   - group: "🔧 Reparación y piezas"
     name: "No carga — arreglo el conector"
-    price: "desde 25€"
+    price: "desde 40€"
     when:
       - "El cargador no entra bien"
       - "Solo funciona en cierto ángulo"
@@ -110,7 +110,7 @@ tiers:
       - { t: "Fiable", d: "Sin sujetarlo en ángulo" }
   - group: "🔧 Reparación y piezas"
     name: "Necesitas un PC nuevo — lo monto"
-    price: "desde 40€"
+    price: "desde 50€"
     when:
       - "Necesitas un ordenador nuevo"
       - "No sabes qué elegir"
@@ -123,9 +123,37 @@ tiers:
     gives:
       - { t: "Hecho para ti", d: "Sin gastos de más" }
       - { t: "Listo para usar", d: "Lo enciendes y funciona" }
+  - group: "🔧 Reparación y piezas"
+    name: "Conector o botón suelto — lo resueldo"
+    price: "desde 25€"
+    when:
+      - "El conector de carga o auriculares baila"
+      - "Un botón no se pulsa"
+      - "Se ha soltado un cable por dentro"
+    what:
+      - "Lo abro y encuentro el fallo"
+      - "Lo resueldo con cuidado"
+      - "Lo pruebo con carga"
+    gives:
+      - { t: "Funciona como debe", d: "Sin apaños" }
+      - { t: "Cuidado", d: "Sin marcas de haberlo abierto" }
+  - group: "🔧 Reparación y piezas"
+    name: "La consola hace ruido o el stick se va — la arreglo"
+    price: "desde 30€"
+    when:
+      - "Tu PS/Xbox ruge y se calienta"
+      - "El stick se va solo (drift)"
+      - "La consola se apaga por el calor"
+    what:
+      - "La abro y limpio el polvo"
+      - "Cambio la pasta térmica"
+      - "Arreglo o cambio el stick"
+    gives:
+      - { t: "Silenciosa y fresca", d: "Sin sobrecalentamiento" }
+      - { t: "Control preciso", d: "Sin drift" }
   - group: "📱 Móviles y tablets"
     name: "Móvil nuevo — paso tus datos"
-    price: "desde 15€"
+    price: "desde 20€"
     when:
       - "Has comprado un móvil nuevo"
       - "Tienes miedo de perder fotos y contactos"
@@ -139,7 +167,7 @@ tiers:
       - { t: "Móvil nuevo configurado", d: "Listo para usar" }
   - group: "📱 Móviles y tablets"
     name: "La batería se agota rápido — la cambio"
-    price: "desde 30€"
+    price: "desde 40€"
     when:
       - "Tienes que cargarlo varias veces al día"
       - "Se apaga al 20–30%"
@@ -151,7 +179,7 @@ tiers:
       - { t: "Sin llevar el cargador", d: "Vuelve a lo normal" }
   - group: "📱 Móviles y tablets"
     name: "El móvil va lento — lo acelero"
-    price: "desde 10€"
+    price: "desde 15€"
     when:
       - "El móvil va más lento"
       - "Las apps tardan en cargar"
@@ -173,9 +201,122 @@ tiers:
     gives:
       - { t: "Pantalla protegida", d: "El golpe se lo lleva el cristal, no la pantalla" }
       - { t: "Cuidado", d: "Sin burbujas" }
+  - group: "🐧 Sistemas y datos"
+    name: "Portátil viejo que va a rastras — lo revivo con Linux"
+    price: "desde 30€"
+    when:
+      - "Un ordenador viejo apenas mueve Windows"
+      - "Quieres Linux como segundo sistema"
+      - "Necesitas un sistema ligero para estudiar o trabajar"
+    what:
+      - "Elijo un Linux adecuado"
+      - "Lo instalo junto a Windows o en su lugar"
+      - "Lo configuro para lo tuyo"
+      - "Te enseño a usarlo"
+    gives:
+      - { t: "El PC viejo vuela otra vez", d: "Un sistema ligero" }
+      - { t: "Dos sistemas a elegir", d: "Si quieres" }
+  - group: "🐧 Sistemas y datos"
+    name: "Fotos y archivos perdidos — intento recuperarlos"
+    price: "desde 30€"
+    when:
+      - "Borraste algo importante sin querer"
+      - "Un USB o disco no abre"
+      - "El sistema murió con los datos dentro"
+    what:
+      - "Reviso el soporte"
+      - "Intento recuperar los datos"
+      - "Si no se puede — te lo digo con honestidad"
+    gives:
+      - { t: "Una oportunidad de recuperarlo", d: "Fotos, documentos, archivos" }
+      - { t: "Honesto", d: "No cobro si no funciona" }
+  - group: "🐧 Sistemas y datos"
+    name: "Tu propio centro multimedia y almacenamiento — lo monto"
+    price: "desde 40€"
+    when:
+      - "Quieres tu propio «Netflix» en casa (Plex/Jellyfin)"
+      - "Necesitas almacenamiento compartido para archivos"
+      - "Cansado de tener fotos repartidas por dispositivos"
+    what:
+      - "Lo monto con tu hardware o piezas que elijo"
+      - "Configuro el servidor multimedia y el acceso"
+      - "Te enseño a añadir películas y archivos"
+    gives:
+      - { t: "Tus pelis y tu música", d: "Desde cualquier dispositivo en casa" }
+      - { t: "Todo en un sitio", d: "Archivos y copias de seguridad" }
+  - group: "🐧 Sistemas y datos"
+    name: "Privacidad y control parental — los configuro"
+    price: "desde 20€"
+    when:
+      - "Quieres más privacidad en internet"
+      - "Necesitas control parental para los niños"
+      - "Demasiado rastreo y publicidad"
+    what:
+      - "Configuro una VPN en tus dispositivos"
+      - "Añado bloqueo de rastreo y anuncios"
+      - "Configuro el control parental"
+    gives:
+      - { t: "Menos rastreo", d: "Y anuncios molestos" }
+      - { t: "Tranquilidad", d: "Internet más seguro para los niños" }
+  - group: "🏠 Casa y dispositivos"
+    name: "Hogar inteligente — lo configuro a tu medida"
+    price: "desde 25€"
+    when:
+      - "Compraste bombillas, enchufes o altavoz inteligentes"
+      - "No consigues que todo funcione junto"
+      - "Quieres control por voz o por escenas"
+    what:
+      - "Conecto los dispositivos a Alexa o Google"
+      - "Configuro escenas (luz, música, mañana)"
+      - "Te enseño a controlarlo"
+    gives:
+      - { t: "Todo obedece a tu voz", d: "Luz, música, enchufes" }
+      - { t: "Escenas cómodas", d: "Pensadas para tu día" }
+  - group: "🏠 Casa y dispositivos"
+    name: "La impresora no imprime — la conecto y configuro"
+    price: "desde 15€"
+    when:
+      - "No consigues conectar la impresora"
+      - "Imprime con errores o no imprime"
+      - "Necesitas configurar el escáner"
+    what:
+      - "La conecto al ordenador y al Wi-Fi"
+      - "Instalo los drivers"
+      - "Compruebo impresión y escaneo"
+    gives:
+      - { t: "Imprime desde cualquier dispositivo", d: "PC y móvil" }
+      - { t: "Sin errores", d: "Estable" }
+  - group: "🏠 Casa y dispositivos"
+    name: "Smart TV o reproductor — lo configuro"
+    price: "desde 20€"
+    when:
+      - "Una tele o reproductor nuevos"
+      - "Las apps y los canales no están configurados"
+      - "Quieres un buen cine en casa"
+    what:
+      - "Lo conecto y actualizo"
+      - "Configuro apps y cuentas"
+      - "Te enseño a usarlo"
+    gives:
+      - { t: "Listo para ver", d: "Apps y canales" }
+      - { t: "Claro", d: "Te explico los mandos" }
+  - group: "🏠 Casa y dispositivos"
+    name: "Cámaras de vigilancia — las instalo y configuro"
+    price: "desde 30€"
+    when:
+      - "Quieres vigilar tu casa o el portal"
+      - "Compraste cámaras pero no están configuradas"
+      - "Necesitas acceso desde el móvil"
+    what:
+      - "Coloco y conecto las cámaras"
+      - "Configuro la grabación y el acceso desde el móvil"
+      - "Te enseño a verlas"
+    gives:
+      - { t: "Se ve desde el móvil", d: "Desde donde sea" }
+      - { t: "Tranquilidad", d: "La casa, vigilada" }
   - group: "🔑 Cuentas y correo"
     name: "Olvidaste la contraseña — recupero el acceso"
-    price: "desde 15€"
+    price: "desde 20€"
     when:
       - "No puedes entrar en el correo o una red social"
       - "La cuenta está bloqueada"
@@ -187,7 +328,7 @@ tiers:
       - { t: "Honesto", d: "No cobro si no funciona" }
   - group: "🔑 Cuentas y correo"
     name: "El correo no funciona — lo configuro"
-    price: "desde 10€"
+    price: "desde 15€"
     when:
       - "No llegan los correos"
       - "El correo no está configurado en el móvil"
@@ -199,7 +340,7 @@ tiers:
       - { t: "Fiable", d: "No se pierden correos" }
   - group: "🎨 Servicios digitales"
     name: "Necesitas un banner o ficha"
-    price: "desde 15€"
+    price: "desde 20€"
     when:
       - "Necesitas un banner para redes"
       - "Necesitas una ficha de producto para una tienda"
@@ -211,7 +352,7 @@ tiers:
       - { t: "Bonito", d: "Llama la atención" }
   - group: "🎨 Servicios digitales"
     name: "Necesitas una presentación"
-    price: "desde 20€"
+    price: "desde 30€"
     when:
       - "Necesitas presentar un producto o servicio"
       - "La necesitas para una reunión"
@@ -222,6 +363,62 @@ tiers:
     gives:
       - { t: "Lista para mostrar", d: "Se usa enseguida" }
       - { t: "Limpio", d: "Buena impresión" }
+  - group: "🎨 Servicios digitales"
+    name: "Necesitas una web sencilla"
+    price: "desde 60€"
+    when:
+      - "Necesitas una landing o una página única"
+      - "Necesitas un portfolio o una página de servicios"
+      - "Quieres presencia en internet"
+    what:
+      - "Aclaro el objetivo y el estilo"
+      - "Monto una web cuidada"
+      - "La configuro y publico"
+    gives:
+      - { t: "Lista para mostrar", d: "Comparte el enlace" }
+      - { t: "Cuidada", d: "Se ve bien en el móvil" }
+  - group: "🎨 Servicios digitales"
+    name: "Edito vídeo para redes"
+    price: "desde 20€"
+    when:
+      - "Necesitas un Reel, un Short o un clip"
+      - "Tienes material pero no tiempo para montar"
+      - "Lo quieres cuidado y dinámico"
+    what:
+      - "Lo monto con tu material"
+      - "Añado texto, música, transiciones"
+      - "Lo ajusto al formato adecuado"
+    gives:
+      - { t: "Listo para publicar", d: "Para la plataforma adecuada" }
+      - { t: "Se ve vivo", d: "Dinámico y limpio" }
+  - group: "🎨 Servicios digitales"
+    name: "Diseño tu canal o tus redes"
+    price: "desde 20€"
+    when:
+      - "Necesitas portada, avatar, cabecera"
+      - "Quieres un estilo coherente para el canal"
+      - "Necesitas un logo sencillo"
+    what:
+      - "Aclaro el estilo"
+      - "Hago portadas y avatar"
+      - "Lo reúno en un único estilo"
+    gives:
+      - { t: "Un estilo coherente", d: "El canal se ve entero" }
+      - { t: "Listo para subir", d: "Tamaños correctos" }
+  - group: "🎨 Servicios digitales"
+    name: "Te enseño a usar la IA"
+    price: "desde 20€"
+    when:
+      - "Has oído hablar de ChatGPT pero no lo has probado"
+      - "Quieres usar la IA para trabajar y estudiar"
+      - "No sabes por dónde empezar"
+    what:
+      - "Configuro las herramientas de IA adecuadas"
+      - "Te lo enseño con tus propios ejemplos"
+      - "Te lo explico en lenguaje sencillo"
+    gives:
+      - { t: "La usas con soltura", d: "Para trabajar y estudiar" }
+      - { t: "Ahorra tiempo", d: "La IA se lleva lo repetitivo" }
 priceNote: "Son precios orientativos — el precio final depende del trabajo y se acuerda antes de empezar. El material se paga aparte."
 problem: "Algo se ha roto, va lento o simplemente no sabes cómo configurarlo — un ordenador, un móvil, el correo, una impresora, el Wi-Fi. Suele ser el momento en que es más fácil rendirse o comprar nuevo. Yo prefiero mirar primero si tiene solución."
 approach: "No descarto un aparato sin intentar arreglarlo, ni complico lo que se puede decir de forma sencilla. Averiguo qué falla y te lo digo con honestidad: se arregla, se configura — o te conviene más cambiarlo."
