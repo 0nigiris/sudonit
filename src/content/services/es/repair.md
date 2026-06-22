@@ -66,7 +66,7 @@ tiers:
       - "Paso el sistema"
     gives:
       - { t: "Arranca en 15 segundos", d: "En vez de 10 minutos" }
-      - { t: "Los archivos vuelan", d: "Se abren al instante" }
+      - { t: "Los archivos se abren al instante", d: "Sin esperas" }
   - group: "🔧 Reparación y piezas"
     name: "Pantalla de portátil rota — la cambio"
     price: "desde 45€"
@@ -106,7 +106,7 @@ tiers:
       - "Lo cambio si hace falta"
       - "Compruebo la carga"
     gives:
-      - { t: "Carga normal", d: "Sin trucos" }
+      - { t: "Carga de forma estable", d: "En cualquier posición" }
       - { t: "Fiable", d: "Sin sujetarlo en ángulo" }
   - group: "🔧 Reparación y piezas"
     name: "Necesitas un PC nuevo — lo monto"
@@ -135,7 +135,7 @@ tiers:
       - "Lo resueldo con cuidado"
       - "Lo pruebo con carga"
     gives:
-      - { t: "Funciona como debe", d: "Sin apaños" }
+      - { t: "Funciona como debe", d: "Estable y fiable" }
       - { t: "Cuidado", d: "Sin marcas de haberlo abierto" }
   - group: "🔧 Reparación y piezas"
     name: "La consola hace ruido o el stick se va — la arreglo"

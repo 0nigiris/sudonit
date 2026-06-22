@@ -66,7 +66,7 @@ tiers:
       - "Move your system over"
     gives:
       - { t: "Boots in 15 seconds", d: "Instead of 10 minutes" }
-      - { t: "Files fly", d: "Open instantly" }
+      - { t: "Files open instantly", d: "No more waiting" }
   - group: "🔧 Repairs & parts"
     name: "Cracked laptop screen — I'll replace it"
     price: "from 45€"
@@ -106,8 +106,8 @@ tiers:
       - "Replace it if needed"
       - "Test the charging"
     gives:
-      - { t: "Charges normally", d: "No tricks" }
-      - { t: "Reliable", d: "No holding it at an angle" }
+      - { t: "Charges reliably", d: "In any position" }
+      - { t: "Dependable", d: "No holding it at an angle" }
   - group: "🔧 Repairs & parts"
     name: "Need a new PC — I'll build it"
     price: "from 50€"
@@ -135,7 +135,7 @@ tiers:
       - "Re-solder it cleanly"
       - "Test it under load"
     gives:
-      - { t: "Works as it should", d: "No workarounds" }
+      - { t: "Works as it should", d: "Stable and dependable" }
       - { t: "Tidy", d: "No signs it was opened" }
   - group: "🔧 Repairs & parts"
     name: "Console is loud or the stick drifts — I'll fix it"

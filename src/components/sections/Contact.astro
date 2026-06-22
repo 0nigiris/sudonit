@@ -25,31 +25,28 @@ const nextUrl = Astro.site
 
 // Self-contained form copy (kept local so it doesn't touch the typed i18n union).
 const FORM_COPY: Record<Locale, {
-  divider: string; name: string; email: string; message: string; send: string; sent: string;
+  divider: string; name: string; message: string; send: string; sent: string;
 }> = {
   ru: {
-    divider: 'или напиши прямо здесь',
-    name: 'Как тебя зовут?',
-    email: 'твой@email.com',
-    message: 'Что случилось? Опиши своими словами…',
+    divider: 'или напишите здесь',
+    name: 'Ваше имя',
+    message: 'Опишите задачу',
     send: 'Отправить',
-    sent: 'Спасибо! Сообщение ушло — отвечу как смогу.',
+    sent: 'Сообщение отправлено. Я свяжусь с вами в ближайшее время.',
   },
   en: {
-    divider: 'or write right here',
-    name: 'Your name?',
-    email: 'your@email.com',
-    message: "What's going on? Describe it in your own words…",
+    divider: 'or write here',
+    name: 'Your name',
+    message: 'Describe what you need',
     send: 'Send',
-    sent: "Thanks! Your message is on its way — I'll reply as soon as I can.",
+    sent: "Message sent. I'll get back to you shortly.",
   },
   es: {
-    divider: 'o escríbeme aquí mismo',
-    name: '¿Cómo te llamas?',
-    email: 'tu@email.com',
-    message: '¿Qué pasó? Descríbelo con tus palabras…',
+    divider: 'o escríbeme aquí',
+    name: 'Tu nombre',
+    message: 'Describe lo que necesitas',
     send: 'Enviar',
-    sent: '¡Gracias! Tu mensaje está en camino — te responderé en cuanto pueda.',
+    sent: 'Mensaje enviado. Te responderé en breve.',
   },
 };
 const fc = FORM_COPY[locale];
@@ -84,12 +81,8 @@ const fc = FORM_COPY[locale];
     <form class="cform" action={FORM_ACTION} method="POST">
       <input type="hidden" name="_subject" value="Новая заявка с sudonit.com" />
       <input type="hidden" name="_next" value={nextUrl} />
-      <div class="cform__row">
-        <input class="cform__input" type="text" name="name" autocomplete="name"
-          placeholder={fc.name} required />
-        <input class="cform__input" type="email" name="email" autocomplete="email"
-          placeholder={fc.email} required />
-      </div>
+      <input class="cform__input" type="text" name="name" autocomplete="name"
+        placeholder={fc.name} required />
       <textarea class="cform__input cform__msg" name="message" rows="4"
         placeholder={fc.message} required></textarea>
       <button class="cta cta--warm cform__send" type="submit">{fc.send}</button>
@@ -209,11 +202,6 @@ const fc = FORM_COPY[locale];
     gap: var(--space-3);
     text-align: left;
   }
-  .cform__row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3);
-  }
   .cform__input {
     width: 100%;
     padding: var(--space-3);
@@ -234,9 +222,6 @@ const fc = FORM_COPY[locale];
     justify-self: start;
     align-self: center;
     margin-top: var(--space-1);
-  }
-  @media (max-width: 520px) {
-    .cform__row { grid-template-columns: 1fr; }
   }
 </style>
 
