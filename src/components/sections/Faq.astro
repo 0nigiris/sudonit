@@ -1,0 +1,137 @@
+---
+/**
+ * Faq — a short, honest answer block before the contact close. Native
+ * <details>/<summary> accordions: works with JavaScript disabled, no library.
+ * Copy is kept local (like Contact's FORM_COPY) so it doesn't touch the typed
+ * i18n union. Keep answers plain and human — these pre-empt the obvious worries.
+ */
+import { type Locale } from '../../data/site';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+
+const FAQ_COPY: Record<Locale, { eyebrow: string; title: string; items: { q: string; a: string }[] }> = {
+  ru: {
+    eyebrow: 'Вопросы',
+    title: 'Коротко о главном',
+    items: [
+      { q: 'Где ты находишься и выезжаешь ли?',
+        a: 'Я в Аликанте. Многое решаю онлайн — настройку, обучение, восстановление данных. Ремонт техники делаю лично, по городу можно договориться о встрече.' },
+      { q: 'На каких языках можно общаться?',
+        a: 'Русский, английский и испанский — на любом из трёх, как вам удобнее.' },
+      { q: 'Как происходит оплата?',
+        a: 'Сначала обсуждаем стоимость, и только потом я берусь за работу. Оплата — после, наличными или переводом. Комплектующие оплачиваются отдельно.' },
+      { q: 'А если не получится починить?',
+        a: 'Если вижу, что не берусь или дешевле заменить — скажу сразу и денег не возьму. Честно дороже репутации.' },
+      { q: 'Сколько времени это займёт?',
+        a: 'Зависит от задачи. После пары вопросов назову примерный срок ещё до начала — без сюрпризов.' },
+    ],
+  },
+  en: {
+    eyebrow: 'Questions',
+    title: 'The short answers',
+    items: [
+      { q: 'Where are you, and do you come to me?',
+        a: "I'm in Alicante. A lot I can do online — setup, tutoring, data recovery. Hardware repair I do in person, and we can arrange to meet around the city." },
+      { q: 'Which languages can we talk in?',
+        a: 'Russian, English and Spanish — whichever of the three suits you best.' },
+      { q: 'How does payment work?',
+        a: 'We agree on the price first, and only then do I start. You pay afterwards, cash or transfer. Parts are billed separately.' },
+      { q: "What if it can't be fixed?",
+        a: "If I see I can't take it on, or it's cheaper to replace — I'll tell you straight away and won't charge. Being honest matters more than one job." },
+      { q: 'How long will it take?',
+        a: "Depends on the job. After a couple of questions I'll give you a rough timeframe up front — no surprises." },
+    ],
+  },
+  es: {
+    eyebrow: 'Preguntas',
+    title: 'Lo esencial, en breve',
+    items: [
+      { q: '¿Dónde estás y te desplazas?',
+        a: 'Estoy en Alicante. Muchas cosas las resuelvo online — configuración, clases, recuperación de datos. La reparación de equipos la hago en persona y podemos quedar por la ciudad.' },
+      { q: '¿En qué idiomas podemos hablar?',
+        a: 'Ruso, inglés y español — en cualquiera de los tres, como te venga mejor.' },
+      { q: '¿Cómo es el pago?',
+        a: 'Primero acordamos el precio y solo entonces empiezo. Pagas después, en efectivo o por transferencia. Los componentes se pagan aparte.' },
+      { q: '¿Y si no se puede arreglar?',
+        a: 'Si veo que no me lo quedo o que sale más barato reemplazarlo, te lo digo al momento y no cobro. La honestidad vale más que un trabajo.' },
+      { q: '¿Cuánto tiempo lleva?',
+        a: 'Depende del caso. Tras un par de preguntas te doy un plazo aproximado antes de empezar — sin sorpresas.' },
+    ],
+  },
+};
+const fq = FAQ_COPY[locale];
+---
+
+<section class="section faq" id="faq">
+  <div class="container">
+    <p class="eyebrow" data-reveal>{fq.eyebrow}</p>
+    <h2 class="section__title" data-reveal>{fq.title}</h2>
+
+    <div class="faq__list" data-reveal-group>
+      {
+        fq.items.map((item) => (
+          <details class="faq__item">
+            <summary class="faq__q">
+              <span>{item.q}</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq__a">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__list {
+    max-width: var(--measure);
+    margin-top: var(--space-5);
+    border-top: 1px solid var(--c-line);
+  }
+  .faq__item {
+    border-bottom: 1px solid var(--c-line);
+  }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    color: var(--c-text);
+    transition: color var(--dur-micro) var(--ease-settle);
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__q:hover { color: var(--c-light); }
+  /* +/× toggle drawn with two hairlines so it needs no icon font. */
+  .faq__icon {
+    position: relative;
+    flex: none;
+    width: 14px;
+    height: 14px;
+  }
+  .faq__icon::before,
+  .faq__icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    background: var(--c-light);
+    transition: transform var(--dur-micro) var(--ease-settle);
+  }
+  .faq__icon::before { width: 14px; height: 2px; }
+  .faq__icon::after { width: 2px; height: 14px; }
+  .faq__item[open] .faq__icon::after { transform: rotate(90deg); }
+  .faq__a {
+    margin: 0;
+    padding: 0 0 var(--space-4);
+    max-width: var(--measure);
+    color: var(--c-muted);
+    line-height: var(--lh-body);
+    text-wrap: pretty;
+  }
+</style>

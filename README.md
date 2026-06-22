@@ -1,56 +1,87 @@
-# sudonit.com
+<div align="center">
 
-Personal website for **Alexander (Sudonit)** — a maker in Alicante who fixes
-computers, tutors, and builds his own projects.
+# 🪐 Sudonit
 
-🌐 **Live:** [sudonit.com](https://sudonit.com)
+### Привет. Меня зовут Александр.
 
-The site is built around four things he does: **Fix · Teach · Build · Create**.
-It's scroll-first and story-first — you read about Alexander, then his work, then
-how to reach him. No dashboards, no command palettes, nothing to "learn."
+Мне 15, я живу в Аликанте и умею делать так, чтобы техника работала,
+а непонятное становилось понятным.
 
-Available in **Russian · English · Spanish**.
+Этот репозиторий — мой сайт. Не портфолио, не дашборд, не «смотрите какой
+интерфейс». Просто честный рассказ о том, чем я могу быть полезен.
 
-## Stack
+**[→ Заходите на sudonit.com](https://sudonit.com)**
 
-- **[Astro](https://astro.build)** — static-first, ships almost no JavaScript
-- **Plain CSS + design tokens** — no Tailwind, no UI framework
-- **Content collections** — each service/project is a Markdown file per language
-- **i18n** — RU (default), EN (`/en/`), ES (`/es/`)
+<br>
 
-The whole site is static HTML/CSS and works without JavaScript.
+[![Live](https://img.shields.io/badge/live-sudonit.com-ff9d4d?style=for-the-badge)](https://sudonit.com)
+[![Languages](https://img.shields.io/badge/RU%20·%20EN%20·%20ES-trilingual-211d16?style=for-the-badge)](https://sudonit.com)
+[![Made with Astro](https://img.shields.io/badge/made%20with-Astro-15130f?style=for-the-badge&logo=astro)](https://astro.build)
 
-## Develop
-
-```sh
-npm install      # install dependencies
-npm run dev      # local dev server at localhost:4321
-npm run build    # static build -> dist/
-npm run preview  # preview the built site
-```
-
-## Project layout
-
-```
-src/
-  components/   sections (Hero, About, Services, Projects, Contact) + UI pieces
-  content/      services & projects as Markdown, in ru/ en/ es/
-  data/         site config, contact details, verb definitions
-  i18n/         interface strings
-  layouts/      page shell
-  pages/        routes — / (ru), /en/, /es/
-  styles/       design tokens, fonts, base styles
-public/
-  fonts/        self-hosted webfonts
-  CNAME         custom domain
-```
-
-## Deploy
-
-Pushing to `master` triggers a GitHub Actions workflow
-([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) that builds the
-site and publishes it to GitHub Pages on the custom domain.
+</div>
 
 ---
 
-© Alexander (Sudonit)
+## Что я делаю
+
+Сайт держится на четырёх глаголах. Всё остальное — вокруг них.
+
+| | | |
+|---|---|---|
+| 🔧 **Fix** | Ремонт техники | Компьютеры, телефоны, консоли, принтеры, умный дом. Чиню, настраиваю, восстанавливаю данные — или честно говорю, когда дешевле заменить. |
+| 📚 **Teach** | Репетиторство | Объясняю по-человечески: английский, математика (до 2 ESO), программирование, Linux, нейросети. Понимание, а не зубрёжка. |
+| 🛠 **Build** | Smart Glasses | Свой проект умных очков — камера, ИИ и звук без телефона в руках. |
+| ✨ **Create** | English Project | Учу языку так, как хотел бы, чтобы учили меня. |
+
+Три языка — **русский, английский, испанский** — потому что на них я и живу.
+
+---
+
+## Чем этот сайт *не* является
+
+Это сознательные решения, а не недоработки:
+
+- ❌ Не портфолио разработчика
+- ❌ Не дашборд и не админ-панель
+- ❌ Не имитация операционной системы и не терминал
+- ❌ Никаких командных палитр, Ctrl+K и горячих клавиш
+
+> **Правило сайта:** Александр → проекты → интерфейс.
+> Если дизайн делает интерфейс важнее меня — он удаляется.
+
+Главное взаимодействие — это скролл. Посетитель никогда не должен думать
+«а на что тут вообще нажимать».
+
+---
+
+## Под капотом
+
+Если интересно, как это собрано:
+
+- ⚡ **[Astro](https://astro.build)** — статика first, JavaScript почти не отправляется
+- 🎨 **Чистый CSS + дизайн-токены** — без Tailwind и UI-фреймворков
+- 📝 **Content collections** — каждая услуга и проект это Markdown-файл на каждый язык
+- 🌍 **i18n** — RU по умолчанию, EN (`/en/`), ES (`/es/`)
+- ♿ Весь сайт работает даже с выключенным JavaScript
+
+```sh
+npm install      # поставить зависимости
+npm run dev      # локальный сервер на localhost:4321
+npm run build    # статическая сборка → dist/
+npm run preview  # посмотреть собранный сайт
+```
+
+Пуш в `master` запускает GitHub Actions, который собирает сайт и публикует его
+на GitHub Pages по собственному домену.
+
+---
+
+<div align="center">
+
+**Сломалось? Не понимаешь? Просто интересно?**
+
+[Напиши мне →](https://sudonit.com/#contact)
+
+<sub>© Alexander · Sudonit · Аликанте</sub>
+
+</div>
