@@ -1,0 +1,106 @@
+---
+/**
+ * HowItWorks — three honest steps from "you write" to "it works". Removes the
+ * fear of "how do I even order this". Static, no JS. Copy kept local (like
+ * Contact's FORM_COPY) so it stays out of the typed i18n union.
+ */
+import { type Locale } from '../../data/site';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+
+const COPY: Record<Locale, { eyebrow: string; title: string; steps: { t: string; d: string }[] }> = {
+  ru: {
+    eyebrow: 'Как это происходит',
+    title: 'Просто и без сюрпризов',
+    steps: [
+      { t: 'Напишите', d: 'Опишите задачу своими словами — в WhatsApp, Telegram или через форму. Фото приветствуются.' },
+      { t: 'Обсудим', d: 'Задаю пару вопросов и называю стоимость и срок — ещё до начала, без сюрпризов.' },
+      { t: 'Сделаю', d: 'Чиню, настраиваю или объясняю. Оплата после — когда всё работает.' },
+    ],
+  },
+  en: {
+    eyebrow: 'How it works',
+    title: 'Simple, no surprises',
+    steps: [
+      { t: 'Get in touch', d: 'Describe the problem in your own words — on WhatsApp, Telegram or through the form. Photos welcome.' },
+      { t: 'We agree', d: 'I ask a couple of questions and tell you the price and timeframe up front — no surprises.' },
+      { t: 'I deliver', d: 'I fix, set up or explain. You pay afterwards — once everything works.' },
+    ],
+  },
+  es: {
+    eyebrow: 'Cómo funciona',
+    title: 'Sencillo, sin sorpresas',
+    steps: [
+      { t: 'Escríbeme', d: 'Cuéntame el problema con tus palabras — por WhatsApp, Telegram o el formulario. Las fotos ayudan.' },
+      { t: 'Lo acordamos', d: 'Te hago un par de preguntas y te digo el precio y el plazo antes de empezar — sin sorpresas.' },
+      { t: 'Lo hago', d: 'Reparo, configuro o explico. Pagas después — cuando todo funciona.' },
+    ],
+  },
+};
+const c = COPY[locale];
+---
+
+<section class="section how" id="how">
+  <div class="container">
+    <p class="eyebrow" data-reveal>{c.eyebrow}</p>
+    <h2 class="section__title" data-reveal>{c.title}</h2>
+
+    <ol class="how__steps" data-reveal-group>
+      {
+        c.steps.map((step, i) => (
+          <li class="how__step">
+            <span class="how__num">{i + 1}</span>
+            <h3 class="how__t">{step.t}</h3>
+            <p class="how__d">{step.d}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .how__steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+  .how__step {
+    position: relative;
+    padding-top: var(--space-4);
+    border-top: 2px solid color-mix(in srgb, var(--c-light) 40%, var(--c-line));
+  }
+  .how__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: var(--space-3);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--c-light) 12%, transparent);
+    color: var(--c-light);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .how__t {
+    font-size: var(--fs-h3, 1.25rem);
+    margin-bottom: var(--space-2);
+  }
+  .how__d {
+    color: var(--c-muted);
+    line-height: var(--lh-body);
+    text-wrap: pretty;
+    max-width: 34ch;
+  }
+  @media (max-width: 760px) {
+    .how__steps {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+</style>

@@ -21,6 +21,12 @@ const localeHref = (locale: Locale) => localePath(locale, bare);
 ---
 
 <Wrapper class="lang" aria-label={landmark ? 'Language' : undefined}>
+  <svg class="lang__globe" viewBox="0 0 24 24" width="14" height="14" fill="none"
+    stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18" />
+    <path d="M12 3c2.6 2.5 4 5.6 4 9s-1.4 6.5-4 9c-2.6-2.5-4-5.6-4-9s1.4-6.5 4-9Z" />
+  </svg>
   {
     LOCALES.map((locale) => (
       <a
@@ -42,15 +48,22 @@ const localeHref = (locale: Locale) => localePath(locale, bare);
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    padding: 3px;
+    padding: 3px 3px 3px 9px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--c-base) 55%, transparent);
-    border: 1px solid color-mix(in srgb, var(--c-line) 80%, transparent);
+    background: color-mix(in srgb, var(--c-light) 6%, color-mix(in srgb, var(--c-base) 55%, transparent));
+    border: 1px solid color-mix(in srgb, var(--c-light) 22%, var(--c-line));
     -webkit-backdrop-filter: saturate(160%) blur(10px);
     backdrop-filter: saturate(160%) blur(10px);
     font-family: var(--font-mono);
     font-size: var(--fs-label);
     letter-spacing: var(--tracking-label);
+  }
+  /* Globe hint — makes it read as a language control at a glance. */
+  .lang__globe {
+    color: var(--c-light);
+    opacity: 0.85;
+    margin-right: 4px;
+    flex: none;
   }
   .lang__item {
     position: relative;

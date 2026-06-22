@@ -42,6 +42,7 @@ const services = await getServices(locale);
       <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
         {t(locale, 'contact.primaryRepair')} →
       </a>
+      <span class="services__reply"><span class="services__pulse" aria-hidden="true"></span>{homeT(locale, 'contact.reply')}</span>
     </p>
   </div>
 </section>
@@ -61,5 +62,31 @@ const services = await getServices(locale);
   }
   .services__cta {
     margin-top: var(--space-5);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .services__reply {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+  .services__pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #4ad27a;
+    animation: services-pulse 2.4s var(--ease-settle) infinite;
+  }
+  @keyframes services-pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, #4ad27a 55%, transparent); }
+    70% { box-shadow: 0 0 0 7px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .services__pulse { animation: none; }
   }
 </style>

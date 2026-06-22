@@ -74,6 +74,8 @@ const fc = FORM_COPY[locale];
       </a>
     </div>
 
+    <p class="contact__reply"><span class="contact__pulse" aria-hidden="true"></span>{homeT(locale, 'contact.reply')}</p>
+
     <p class="contact__divider"><span>{fc.divider}</span></p>
 
     {/* Thank-you note shown after Formspree redirects back with ?sent=1. */}
@@ -126,6 +128,30 @@ const fc = FORM_COPY[locale];
     gap: var(--space-3);
     flex-wrap: wrap;
     justify-content: center;
+  }
+  .contact__reply {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+  .contact__pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #4ad27a;
+    box-shadow: 0 0 0 0 color-mix(in srgb, #4ad27a 70%, transparent);
+    animation: contact-pulse 2.4s var(--ease-settle) infinite;
+  }
+  @keyframes contact-pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, #4ad27a 55%, transparent); }
+    70% { box-shadow: 0 0 0 7px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .contact__pulse { animation: none; }
   }
   .contact__social {
     display: inline-flex;

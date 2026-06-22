@@ -10,7 +10,7 @@ type HomeKey =
   | 'services.eyebrow' | 'services.title' | 'services.note'
   | 'showcase.eyebrow' | 'showcase.title'
   | 'projects.eyebrow' | 'projects.title'
-  | 'contact.eyebrow' | 'contact.title' | 'contact.note';
+  | 'contact.eyebrow' | 'contact.title' | 'contact.note' | 'contact.reply';
 
 export const home: Record<Locale, Record<HomeKey, string>> = {
   ru: {
@@ -29,6 +29,7 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'contact.eyebrow': 'Контакт',
     'contact.title': 'Напишите — разберёмся.',
     'contact.note': 'Лучше всего — в WhatsApp. Отвечаю быстро.',
+    'contact.reply': 'Обычно отвечаю в течение часа',
   },
   en: {
     'hero.line1': 'Tech repair.',
@@ -46,6 +47,7 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'contact.eyebrow': 'Contact',
     'contact.title': "Message me — let's sort it out.",
     'contact.note': 'WhatsApp is best. I reply fast.',
+    'contact.reply': 'I usually reply within an hour',
   },
   es: {
     'hero.line1': 'Reparación.',
@@ -63,6 +65,7 @@ export const home: Record<Locale, Record<HomeKey, string>> = {
     'contact.eyebrow': 'Contacto',
     'contact.title': 'Escríbeme — lo resolvemos.',
     'contact.note': 'WhatsApp es lo mejor. Respondo rápido.',
+    'contact.reply': 'Suelo responder en una hora',
   },
 };
 

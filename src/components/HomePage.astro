@@ -1,14 +1,16 @@
 ---
 /**
  * HomePage — composes the single scroll story from the content model.
- * Order: Hero → Services → Projects → FAQ → Contact.
+ * Order: Hero → Services → TechStrip → Projects → HowItWorks → FAQ → Contact.
  * "How I can help" comes first. Header/Footer/sticky bar come from BaseLayout.
  * Fully static — works with JavaScript disabled.
  */
 import { type Locale } from '../data/site';
 import Hero from './sections/Hero.astro';
 import Services from './sections/Services.astro';
+import TechStrip from './sections/TechStrip.astro';
 import Projects from './sections/Projects.astro';
+import HowItWorks from './sections/HowItWorks.astro';
 import Faq from './sections/Faq.astro';
 import Contact from './sections/Contact.astro';
 
@@ -18,6 +20,8 @@ const { locale } = Astro.props;
 
 <Hero locale={locale} />
 <Services locale={locale} />
+<TechStrip locale={locale} />
 <Projects locale={locale} />
+<HowItWorks locale={locale} />
 <Faq locale={locale} />
 <Contact locale={locale} />

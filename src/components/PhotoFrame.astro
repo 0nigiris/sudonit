@@ -15,6 +15,7 @@ interface Props {
   alt?: string;        // describe the photo (a11y); falls back to caption
   caption?: string;
   ratio?: string;      // CSS aspect-ratio, e.g. "3 / 2", "4 / 5"
+  position?: string;   // object-position for the cropped photo, e.g. "center top"
   tint?: string;
   priority?: boolean;  // above-the-fold (hero) — load eagerly for LCP
   placeholder?: boolean; // false => render nothing until the real photo exists
@@ -25,6 +26,7 @@ const {
   alt = '',
   caption = '',
   ratio = '4 / 5',
+  position = 'center',
   tint = 'var(--c-light-dim)',
   priority = false,
   placeholder = true,
@@ -57,7 +59,7 @@ const widths = img
   /* No real photo + placeholder disabled => render nothing. The slot returns
      automatically once the file lands in src/assets/photos/<id>.*. */
   (img || placeholder) && (
-    <figure class:list={['photo', className]} style={`--ratio:${ratio}; --ptint:${tint}`}>
+    <figure class:list={['photo', className]} style={`--ratio:${ratio}; --ptint:${tint}; --ppos:${position}`}>
       {
         img ? (
           <Image
@@ -104,6 +106,7 @@ const widths = img
   }
   .photo :global(.photo__img) {
     object-fit: cover;
+    object-position: var(--ppos, center);
     border: 1px solid var(--c-line);
   }
   .photo__tag {

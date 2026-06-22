@@ -1,0 +1,102 @@
+---
+/**
+ * TechStrip — a quiet row of what I work with. Line icons (not emoji) in the
+ * muted palette, warming to amber on hover. Shows the breadth of repair at a
+ * glance without a long list. Static, no JS; copy kept local.
+ */
+import { type Locale } from '../../data/site';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+
+const LEAD: Record<Locale, string> = {
+  ru: 'Чиню и настраиваю',
+  en: 'I fix and set up',
+  es: 'Reparo y configuro',
+};
+
+const LABELS: Record<Locale, string[]> = {
+  ru: ['Компьютеры', 'Телефоны', 'Консоли', 'Принтеры', 'Умный дом', 'Системы и Linux'],
+  en: ['Computers', 'Phones', 'Consoles', 'Printers', 'Smart home', 'Systems & Linux'],
+  es: ['Ordenadores', 'Teléfonos', 'Consolas', 'Impresoras', 'Casa inteligente', 'Sistemas y Linux'],
+};
+const labels = LABELS[locale];
+---
+
+<section class="techstrip" aria-label={LEAD[locale]}>
+  <div class="container">
+    <p class="techstrip__lead" data-reveal>{LEAD[locale]}</p>
+    <ul class="techstrip__row" data-reveal-group>
+      <li class="techstrip__item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="11" rx="1.5"/><path d="M2 19.5h20"/>
+        </svg>
+        <span>{labels[0]}</span>
+      </li>
+      <li class="techstrip__item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>
+        </svg>
+        <span>{labels[1]}</span>
+      </li>
+      <li class="techstrip__item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="8" width="20" height="9" rx="4"/><path d="M7 12.5h3M8.5 11v3"/><circle cx="16" cy="11.5" r="1.1"/><circle cx="18" cy="14" r="1.1"/>
+        </svg>
+        <span>{labels[2]}</span>
+      </li>
+      <li class="techstrip__item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="1.5"/><rect x="7" y="14" width="10" height="6"/>
+        </svg>
+        <span>{labels[3]}</span>
+      </li>
+      <li class="techstrip__item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>
+        </svg>
+        <span>{labels[4]}</span>
+      </li>
+      <li class="techstrip__item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/>
+        </svg>
+        <span>{labels[5]}</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .techstrip {
+    padding-block: var(--space-5);
+    border-block: 1px solid var(--c-line);
+  }
+  .techstrip__lead {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--c-muted);
+    margin-bottom: var(--space-4);
+  }
+  .techstrip__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5) var(--space-6);
+  }
+  .techstrip__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--c-muted);
+    font-size: var(--fs-small);
+    transition: color var(--dur-micro) var(--ease-settle);
+  }
+  .techstrip__item:hover {
+    color: var(--c-light);
+  }
+  @media (max-width: 600px) {
+    .techstrip__row { gap: var(--space-4) var(--space-5); }
+  }
+</style>
