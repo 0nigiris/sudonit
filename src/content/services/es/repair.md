@@ -224,7 +224,7 @@ tiers:
       - { t: "Limpio", d: "Buena impresión" }
 priceNote: "Son precios orientativos — el precio final depende del trabajo y se acuerda antes de empezar. El material se paga aparte."
 problem: "Algo se ha roto, va lento o simplemente no sabes cómo configurarlo — un ordenador, un móvil, el correo, una impresora, el Wi-Fi. Suele ser el momento en que es más fácil rendirse o comprar nuevo. Yo prefiero mirar primero si tiene solución."
-approach: "No descarto un aparato sin intentar arreglarlo, ni complico lo que se puede decir de forma sencilla. Averiguo qué falla y te lo digo con honestidad: se arregla, se configura — o te conviene más cambiarlo. Sin tecnicismos y sin pago por adelantado."
+approach: "No descarto un aparato sin intentar arreglarlo, ni complico lo que se puede decir de forma sencilla. Averiguo qué falla y te lo digo con honestidad: se arregla, se configura — o te conviene más cambiarlo."
 whatYouGet: "Un dispositivo que funciona y está configurado, y una explicación clara de qué pasaba. Antes de cualquier trabajo serio hago una copia de seguridad — tus datos están protegidos. Si no tiene solución, te lo digo enseguida y no te cobro. Solo pagas cuando todo funciona."
 howItWorks: "Me cuentas qué ha pasado — te hago un par de preguntas y te doy un precio aproximado. Luego lo resuelvo en remoto (TeamViewer / AnyDesk) o en persona en Alicante. Revisamos el resultado juntos — y solo entonces pagas."
 ---
