@@ -21,6 +21,8 @@ const services = await getServices(locale);
     <p class="eyebrow" data-reveal>{homeT(locale, 'services.eyebrow')}</p>
     <h2 class="section__title" data-reveal>{homeT(locale, 'services.title')}</h2>
 
+    <p class="services__note" data-reveal>{homeT(locale, 'services.note')}</p>
+
     <div class="cards2" data-reveal-group>
       {
         services.map((s) => (
@@ -45,6 +47,18 @@ const services = await getServices(locale);
 </section>
 
 <style>
+  .services__note {
+    max-width: var(--measure);
+    margin: var(--space-3) 0 var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--c-light);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--c-light) 9%, transparent);
+    color: var(--c-text);
+    font-size: var(--fs-small);
+    line-height: var(--lh-body);
+    text-wrap: pretty;
+  }
   .services__cta {
     margin-top: var(--space-5);
   }
