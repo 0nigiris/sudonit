@@ -16,10 +16,10 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 ---
 
-<section class="section contact" id="contact">
+<section class="section section--ruled contact" id="contact">
   <div class="container contact__inner" data-reveal>
     <WarmMark size={40} glow={true} class="contact__mark" />
-    <p class="eyebrow">{homeT(locale, 'contact.eyebrow')}</p>
+    <p class="eyebrow contact__eyebrow">{homeT(locale, 'contact.eyebrow')}</p>
     <h2 class="contact__title">{homeT(locale, 'contact.title')}</h2>
     <p class="contact__note">{homeT(locale, 'contact.note')}</p>
 
@@ -51,7 +51,18 @@ const { locale } = Astro.props;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 760px;
+    margin-inline: auto;
+    padding: var(--space-7) var(--gutter);
+    border: 1px solid color-mix(in srgb, var(--c-light) 18%, var(--c-line));
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(80% 120% at 50% -20%, color-mix(in srgb, var(--c-light) 10%, transparent), transparent 60%),
+      var(--c-surface);
+    box-shadow: var(--shadow-lg);
   }
+  /* Centered eyebrow — drop the left tick so the word sits symmetrically. */
+  .contact__eyebrow::before { display: none; }
   .contact__mark {
     margin-bottom: var(--space-3);
   }
@@ -83,12 +94,12 @@ const { locale } = Astro.props;
     width: 8px;
     height: 8px;
     border-radius: 999px;
-    background: #4ad27a;
-    box-shadow: 0 0 0 0 color-mix(in srgb, #4ad27a 70%, transparent);
+    background: var(--c-ok);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-ok) 70%, transparent);
     animation: contact-pulse 2.4s var(--ease-settle) infinite;
   }
   @keyframes contact-pulse {
-    0% { box-shadow: 0 0 0 0 color-mix(in srgb, #4ad27a 55%, transparent); }
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-ok) 55%, transparent); }
     70% { box-shadow: 0 0 0 7px transparent; }
     100% { box-shadow: 0 0 0 0 transparent; }
   }

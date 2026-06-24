@@ -1,67 +1,182 @@
 ---
 /**
- * Hero — understand Alexander in one breath. What he offers + name + portrait.
- * Static (no motion in Phase 2). WarmMark is dim/static here.
+ * Hero — meet Alexander in one breath: who he is, what he does, and the promise
+ * that removes the risk of reaching out. Person-first (the name leads), with the
+ * verb spine (Fix · Teach · Build · Create) and a bold, warm-lit portrait.
+ * Above the fold = the LCP element: it paints instantly, never gated by JS.
  */
 import { type Locale } from '../../data/site';
 import { homeT } from '../../i18n/home';
-import WarmMark from '../WarmMark.astro';
+import { t } from '../../i18n/ui';
+import { whatsappLink } from '../../data/contact';
+import { VERB_META, tint, type Verb } from '../../data/verbs';
 import PhotoFrame from '../PhotoFrame.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
+
+const verbs = Object.keys(VERB_META) as Verb[];
 ---
 
 <section class="hero">
-  {/* No reveal-gating here: the hero is above the fold and is the LCP element.
-      It must paint instantly, never wait for JS to fade in. Motion starts below. */}
   <div class="container hero__grid">
     <div class="hero__text">
-      <h1 class="hero__head">
-        <span class="hero__l">{homeT(locale, 'hero.line1')}</span>
-        <span class="hero__l">{homeT(locale, 'hero.line2')}</span>
-        <span class="hero__l">
-          {homeT(locale, 'hero.line3')}<WarmMark size={30} class="hero__mark" />
-        </span>
-      </h1>
-      <p class="hero__sub">{homeT(locale, 'hero.sub')}</p>
+      <p class="hero__kicker">{homeT(locale, 'hero.kicker')}</p>
+
+      <h1 class="hero__name">{homeT(locale, 'hero.name')}</h1>
+
+      {/* The identity spine — quiet, tinted, decorative-but-meaningful. */}
+      <ul class="hero__verbs" aria-hidden="true">
+        {verbs.map((v) => (
+          <li class="hero__verb" style={`--tint:${tint(v)}`}>{VERB_META[v].label}</li>
+        ))}
+      </ul>
+
+      <p class="hero__lead">{homeT(locale, 'hero.lead')}</p>
+
+      <p class="hero__trust">
+        <svg class="hero__check" viewBox="0 0 24 24" width="18" height="18" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 12.5l5 5L20 6" />
+        </svg>
+        <span>{homeT(locale, 'hero.trust')}</span>
+      </p>
+
+      <div class="hero__actions">
+        <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+          {t(locale, 'contact.whatsapp')}
+        </a>
+        <a class="cta cta--ghost" href="#services">
+          {homeT(locale, 'hero.ctaSecondary')} ↓
+        </a>
+      </div>
     </div>
-    <PhotoFrame id="A1" ratio="4 / 5" position="center top" tint="var(--c-light)" alt={homeT(locale, 'hero.portraitAlt')} priority class="hero__photo" />
+
+    <div class="hero__portrait">
+      <PhotoFrame id="A1" ratio="4 / 5" position="center top" tint="var(--c-light)"
+        alt={homeT(locale, 'hero.portraitAlt')} priority class="hero__photo" />
+    </div>
   </div>
 </section>
 
 <style>
   .hero {
-    padding-block: var(--space-8) var(--space-7);
+    position: relative;
+    padding-block: var(--space-7) var(--space-6);
   }
   .hero__grid {
     display: grid;
-    grid-template-columns: 1fr minmax(300px, 440px);
+    grid-template-columns: 1.05fr minmax(300px, 440px);
     gap: var(--space-6);
-    align-items: start;
+    align-items: center;
   }
-  .hero__head {
-    font-size: clamp(2.5rem, 6.5vw, 5rem);
-    margin-bottom: var(--space-4);
+
+  .hero__kicker {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--c-light);
+    margin-bottom: var(--space-3);
   }
-  .hero__l {
-    display: block;
+
+  .hero__name {
+    font-size: var(--fs-display);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    /* a warm vertical sheen so the name reads as lit, not flat paint */
+    background: linear-gradient(180deg, var(--c-text), color-mix(in srgb, var(--c-text) 84%, var(--c-light)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  .hero__mark {
-    margin-left: 0.25em;
-    vertical-align: baseline;
+
+  .hero__verbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    margin-top: var(--space-4);
   }
-  .hero__sub {
+  .hero__verb {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--tint);
+    padding: 0.35em 0.7em;
+    border: 1px solid color-mix(in srgb, var(--tint) 30%, var(--c-line));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tint) 8%, transparent);
+  }
+
+  .hero__lead {
+    margin-top: var(--space-4);
+    max-width: 42ch;
     font-size: var(--fs-lead);
+    line-height: var(--lh-snug);
     color: var(--c-text);
+    text-wrap: pretty;
   }
+
+  .hero__trust {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding: 0.6em 1em 0.6em 0.8em;
+    border: 1px solid color-mix(in srgb, var(--c-light) 30%, var(--c-line));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--c-light) 7%, transparent);
+    color: var(--c-text);
+    font-size: var(--fs-small);
+    line-height: 1.35;
+    text-wrap: pretty;
+  }
+  .hero__check {
+    flex: none;
+    color: var(--c-light);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  /* Portrait: a warm light bloom behind it so the figure feels lit by the lamp. */
+  .hero__portrait {
+    position: relative;
+    isolation: isolate;
+  }
+  .hero__portrait::before {
+    content: '';
+    position: absolute;
+    inset: -12% -8% -4% -8%;
+    z-index: -1;
+    background: radial-gradient(60% 55% at 60% 18%,
+      color-mix(in srgb, var(--c-light) 26%, transparent), transparent 70%);
+    filter: blur(8px);
+  }
+  .hero__portrait :global(.hero__photo) {
+    box-shadow: var(--shadow-lg);
+  }
+  .hero__portrait :global(.hero__photo .photo__img),
+  .hero__portrait :global(.hero__photo .photo__inner) {
+    border-radius: var(--radius-lg);
+  }
+
   @media (max-width: 900px) {
+    .hero {
+      padding-block: var(--space-6) var(--space-5);
+    }
     .hero__grid {
       grid-template-columns: 1fr;
       gap: var(--space-5);
     }
-    .hero__photo {
-      max-width: 480px;
+    .hero__portrait {
+      max-width: 420px;
     }
   }
 </style>

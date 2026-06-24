@@ -41,10 +41,12 @@ const COPY: Record<Locale, { eyebrow: string; title: string; steps: { t: string;
 const c = COPY[locale];
 ---
 
-<section class="section how" id="how">
+<section class="section section--ruled how" id="how">
   <div class="container">
-    <p class="eyebrow" data-reveal>{c.eyebrow}</p>
-    <h2 class="section__title" data-reveal>{c.title}</h2>
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>{c.eyebrow}</p>
+      <h2 class="section__title" data-reveal>{c.title}</h2>
+    </div>
 
     <ol class="how__steps" data-reveal-group>
       {
@@ -65,30 +67,44 @@ const c = COPY[locale];
     list-style: none;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-5);
-    margin-top: var(--space-5);
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+    counter-reset: step;
   }
   .how__step {
     position: relative;
-    padding-top: var(--space-4);
-    border-top: 2px solid color-mix(in srgb, var(--c-light) 40%, var(--c-line));
+    padding: var(--space-5) var(--space-4) var(--space-4);
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-lg);
+  }
+  /* A faint connecting tick at the top-left of each card — a quiet progression. */
+  .how__step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--space-4);
+    width: 2.5rem;
+    height: 2px;
+    background: var(--c-light);
   }
   .how__num {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
     margin-bottom: var(--space-3);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--c-light) 12%, transparent);
+    background: color-mix(in srgb, var(--c-light) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-light) 30%, transparent);
     color: var(--c-light);
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 600;
   }
   .how__t {
-    font-size: var(--fs-h3, 1.25rem);
+    font-size: var(--fs-h3);
     margin-bottom: var(--space-2);
   }
   .how__d {

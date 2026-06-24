@@ -31,38 +31,37 @@ body {
   min-height: 100svh;
 }
 
-/* Ambient warmth — a barely-there glow pooled in the corners so the empty
-   edges/gutters aren't dead space. Fixed, behind everything, never interactive.
-   Kept very low-opacity on purpose: atmosphere, not decoration you notice. */
+/* The lamp — a warm light pooled from the top of the page, like a desk lamp
+   over a workbench. Fixed, behind everything, never interactive, STATIC (no
+   constant movement — per the project's animation philosophy). It gives the
+   page a single believable light source instead of dead flat black. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(60vw 60vw at 6% -8%,
-      color-mix(in srgb, var(--c-light) 5%, transparent), transparent 60%),
-    radial-gradient(55vw 55vw at 104% 108%,
-      color-mix(in srgb, var(--c-light) 4%, transparent), transparent 55%);
+  background: var(--lamp);
 }
 
-/* Decorative drifting star-field that fills the empty side gutters on wide
-   screens. Drawn on a single fixed canvas behind everything (see the
-   #petal-field script in BaseLayout). Confined to the gutters by the script,
-   so it never sits behind the centred content. */
-#petal-field {
+/* A faint cool settling at the very bottom so the page has a top-lit feel
+   (light above, shadow pooling below). Purely atmospheric, static. */
+body::after {
+  content: '';
   position: fixed;
-  inset: 0;
+  inset: auto 0 0 0;
+  height: 40vh;
   z-index: -1;
   pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent);
 }
 
 h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: var(--lh-tight);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
 }
 
 a {
@@ -91,21 +90,48 @@ ul {
 }
 
 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--c-muted);
+  color: var(--c-light);
+}
+/* A short amber tick before the eyebrow word — quiet "you are here" marker. */
+.eyebrow::before {
+  content: '';
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
 }
 
 /* Section rhythm */
 .section {
   padding-block: var(--space-7);
 }
+/* A hairline that opens each section, fading from the warm line into nothing —
+   gives the long scroll quiet structure without heavy boxes. */
+.section--ruled {
+  border-top: 1px solid var(--c-line);
+}
+.section__head {
+  margin-bottom: var(--space-5);
+}
 .section__title {
   font-size: var(--fs-h1);
-  margin-block: var(--space-2) var(--space-5);
+  margin-block: var(--space-3) 0;
   max-width: 20ch;
+}
+.section__lead {
+  margin-top: var(--space-3);
+  max-width: var(--measure);
+  color: var(--c-muted);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
+  text-wrap: pretty;
 }
 
 /* Calls to action (shared) */
@@ -114,22 +140,36 @@ ul {
   align-items: center;
   gap: 0.5em;
   font-weight: 600;
-  padding: 0.8em 1.4em;
+  padding: 0.85em 1.5em;
   border-radius: 999px;
   font-size: var(--fs-body);
+  line-height: 1;
   transition: transform var(--dur-micro) var(--ease-settle),
-    background-color var(--dur-micro) var(--ease-settle);
+    background-color var(--dur-micro) var(--ease-settle),
+    border-color var(--dur-micro) var(--ease-settle),
+    box-shadow var(--dur-micro) var(--ease-settle);
 }
 .cta--warm {
-  background: var(--c-light);
-  color: #1a1206;
+  background: linear-gradient(180deg, var(--c-light-hi), var(--c-light));
+  color: var(--c-on-light);
+  box-shadow: 0 8px 24px -12px color-mix(in srgb, var(--c-light) 70%, transparent);
+}
+.cta--warm:hover {
+  box-shadow: var(--glow-warm);
 }
 .cta--ghost {
-  border: 1px solid var(--c-line);
+  border: 1px solid var(--c-line-2);
   color: var(--c-text);
 }
+.cta--ghost:hover {
+  border-color: var(--c-light);
+  background: color-mix(in srgb, var(--c-light) 8%, transparent);
+}
 .cta:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta:hover { transform: none; }
 }
 
 /* Dedicated-page body: two-column block grid + prose block */

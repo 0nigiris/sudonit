@@ -1,28 +1,40 @@
 /* ============================================================
-   Sudonit — Design tokens (LOCKED visual system, Direction B blend)
-   Single source of truth for color, type, space, motion.
-   Personality lives in TYPE + PHOTO + VOICE. Color SUPPORTS, never defines.
+   Sudonit — Design tokens · "Warm Light" redesign
+   Single source of truth for color, type, space, motion, elevation.
+
+   Concept: Alexander is who you go to when something's broken or you
+   want to learn. The amber mark is a real LIGHT SOURCE (a lamp over a
+   workbench), pooling warmth from the top of the page. Color now builds
+   DEPTH (layered surfaces + elevation), but TYPE + PHOTO + VOICE still
+   carry the personality. Color supports; it never shouts.
    ============================================================ */
 
 :root {
-  /* --- Base (warmth + personality, from T2) --- */
-  --c-base: #15130f;        /* warm near-black — page background */
-  --c-surface: #211d16;     /* raised surfaces / cards */
-  --c-text: #f2ede4;        /* warm off-white — body text */
-  --c-muted: #9a9286;       /* secondary text */
-  --c-line: #2c2820;        /* hairlines / borders */
+  /* --- Base + layered surfaces (depth ladder) --- */
+  --c-base: #13100c;        /* warm near-black — page background (deepened) */
+  --c-surface: #1c1711;     /* raised surfaces / cards (level 1) */
+  --c-surface-2: #262019;   /* higher elevation (hover, nested, callouts) */
+  --c-text: #f5f0e8;        /* warm off-white — body text */
+  --c-muted: #b1a899;       /* secondary text — brightened to clear AA on base */
+  --c-faint: #7d756a;       /* tertiary / decorative labels only */
+  --c-line: #322c22;        /* hairlines / borders */
+  --c-line-2: #423a2d;      /* stronger divider / hovered border */
 
-  /* --- The warm mark / brand light (the SIGNATURE, not the theme) ---
-     Reserved for: brand mark, primary CTA, full glow at Repair + Contact only. */
-  --c-light: #ff9d4d;       /* rich amber */
-  --c-light-dim: #5a3f25;   /* low-glow resting state */
+  /* --- The warm mark / brand light (the SIGNATURE) ---
+     Reserved for: brand mark, primary CTA, the lamp glow, full glow at
+     Repair + Contact. Now used a touch more confidently as a light. */
+  --c-light: #ff9d4d;       /* rich amber — the lamp */
+  --c-light-hi: #ffc07a;    /* highlight / hot core */
+  --c-light-dim: #6a4a2b;   /* low-glow resting state */
+  --c-on-light: #221406;    /* text on an amber fill */
 
   /* --- Verb tints (Catppuccin DNA, harmonized onto warm base) ---
-     For blocks / labels / accents only. Body text stays --c-text (contrast). */
+     For blocks / labels / accents only. Body text stays --c-text. */
   --c-fix: #fab387;         /* FIX  — Repair (runs hottest) */
   --c-teach: #84a9d6;       /* TEACH — Tutoring */
   --c-build: #bba0e0;       /* BUILD — Smart Glasses */
   --c-create: #8fcfbf;      /* CREATE — English */
+  --c-ok: #5bd07f;          /* live / "reply soon" pulse */
 
   /* --- Typography ---
      Display = Geologica (personality, Cyrillic). Body = Onest. Mono = JetBrains
@@ -32,19 +44,22 @@
   --font-body: 'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
 
-  /* Fluid type scale (clamp = responsive without breakpoints to maintain) */
-  --fs-display: clamp(2.75rem, 8vw, 6.5rem);
-  --fs-h1: clamp(2rem, 5vw, 3.75rem);
-  --fs-h2: clamp(1.5rem, 3.5vw, 2.5rem);
-  --fs-lead: clamp(1.125rem, 2vw, 1.5rem);
+  /* Fluid type scale (clamp = responsive without breakpoints to maintain).
+     Pushed a little more confident at the top end for the new hero. */
+  --fs-display: clamp(3rem, 9vw, 7.25rem);
+  --fs-h1: clamp(2.1rem, 5.2vw, 4rem);
+  --fs-h2: clamp(1.55rem, 3.6vw, 2.6rem);
+  --fs-h3: clamp(1.2rem, 1.8vw, 1.4rem);
+  --fs-lead: clamp(1.15rem, 2vw, 1.6rem);
   --fs-body: clamp(1rem, 1.2vw, 1.125rem);
-  --fs-small: 0.875rem;
+  --fs-small: 0.9rem;
   --fs-label: 0.75rem;
 
-  --lh-tight: 1.05;
-  --lh-snug: 1.25;
-  --lh-body: 1.6;
-  --tracking-label: 0.08em;
+  --lh-tight: 1.02;
+  --lh-snug: 1.22;
+  --lh-body: 1.62;
+  --tracking-label: 0.14em;
+  --tracking-tight: -0.02em;
 
   /* --- Spacing scale --- */
   --space-1: 0.25rem;
@@ -57,20 +72,34 @@
   --space-8: 9rem;
 
   /* Editorial measure + page gutter */
-  --measure: 64ch;
+  --measure: 62ch;
   --gutter: clamp(1.25rem, 5vw, 5rem);
-  --maxw: 1200px;
+  --maxw: 1240px;
 
   /* --- Radius / borders --- */
-  --radius-sm: 6px;
-  --radius: 12px;
-  --radius-lg: 20px;
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+
+  /* --- Elevation (warm-tinted shadows, not neutral black) --- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 10px 30px -18px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 30px 70px -40px rgba(0, 0, 0, 0.85);
+  --glow-warm: 0 0 40px -8px color-mix(in srgb, var(--c-light) 40%, transparent);
+
+  /* --- The lamp: a reusable warm radial light pooled from the top --- */
+  --lamp:
+    radial-gradient(70vw 48vw at 50% -14%,
+      color-mix(in srgb, var(--c-light) 13%, transparent), transparent 62%),
+    radial-gradient(46vw 40vw at 8% -6%,
+      color-mix(in srgb, var(--c-light) 6%, transparent), transparent 58%);
 
   /* --- Motion tokens (premium, almost-invisible) ---
      transform + opacity ONLY. settle = fast-out, soft-landing (the "Apple" feel). */
-  --dur-micro: 140ms;
+  --dur-micro: 160ms;
   --dur-entrance: 480ms;
-  --dur-reveal: 560ms;
+  --dur-reveal: 620ms;
   --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
 

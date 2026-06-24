@@ -16,10 +16,12 @@ const { locale } = Astro.props;
 const services = await getServices(locale);
 ---
 
-<section class="section" id="services">
+<section class="section section--ruled" id="services">
   <div class="container">
-    <p class="eyebrow" data-reveal>{homeT(locale, 'services.eyebrow')}</p>
-    <h2 class="section__title" data-reveal>{homeT(locale, 'services.title')}</h2>
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>{homeT(locale, 'services.eyebrow')}</p>
+      <h2 class="section__title" data-reveal>{homeT(locale, 'services.title')}</h2>
+    </div>
 
     <p class="services__note" data-reveal>{homeT(locale, 'services.note')}</p>
 
@@ -78,11 +80,11 @@ const services = await getServices(locale);
     width: 8px;
     height: 8px;
     border-radius: 999px;
-    background: #4ad27a;
+    background: var(--c-ok);
     animation: services-pulse 2.4s var(--ease-settle) infinite;
   }
   @keyframes services-pulse {
-    0% { box-shadow: 0 0 0 0 color-mix(in srgb, #4ad27a 55%, transparent); }
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-ok) 55%, transparent); }
     70% { box-shadow: 0 0 0 7px transparent; }
     100% { box-shadow: 0 0 0 0 transparent; }
   }

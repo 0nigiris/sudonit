@@ -45,10 +45,11 @@ const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
     flex-direction: column;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-4) var(--space-5);
-    background: var(--c-surface);
+    background: linear-gradient(180deg, var(--c-surface-2), var(--c-surface));
     border: 1px solid var(--c-line);
     border-top: 2px solid color-mix(in srgb, var(--tint) 60%, var(--c-line));
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
     transition:
       border-color var(--dur-micro) var(--ease-settle),
       transform var(--dur-reveal) var(--ease-settle),
@@ -69,9 +70,11 @@ const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
     transition: opacity var(--dur-reveal) var(--ease-settle);
   }
   .vcard:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
     border-color: color-mix(in srgb, var(--tint) 55%, var(--c-line));
-    box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--tint) 70%, transparent);
+    box-shadow:
+      var(--shadow-lg),
+      0 24px 50px -28px color-mix(in srgb, var(--tint) 75%, transparent);
   }
   .vcard:hover::before { opacity: 1; }
 

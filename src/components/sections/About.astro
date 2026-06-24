@@ -1,0 +1,91 @@
+---
+/**
+ * About — the short "who I am / what I can do" the homepage was missing.
+ * Deliberately NOT a biography: no life story, no geography lecture. One honest
+ * paragraph about capability, plus the guarantee elevated as the trust anchor
+ * (the strongest argument: price first, pay when it works).
+ */
+import { type Locale } from '../../data/site';
+import { homeT } from '../../i18n/home';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+
+<section class="section section--ruled about" id="about">
+  <div class="container about__grid">
+    <div class="about__intro" data-reveal>
+      <p class="eyebrow">{homeT(locale, 'about.eyebrow')}</p>
+      <h2 class="about__title">{homeT(locale, 'about.title')}</h2>
+      <p class="about__body">{homeT(locale, 'about.body')}</p>
+    </div>
+
+    <aside class="about__guarantee" data-reveal>
+      <span class="about__badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      </span>
+      <p class="about__guaranteeText">{homeT(locale, 'about.guarantee')}</p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: var(--space-6);
+    align-items: center;
+  }
+  .about__title {
+    font-size: var(--fs-h2);
+    margin-block: var(--space-3) var(--space-4);
+    max-width: 16ch;
+  }
+  .about__body {
+    max-width: var(--measure);
+    color: var(--c-muted);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-body);
+    text-wrap: pretty;
+  }
+
+  /* The guarantee — a raised, warm-lit callout. The one thing that disarms
+     "is this person reliable?" before it's even asked. */
+  .about__guarantee {
+    position: relative;
+    padding: var(--space-5);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--c-light) 7%, var(--c-surface)), var(--c-surface));
+    border: 1px solid color-mix(in srgb, var(--c-light) 22%, var(--c-line));
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .about__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: var(--space-3);
+    border-radius: 50%;
+    color: var(--c-light);
+    background: color-mix(in srgb, var(--c-light) 14%, transparent);
+  }
+  .about__guaranteeText {
+    color: var(--c-text);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 860px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+  }
+</style>
