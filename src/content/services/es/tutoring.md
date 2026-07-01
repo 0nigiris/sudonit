@@ -7,7 +7,7 @@ order: 2
 status: available
 pricing: tiers
 tiers:
-  - group: "🗣 Idiomas"
+  - group: "Idiomas"
     name: "Inglés — de cero a B1"
     price: "7 €/hora"
     when:
@@ -23,7 +23,7 @@ tiers:
     gives:
       - { t: "Entiendes y hablas", d: "A un nivel real, del día a día" }
       - { t: "Tu propio ritmo", d: "Hacia tu objetivo" }
-  - group: "📐 Asignaturas del cole"
+  - group: "Asignaturas del cole"
     name: "Matemáticas"
     price: "7 €/hora"
     when:
@@ -37,7 +37,7 @@ tiers:
     gives:
       - { t: "Comprensión, no empollar", d: "Ves de dónde sale la respuesta" }
       - { t: "Confianza", d: "Se le quita el miedo a la asignatura" }
-  - group: "📐 Asignaturas del cole"
+  - group: "Asignaturas del cole"
     name: "Física"
     price: "7 €/hora"
     when:
@@ -49,7 +49,7 @@ tiers:
     gives:
       - { t: "Empieza a tener lógica", d: "No un montón de fórmulas" }
       - { t: "Listo para el examen", d: "Trabajamos tus propios problemas" }
-  - group: "💻 Ordenadores y programación"
+  - group: "Ordenadores y programación"
     name: "Programación desde cero"
     price: "7 €/hora"
     when:
@@ -63,7 +63,7 @@ tiers:
     gives:
       - { t: "Tu primer código que funciona", d: "Con tus propias manos" }
       - { t: "Una base sólida", d: "Desde la que crecer" }
-  - group: "💻 Ordenadores y programación"
+  - group: "Ordenadores y programación"
     name: "Linux desde cero"
     price: "7 €/hora"
     when:
@@ -77,7 +77,7 @@ tiers:
     gives:
       - { t: "Trabajas con confianza", d: "Sin miedo a «romperlo»" }
       - { t: "Un sistema a tu medida", d: "Rápido y cómodo" }
-  - group: "💻 Ordenadores y programación"
+  - group: "Ordenadores y programación"
     name: "IA para el trabajo y el estudio"
     price: "7 €/hora"
     when:
@@ -91,7 +91,7 @@ tiers:
     gives:
       - { t: "La usas con confianza", d: "Cada día" }
       - { t: "Ahorras tiempo", d: "La IA se encarga de lo repetitivo" }
-  - group: "💻 Ordenadores y programación"
+  - group: "Ordenadores y programación"
     name: "Informática básica"
     price: "7 €/hora"
     when:

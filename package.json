@@ -15,7 +15,6 @@
     "@astrojs/sitemap": "^3.7.3",
     "@types/three": "^0.185.0",
     "astro": "^5.0.0",
-    "motion": "^12.41.0",
     "three": "^0.185.0"
   }
 }

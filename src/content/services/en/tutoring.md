@@ -7,7 +7,7 @@ order: 2
 status: available
 pricing: tiers
 tiers:
-  - group: "🗣 Languages"
+  - group: "Languages"
     name: "English — from zero to B1"
     price: "€7/hour"
     when:
@@ -23,7 +23,7 @@ tiers:
     gives:
       - { t: "You understand and speak", d: "At a real, everyday level" }
       - { t: "Your own pace", d: "Toward your own goal" }
-  - group: "📐 School subjects"
+  - group: "School subjects"
     name: "Maths"
     price: "€7/hour"
     when:
@@ -37,7 +37,7 @@ tiers:
     gives:
       - { t: "Understanding, not cramming", d: "You see where the answer comes from" }
       - { t: "Confidence", d: "The fear of the subject fades" }
-  - group: "📐 School subjects"
+  - group: "School subjects"
     name: "Physics"
     price: "€7/hour"
     when:
@@ -49,7 +49,7 @@ tiers:
     gives:
       - { t: "It starts to make sense", d: "Not just a set of formulas" }
       - { t: "Ready for the test", d: "We work on your own problems" }
-  - group: "💻 Computers & coding"
+  - group: "Computers & coding"
     name: "Coding from scratch"
     price: "€7/hour"
     when:
@@ -63,7 +63,7 @@ tiers:
     gives:
       - { t: "Your first working code", d: "Made with your own hands" }
       - { t: "A solid foundation", d: "One you can grow from" }
-  - group: "💻 Computers & coding"
+  - group: "Computers & coding"
     name: "Linux from scratch"
     price: "€7/hour"
     when:
@@ -77,7 +77,7 @@ tiers:
     gives:
       - { t: "You work with confidence", d: "No fear of 'breaking' it" }
       - { t: "A system that fits you", d: "Fast and comfortable" }
-  - group: "💻 Computers & coding"
+  - group: "Computers & coding"
     name: "AI for work and study"
     price: "€7/hour"
     when:
@@ -91,7 +91,7 @@ tiers:
     gives:
       - { t: "You use it with confidence", d: "Every day" }
       - { t: "You save time", d: "AI takes over the busywork" }
-  - group: "💻 Computers & coding"
+  - group: "Computers & coding"
     name: "Computer basics"
     price: "€7/hour"
     when:

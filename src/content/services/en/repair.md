@@ -7,7 +7,7 @@ order: 1
 status: available
 pricing: tiers
 tiers:
-  - group: "💻 Computers & laptops"
+  - group: "Computers & laptops"
     name: "Slow computer — I'll speed it up"
     price: "from 25€"
     when:
@@ -22,7 +22,7 @@ tiers:
       - { t: "Fast start", d: "Boots in seconds" }
       - { t: "Runs smoothly", d: "No freezing" }
       - { t: "Clean", d: "No viruses or ads" }
-  - group: "💻 Computers & laptops"
+  - group: "Computers & laptops"
     name: "Full clean-up & setup"
     price: "from 35€"
     when:
@@ -38,7 +38,7 @@ tiers:
       - { t: "Runs fast", d: "Noticeably faster" }
       - { t: "Tidy", d: "Everything in order" }
       - { t: "Clear", d: "I'll tell you what I did" }
-  - group: "💻 Computers & laptops"
+  - group: "Computers & laptops"
     name: "Frozen solid — I'll reinstall it"
     price: "from 45€"
     when:
@@ -54,7 +54,7 @@ tiers:
       - { t: "Like new", d: "Runs fast" }
       - { t: "Files intact", d: "Nothing gets lost" }
       - { t: "Clean", d: "Only what you need" }
-  - group: "🔧 Repairs & parts"
+  - group: "Repairs & parts"
     name: "Slow to boot — I'll add a fast drive"
     price: "from 30€"
     when:
@@ -67,7 +67,7 @@ tiers:
     gives:
       - { t: "Boots in 15 seconds", d: "Instead of 10 minutes" }
       - { t: "Files open instantly", d: "No more waiting" }
-  - group: "🔧 Repairs & parts"
+  - group: "Repairs & parts"
     name: "Cracked laptop screen — I'll replace it"
     price: "from 45€"
     when:
@@ -80,7 +80,7 @@ tiers:
     gives:
       - { t: "Screen like new", d: "No cracks" }
       - { t: "Tidy", d: "Everything back in place" }
-  - group: "🔧 Repairs & parts"
+  - group: "Repairs & parts"
     name: "Noisy & overheating — I'll clean it"
     price: "from 30€"
     when:
@@ -95,7 +95,7 @@ tiers:
       - { t: "Quiet", d: "No constant noise" }
       - { t: "Cool", d: "No overheating" }
       - { t: "Lasts longer", d: "Overheating kills hardware" }
-  - group: "🔧 Repairs & parts"
+  - group: "Repairs & parts"
     name: "Won't charge — I'll fix the port"
     price: "from 40€"
     when:
@@ -108,7 +108,7 @@ tiers:
     gives:
       - { t: "Charges reliably", d: "In any position" }
       - { t: "Dependable", d: "No holding it at an angle" }
-  - group: "🔧 Repairs & parts"
+  - group: "Repairs & parts"
     name: "Need a new PC — I'll build it"
     price: "from 50€"
     when:
@@ -123,7 +123,7 @@ tiers:
     gives:
       - { t: "Right for you", d: "No wasted spend" }
       - { t: "Ready to go", d: "Turn it on and use it" }
-  - group: "🔧 Repairs & parts"
+  - group: "Repairs & parts"
     name: "Loose port or button — I'll re-solder it"
     price: "from 25€"
     when:
@@ -137,7 +137,7 @@ tiers:
     gives:
       - { t: "Works as it should", d: "Stable and dependable" }
       - { t: "Tidy", d: "No signs it was opened" }
-  - group: "🔧 Repairs & parts"
+  - group: "Repairs & parts"
     name: "Console is loud or the stick drifts — I'll fix it"
     price: "from 30€"
     when:
@@ -151,7 +151,7 @@ tiers:
     gives:
       - { t: "Quiet and cool", d: "No overheating" }
       - { t: "Precise control", d: "No drift" }
-  - group: "📱 Phones & tablets"
+  - group: "Phones & tablets"
     name: "New phone — I'll move your data"
     price: "from 20€"
     when:
@@ -165,7 +165,7 @@ tiers:
     gives:
       - { t: "Nothing gets lost", d: "All photos, contacts, apps" }
       - { t: "New phone set up", d: "Ready to go" }
-  - group: "📱 Phones & tablets"
+  - group: "Phones & tablets"
     name: "Battery drains fast — I'll replace it"
     price: "from 40€"
     when:
@@ -177,7 +177,7 @@ tiers:
     gives:
       - { t: "Lasts all day", d: "Like a new phone" }
       - { t: "No carrying a charger", d: "Back to normal" }
-  - group: "📱 Phones & tablets"
+  - group: "Phones & tablets"
     name: "Slow phone — I'll speed it up"
     price: "from 15€"
     when:
@@ -190,7 +190,7 @@ tiers:
     gives:
       - { t: "Runs faster", d: "Apps open normally" }
       - { t: "More space", d: "For photos and files" }
-  - group: "📱 Phones & tablets"
+  - group: "Phones & tablets"
     name: "Afraid to crack it — I'll fit a screen protector"
     price: "from 10€"
     when:
@@ -201,7 +201,7 @@ tiers:
     gives:
       - { t: "Screen protected", d: "The glass takes the hit, not the display" }
       - { t: "Tidy", d: "No bubbles" }
-  - group: "🐧 Systems & data"
+  - group: "Systems & data"
     name: "Old laptop crawling — I'll revive it with Linux"
     price: "from 30€"
     when:
@@ -216,7 +216,7 @@ tiers:
     gives:
       - { t: "The old PC flies again", d: "A light system" }
       - { t: "Two systems to choose from", d: "If you want" }
-  - group: "🐧 Systems & data"
+  - group: "Systems & data"
     name: "Lost photos and files — I'll try to get them back"
     price: "from 30€"
     when:
@@ -230,7 +230,7 @@ tiers:
     gives:
       - { t: "A chance to get it back", d: "Photos, documents, files" }
       - { t: "Honest", d: "No charge if it doesn't work" }
-  - group: "🐧 Systems & data"
+  - group: "Systems & data"
     name: "Your own media centre and storage — I'll set it up"
     price: "from 40€"
     when:
@@ -244,7 +244,7 @@ tiers:
     gives:
       - { t: "Your own films and music", d: "From any device at home" }
       - { t: "All in one place", d: "Files and backups" }
-  - group: "🐧 Systems & data"
+  - group: "Systems & data"
     name: "Privacy and parental controls — I'll set them up"
     price: "from 20€"
     when:
@@ -258,7 +258,7 @@ tiers:
     gives:
       - { t: "Less tracking", d: "And intrusive ads" }
       - { t: "Peace of mind", d: "A safer internet for kids" }
-  - group: "🏠 Home & devices"
+  - group: "Home & devices"
     name: "Smart home — I'll set it up your way"
     price: "from 25€"
     when:
@@ -272,7 +272,7 @@ tiers:
     gives:
       - { t: "It all listens to your voice", d: "Lights, music, plugs" }
       - { t: "Handy scenes", d: "Built around your day" }
-  - group: "🏠 Home & devices"
+  - group: "Home & devices"
     name: "Printer won't print — I'll connect and set it up"
     price: "from 15€"
     when:
@@ -286,7 +286,7 @@ tiers:
     gives:
       - { t: "Prints from any device", d: "PC and phone" }
       - { t: "No errors", d: "Stable" }
-  - group: "🏠 Home & devices"
+  - group: "Home & devices"
     name: "Smart TV or streaming box — I'll set it up"
     price: "from 20€"
     when:
@@ -300,7 +300,7 @@ tiers:
     gives:
       - { t: "Ready to watch", d: "Apps and channels" }
       - { t: "Clear", d: "I'll explain the controls" }
-  - group: "🏠 Home & devices"
+  - group: "Home & devices"
     name: "Security cameras — I'll install and set them up"
     price: "from 30€"
     when:
@@ -314,7 +314,7 @@ tiers:
     gives:
       - { t: "Visible from your phone", d: "From anywhere" }
       - { t: "Peace of mind", d: "Your home is watched over" }
-  - group: "🔑 Accounts & email"
+  - group: "Accounts & email"
     name: "Forgot your password — I'll recover access"
     price: "from 20€"
     when:
@@ -326,7 +326,7 @@ tiers:
     gives:
       - { t: "Recovered if possible", d: "I'll do everything I can" }
       - { t: "Honest", d: "No charge if it doesn't work" }
-  - group: "🔑 Accounts & email"
+  - group: "Accounts & email"
     name: "Email not working — I'll set it up"
     price: "from 15€"
     when:

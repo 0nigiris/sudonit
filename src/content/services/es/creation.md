@@ -8,7 +8,7 @@ status: available
 pricing: tiers
 gallery: ["gen1", "gen2", "gen3", "gen4", "gen5", "gen6"]
 tiers:
-  - group: "🖼 Imágenes y fotos"
+  - group: "Imágenes y fotos"
     name: "Fotos con IA, avatares, retratos"
     price: "desde 15€"
     when:
@@ -22,7 +22,7 @@ tiers:
     gives:
       - { t: "Lista para publicar", d: "En los formatos correctos" }
       - { t: "Tu propio estilo", d: "Reconocible y coherente" }
-  - group: "🖼 Imágenes y fotos"
+  - group: "Imágenes y fotos"
     name: "Banner, ficha de producto, portada"
     price: "desde 20€"
     when:
@@ -34,7 +34,7 @@ tiers:
     gives:
       - { t: "Lista para publicar", d: "Se usa al momento" }
       - { t: "Buena imagen", d: "Llama la atención" }
-  - group: "🎬 Vídeo y montaje"
+  - group: "Vídeo y montaje"
     name: "Montaje de vídeo para redes"
     price: "desde 20€"
     when:
@@ -48,7 +48,7 @@ tiers:
     gives:
       - { t: "Listo para publicar", d: "Para la plataforma correcta" }
       - { t: "Con vida", d: "Dinámico y limpio" }
-  - group: "🎬 Vídeo y montaje"
+  - group: "Vídeo y montaje"
     name: "Clip en tendencia"
     price: "desde 25€"
     when:
@@ -61,7 +61,7 @@ tiers:
     gives:
       - { t: "En tendencia", d: "Más alcance" }
       - { t: "Engancha", d: "Mantiene la atención" }
-  - group: "🎬 Vídeo y montaje"
+  - group: "Vídeo y montaje"
     name: "Vídeo y animación con IA"
     price: "desde 30€"
     when:
@@ -74,7 +74,7 @@ tiers:
     gives:
       - { t: "Impactante", d: "Lo difícil de grabar" }
       - { t: "Clip terminado", d: "Listo para publicar" }
-  - group: "🌐 Webs y publicidad"
+  - group: "Webs y publicidad"
     name: "Web sencilla o landing"
     price: "desde 60€"
     when:
@@ -88,7 +88,7 @@ tiers:
     gives:
       - { t: "Lista para mostrar", d: "Compartes el enlace" }
       - { t: "Cuidada", d: "Se ve genial en el móvil" }
-  - group: "🌐 Webs y publicidad"
+  - group: "Webs y publicidad"
     name: "Creatividad publicitaria"
     price: "desde 20€"
     when:
@@ -101,7 +101,7 @@ tiers:
     gives:
       - { t: "Lista para lanzar", d: "Para tu anuncio" }
       - { t: "Llama la atención", d: "Hecha para el clic" }
-  - group: "🌐 Webs y publicidad"
+  - group: "Webs y publicidad"
     name: "Presentación"
     price: "desde 30€"
     when:
@@ -114,7 +114,7 @@ tiers:
     gives:
       - { t: "Lista para presentar", d: "Se usa al momento" }
       - { t: "Limpia", d: "Buena impresión" }
-  - group: "🤖 Imagen de marca e IA"
+  - group: "Imagen de marca e IA"
     name: "Imagen de canal o redes"
     price: "desde 20€"
     when:
@@ -128,7 +128,7 @@ tiers:
     gives:
       - { t: "Un solo estilo", d: "El canal se ve completo" }
       - { t: "Listo para subir", d: "Tamaños correctos" }
-  - group: "🤖 Imagen de marca e IA"
+  - group: "Imagen de marca e IA"
     name: "Aprende a usar la IA"
     price: "desde 20€"
     when:

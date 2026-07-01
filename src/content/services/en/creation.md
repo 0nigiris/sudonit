@@ -8,7 +8,7 @@ status: available
 pricing: tiers
 gallery: ["gen1", "gen2", "gen3", "gen4", "gen5", "gen6"]
 tiers:
-  - group: "🖼 Images & photos"
+  - group: "Images & photos"
     name: "AI photos, avatars, portraits"
     price: "from 15€"
     when:
@@ -22,7 +22,7 @@ tiers:
     gives:
       - { t: "Ready to post", d: "In the right formats" }
       - { t: "Your own style", d: "Recognisable and consistent" }
-  - group: "🖼 Images & photos"
+  - group: "Images & photos"
     name: "Banner, product card, cover"
     price: "from 20€"
     when:
@@ -34,7 +34,7 @@ tiers:
     gives:
       - { t: "Ready to publish", d: "Use it right away" }
       - { t: "Looks good", d: "Draws attention" }
-  - group: "🎬 Video & editing"
+  - group: "Video & editing"
     name: "Video editing for social"
     price: "from 20€"
     when:
@@ -48,7 +48,7 @@ tiers:
     gives:
       - { t: "Ready to publish", d: "For the right platform" }
       - { t: "Feels alive", d: "Dynamic and clean" }
-  - group: "🎬 Video & editing"
+  - group: "Video & editing"
     name: "On-trend clip"
     price: "from 25€"
     when:
@@ -61,7 +61,7 @@ tiers:
     gives:
       - { t: "On trend", d: "More reach" }
       - { t: "Hooks people", d: "Holds attention" }
-  - group: "🎬 Video & editing"
+  - group: "Video & editing"
     name: "AI video & animation"
     price: "from 30€"
     when:
@@ -74,7 +74,7 @@ tiers:
     gives:
       - { t: "Striking", d: "Things hard to shoot" }
       - { t: "Finished clip", d: "Ready to post" }
-  - group: "🌐 Websites & ads"
+  - group: "Websites & ads"
     name: "Simple site or landing page"
     price: "from 60€"
     when:
@@ -88,7 +88,7 @@ tiers:
     gives:
       - { t: "Ready to show", d: "Share the link" }
       - { t: "Tidy", d: "Looks great on a phone" }
-  - group: "🌐 Websites & ads"
+  - group: "Websites & ads"
     name: "Ad creative"
     price: "from 20€"
     when:
@@ -101,7 +101,7 @@ tiers:
     gives:
       - { t: "Ready to launch", d: "For your ad" }
       - { t: "Catches the eye", d: "Built to get the click" }
-  - group: "🌐 Websites & ads"
+  - group: "Websites & ads"
     name: "Presentation"
     price: "from 30€"
     when:
@@ -114,7 +114,7 @@ tiers:
     gives:
       - { t: "Ready to present", d: "Use it right away" }
       - { t: "Clean", d: "A good impression" }
-  - group: "🤖 Branding & AI"
+  - group: "Branding & AI"
     name: "Channel or social branding"
     price: "from 20€"
     when:
@@ -128,7 +128,7 @@ tiers:
     gives:
       - { t: "One style", d: "The channel looks whole" }
       - { t: "Ready to upload", d: "Correct sizes" }
-  - group: "🤖 Branding & AI"
+  - group: "Branding & AI"
     name: "Learn to use AI tools"
     price: "from 20€"
     when:

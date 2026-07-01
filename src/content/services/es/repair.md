@@ -7,7 +7,7 @@ order: 1
 status: available
 pricing: tiers
 tiers:
-  - group: "💻 Ordenadores y portátiles"
+  - group: "Ordenadores y portátiles"
     name: "El ordenador va lento — lo acelero"
     price: "desde 25€"
     when:
@@ -22,7 +22,7 @@ tiers:
       - { t: "Arranque rápido", d: "Enciende en segundos" }
       - { t: "Funciona bien", d: "Sin cuelgues" }
       - { t: "Limpio", d: "Sin virus ni anuncios" }
-  - group: "💻 Ordenadores y portátiles"
+  - group: "Ordenadores y portátiles"
     name: "Limpieza y configuración completa"
     price: "desde 35€"
     when:
@@ -38,7 +38,7 @@ tiers:
       - { t: "Va rápido", d: "Notablemente más rápido" }
       - { t: "Orden", d: "Todo en su sitio" }
       - { t: "Claro", d: "Te cuento qué hice" }
-  - group: "💻 Ordenadores y portátiles"
+  - group: "Ordenadores y portátiles"
     name: "Se ha colgado del todo — reinstalo"
     price: "desde 45€"
     when:
@@ -54,7 +54,7 @@ tiers:
       - { t: "Como nuevo", d: "Va rápido" }
       - { t: "Archivos intactos", d: "No se pierde nada" }
       - { t: "Limpio", d: "Solo lo necesario" }
-  - group: "🔧 Reparación y piezas"
+  - group: "Reparación y piezas"
     name: "Arranca lento — le pongo un disco rápido"
     price: "desde 30€"
     when:
@@ -67,7 +67,7 @@ tiers:
     gives:
       - { t: "Arranca en 15 segundos", d: "En vez de 10 minutos" }
       - { t: "Los archivos se abren al instante", d: "Sin esperas" }
-  - group: "🔧 Reparación y piezas"
+  - group: "Reparación y piezas"
     name: "Pantalla de portátil rota — la cambio"
     price: "desde 45€"
     when:
@@ -80,7 +80,7 @@ tiers:
     gives:
       - { t: "Pantalla como nueva", d: "Sin grietas" }
       - { t: "Cuidado", d: "Todo en su sitio" }
-  - group: "🔧 Reparación y piezas"
+  - group: "Reparación y piezas"
     name: "Hace ruido y se calienta — lo limpio"
     price: "desde 30€"
     when:
@@ -95,7 +95,7 @@ tiers:
       - { t: "Silencioso", d: "Sin ruido constante" }
       - { t: "Fresco", d: "No se sobrecalienta" }
       - { t: "Dura más", d: "El calor mata los componentes" }
-  - group: "🔧 Reparación y piezas"
+  - group: "Reparación y piezas"
     name: "No carga — arreglo el conector"
     price: "desde 40€"
     when:
@@ -108,7 +108,7 @@ tiers:
     gives:
       - { t: "Carga de forma estable", d: "En cualquier posición" }
       - { t: "Fiable", d: "Sin sujetarlo en ángulo" }
-  - group: "🔧 Reparación y piezas"
+  - group: "Reparación y piezas"
     name: "Necesitas un PC nuevo — lo monto"
     price: "desde 50€"
     when:
@@ -123,7 +123,7 @@ tiers:
     gives:
       - { t: "Hecho para ti", d: "Sin gastos de más" }
       - { t: "Listo para usar", d: "Lo enciendes y funciona" }
-  - group: "🔧 Reparación y piezas"
+  - group: "Reparación y piezas"
     name: "Conector o botón suelto — lo resueldo"
     price: "desde 25€"
     when:
@@ -137,7 +137,7 @@ tiers:
     gives:
       - { t: "Funciona como debe", d: "Estable y fiable" }
       - { t: "Cuidado", d: "Sin marcas de haberlo abierto" }
-  - group: "🔧 Reparación y piezas"
+  - group: "Reparación y piezas"
     name: "La consola hace ruido o el stick se va — la arreglo"
     price: "desde 30€"
     when:
@@ -151,7 +151,7 @@ tiers:
     gives:
       - { t: "Silenciosa y fresca", d: "Sin sobrecalentamiento" }
       - { t: "Control preciso", d: "Sin drift" }
-  - group: "📱 Móviles y tablets"
+  - group: "Móviles y tablets"
     name: "Móvil nuevo — paso tus datos"
     price: "desde 20€"
     when:
@@ -165,7 +165,7 @@ tiers:
     gives:
       - { t: "No se pierde nada", d: "Todas las fotos, contactos, apps" }
       - { t: "Móvil nuevo configurado", d: "Listo para usar" }
-  - group: "📱 Móviles y tablets"
+  - group: "Móviles y tablets"
     name: "La batería se agota rápido — la cambio"
     price: "desde 40€"
     when:
@@ -177,7 +177,7 @@ tiers:
     gives:
       - { t: "Dura todo el día", d: "Como un móvil nuevo" }
       - { t: "Sin llevar el cargador", d: "Vuelve a lo normal" }
-  - group: "📱 Móviles y tablets"
+  - group: "Móviles y tablets"
     name: "El móvil va lento — lo acelero"
     price: "desde 15€"
     when:
@@ -190,7 +190,7 @@ tiers:
     gives:
       - { t: "Va más rápido", d: "Las apps abren normal" }
       - { t: "Más espacio", d: "Para fotos y archivos" }
-  - group: "📱 Móviles y tablets"
+  - group: "Móviles y tablets"
     name: "Miedo a romperlo — pongo cristal templado"
     price: "desde 10€"
     when:
@@ -201,7 +201,7 @@ tiers:
     gives:
       - { t: "Pantalla protegida", d: "El golpe se lo lleva el cristal, no la pantalla" }
       - { t: "Cuidado", d: "Sin burbujas" }
-  - group: "🐧 Sistemas y datos"
+  - group: "Sistemas y datos"
     name: "Portátil viejo que va a rastras — lo revivo con Linux"
     price: "desde 30€"
     when:
@@ -216,7 +216,7 @@ tiers:
     gives:
       - { t: "El PC viejo vuela otra vez", d: "Un sistema ligero" }
       - { t: "Dos sistemas a elegir", d: "Si quieres" }
-  - group: "🐧 Sistemas y datos"
+  - group: "Sistemas y datos"
     name: "Fotos y archivos perdidos — intento recuperarlos"
     price: "desde 30€"
     when:
@@ -230,7 +230,7 @@ tiers:
     gives:
       - { t: "Una oportunidad de recuperarlo", d: "Fotos, documentos, archivos" }
       - { t: "Honesto", d: "No cobro si no funciona" }
-  - group: "🐧 Sistemas y datos"
+  - group: "Sistemas y datos"
     name: "Tu propio centro multimedia y almacenamiento — lo monto"
     price: "desde 40€"
     when:
@@ -244,7 +244,7 @@ tiers:
     gives:
       - { t: "Tus pelis y tu música", d: "Desde cualquier dispositivo en casa" }
       - { t: "Todo en un sitio", d: "Archivos y copias de seguridad" }
-  - group: "🐧 Sistemas y datos"
+  - group: "Sistemas y datos"
     name: "Privacidad y control parental — los configuro"
     price: "desde 20€"
     when:
@@ -258,7 +258,7 @@ tiers:
     gives:
       - { t: "Menos rastreo", d: "Y anuncios molestos" }
       - { t: "Tranquilidad", d: "Internet más seguro para los niños" }
-  - group: "🏠 Casa y dispositivos"
+  - group: "Casa y dispositivos"
     name: "Hogar inteligente — lo configuro a tu medida"
     price: "desde 25€"
     when:
@@ -272,7 +272,7 @@ tiers:
     gives:
       - { t: "Todo obedece a tu voz", d: "Luz, música, enchufes" }
       - { t: "Escenas cómodas", d: "Pensadas para tu día" }
-  - group: "🏠 Casa y dispositivos"
+  - group: "Casa y dispositivos"
     name: "La impresora no imprime — la conecto y configuro"
     price: "desde 15€"
     when:
@@ -286,7 +286,7 @@ tiers:
     gives:
       - { t: "Imprime desde cualquier dispositivo", d: "PC y móvil" }
       - { t: "Sin errores", d: "Estable" }
-  - group: "🏠 Casa y dispositivos"
+  - group: "Casa y dispositivos"
     name: "Smart TV o reproductor — lo configuro"
     price: "desde 20€"
     when:
@@ -300,7 +300,7 @@ tiers:
     gives:
       - { t: "Listo para ver", d: "Apps y canales" }
       - { t: "Claro", d: "Te explico los mandos" }
-  - group: "🏠 Casa y dispositivos"
+  - group: "Casa y dispositivos"
     name: "Cámaras de vigilancia — las instalo y configuro"
     price: "desde 30€"
     when:
@@ -314,7 +314,7 @@ tiers:
     gives:
       - { t: "Se ve desde el móvil", d: "Desde donde sea" }
       - { t: "Tranquilidad", d: "La casa, vigilada" }
-  - group: "🔑 Cuentas y correo"
+  - group: "Cuentas y correo"
     name: "Olvidaste la contraseña — recupero el acceso"
     price: "desde 20€"
     when:
@@ -326,7 +326,7 @@ tiers:
     gives:
       - { t: "Si es posible, lo recupero", d: "Hago todo lo que pueda" }
       - { t: "Honesto", d: "No cobro si no funciona" }
-  - group: "🔑 Cuentas y correo"
+  - group: "Cuentas y correo"
     name: "El correo no funciona — lo configuro"
     price: "desde 15€"
     when:
