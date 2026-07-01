@@ -31,3 +31,12 @@ Old_web.html
 # Local-only: internal product briefs for the glasses project (personal, never public)
 Glasses info/
 PROJECT_BRIEF_SUDONIT.md
+.gstack/
+
+# graphify knowledge graph (generated)
+graphify-out/
+
+# Local-only: internal design briefs & references (working material, never public)
+CLAUDE-FABLE-5.md
+DESIGN-IS-2026-06-24/
+Ref/

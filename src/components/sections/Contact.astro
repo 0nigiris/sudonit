@@ -90,21 +90,12 @@ const { locale } = Astro.props;
     font-size: var(--fs-small);
     color: var(--c-muted);
   }
+  /* Static live-dot — animated pulse removed (banned "janky middle" motion). */
   .contact__pulse {
     width: 8px;
     height: 8px;
     border-radius: 999px;
     background: var(--c-ok);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-ok) 70%, transparent);
-    animation: contact-pulse 2.4s var(--ease-settle) infinite;
-  }
-  @keyframes contact-pulse {
-    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-ok) 55%, transparent); }
-    70% { box-shadow: 0 0 0 7px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .contact__pulse { animation: none; }
   }
   .contact__social {
     display: inline-flex;

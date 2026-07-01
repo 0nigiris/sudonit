@@ -17,11 +17,14 @@ interface Props {
   photoId?: string;
   statusLabel?: string; // localized "in progress" text; omit when available
   cta?: string;
+  // Temperature: services stay warm/dense (default); projects get the premium,
+  // more spacious register where ambition lives.
+  tone?: 'warm' | 'premium';
 }
-const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
+const { verb, name, oneLine, href, photoId, statusLabel, cta, tone = 'warm' } = Astro.props;
 ---
 
-<a class="vcard" href={href} style={`--tint:${tint(verb)}`}>
+<a class={`vcard vcard--${tone}`} href={href} style={`--tint:${tint(verb)}`}>
   {/* The verb ghosted large — identity, not noise (aria-hidden, decorative). */}
   <span class="vcard__ghost" aria-hidden="true">{VERB_META[verb].label}</span>
   {photoId && <PhotoFrame id={photoId} ratio="3 / 2" tint={tint(verb)} alt={name} placeholder={false} />}
@@ -121,6 +124,26 @@ const { verb, name, oneLine, href, photoId, statusLabel, cta } = Astro.props;
   .vcard__line {
     color: var(--c-muted);
     max-width: 36ch;
+  }
+
+  /* Premium tone (projects): more air, a deeper surface, a larger ghost word.
+     Same component, a cooler-quieter, more spacious register than services. */
+  .vcard--premium {
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-5) var(--space-6);
+    background: linear-gradient(180deg,
+      color-mix(in srgb, var(--c-text) 4%, var(--c-surface-2)), var(--c-surface));
+  }
+  .vcard--premium .vcard__ghost {
+    font-size: clamp(5.5rem, 15vw, 9rem);
+  }
+  .vcard--premium .vcard__name {
+    font-size: var(--fs-h1);
+    letter-spacing: -0.02em;
+  }
+  .vcard--premium .vcard__line {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-snug);
   }
   .vcard__cta {
     margin-top: var(--space-2);

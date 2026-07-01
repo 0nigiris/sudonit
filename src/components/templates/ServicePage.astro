@@ -13,6 +13,7 @@ import { pageT } from '../../i18n/pages';
 import { t } from '../../i18n/ui';
 import { whatsappLink } from '../../data/contact';
 import PageHero from '../PageHero.astro';
+import PhotoFrame from '../PhotoFrame.astro';
 import ContactStrip from '../ContactStrip.astro';
 
 interface Props {
@@ -20,7 +21,7 @@ interface Props {
   locale: Locale;
 }
 const { entry, locale } = Astro.props;
-const { name, oneLine, verb, key, pricing, tiers, priceNote, problem, approach, whatYouGet, howItWorks } =
+const { name, oneLine, verb, key, pricing, tiers, priceNote, problem, approach, whatYouGet, howItWorks, gallery } =
   entry.data;
 
 // A tier is expandable if it carries any detail to reveal on click.
@@ -37,6 +38,21 @@ const hasExpandable = pricing === 'tiers' && !!tiers?.some(isExpandable);
   oneLine={oneLine}
   photoId={PHOTO_BY_KEY[key] ?? 'B1'}
 />
+
+{/* Example-work gallery (Creation & AI). PhotoFrame shows tasteful placeholders
+    until the real files land in src/assets/photos/<id>.* — zero layout change. */}
+{gallery && gallery.length > 0 && (
+  <section class="section section--ruled">
+    <div class="container">
+      <h2 class="svc-gal__h" data-reveal>{pageT(locale, 'svc.examples')}</h2>
+      <div class="svc-gal" data-reveal-group>
+        {gallery.map((id) => (
+          <PhotoFrame id={id} ratio="4 / 5" tint={tint(verb)} alt={`${name} — ${pageT(locale, 'svc.examples')}`} />
+        ))}
+      </div>
+    </div>
+  </section>
+)}
 
 <section class="section">
   <div class="container">
@@ -140,6 +156,15 @@ const hasExpandable = pricing === 'tiers' && !!tiers?.some(isExpandable);
 <ContactStrip locale={locale} />
 
 <style>
+  .svc-gal__h {
+    font-size: var(--fs-h2);
+    margin-bottom: var(--space-5);
+  }
+  .svc-gal {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
   .svc__second {
     margin-top: var(--space-6);
   }

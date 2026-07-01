@@ -17,6 +17,11 @@ const { locale } = Astro.props;
     <div class="about__intro" data-reveal>
       <p class="eyebrow">{homeT(locale, 'about.eyebrow')}</p>
       <h2 class="about__title">{homeT(locale, 'about.title')}</h2>
+      <p class="about__thesis">
+        <span>{homeT(locale, 'about.thesis1')}</span>
+        <span>{homeT(locale, 'about.thesis2')}</span>
+        <span>{homeT(locale, 'about.thesis3')}</span>
+      </p>
       <p class="about__body">{homeT(locale, 'about.body')}</p>
     </div>
 
@@ -44,6 +49,28 @@ const { locale } = Astro.props;
     font-size: var(--fs-h2);
     margin-block: var(--space-3) var(--space-4);
     max-width: 16ch;
+  }
+
+  /* The thesis — Alexander's register, in his own words. Display type, lit,
+     one line at a time. The meaning anchor of the whole page; quiet, not loud. */
+  .about__thesis {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-lead);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .about__thesis span {
+    background: linear-gradient(180deg, var(--c-text),
+      color-mix(in srgb, var(--c-text) 78%, var(--c-light)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
   .about__body {
     max-width: var(--measure);

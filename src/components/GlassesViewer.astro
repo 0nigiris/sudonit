@@ -1,0 +1,487 @@
+---
+/**
+ * GlassesViewer — the 3D set-piece for the Smart Glasses page (the ONE 3D hero
+ * the design allows). Apple-product-page register: a FULL-BLEED, pinned stage
+ * that the page scrolls *through*. As you scroll, the module slowly turns,
+ * explodes into its real parts (OV5640 camera, ESP32-S3 board, MAX98357A
+ * speaker, battery, 3D-printed clip) and each part names itself — the
+ * engineering tells the story. Scroll is the only driver (no drag, no buttons),
+ * exactly like apple.com/airpods-pro.
+ *
+ * Progressive enhancement contract (non-negotiable per CLAUDE.md):
+ *   - No JS / WebGL fails  -> the real render (PhotoFrame) + named-parts legend,
+ *                             in normal page flow. The tall pinned track NEVER
+ *                             exists without JS (no giant empty scroll gap).
+ *   - prefers-reduced-motion -> same static version; three.js is never loaded.
+ *   - JS + motion ok       -> on approach, three.js loads LAZILY, the section
+ *                             swaps to the tall pinned track and the scene scrubs
+ *                             with scroll.
+ * The first paint never waits on this: three.js is a dynamic import.
+ *
+ * NOTE: the module's part *geometry* is still placeholder primitives — awaiting
+ * Alexander's real hardware spec. The scroll/pin choreography is independent of
+ * it, so the correct meshes drop straight into `buildModule()` later.
+ */
+import { type Locale } from '../data/site';
+import { pageT } from '../i18n/pages';
+import PhotoFrame from './PhotoFrame.astro';
+
+interface Props {
+  locale: Locale;
+  tint: string;
+  photoId?: string;
+}
+const { locale, tint, photoId = 'E1' } = Astro.props;
+
+// The real parts, in explode order. Colors are legend swatches AND the 3D
+// material/aura tints (read by the script via data-c). Names come from i18n so
+// all three locales stay in sync with the hardware described on the page.
+const parts = [
+  { key: 'glx.partCamera', c: '#84a9d6' },
+  { key: 'glx.partBoard', c: '#8fcfbf' },
+  { key: 'glx.partSpeaker', c: '#fab387' },
+  { key: 'glx.partBattery', c: '#bba0e0' },
+  { key: 'glx.partClip', c: '#c9bfae' },
+] as const;
+---
+
+<section class="section glx__band g3d" style={`--tint:${tint}`}>
+  <div class="container">
+    <h2 class="glx__h" data-reveal>{pageT(locale, 'glx.explore')}</h2>
+    <p class="g3d__lead" data-reveal>{pageT(locale, 'glx.exploreLead')}</p>
+  </div>
+
+  {/* STATIC baseline — always correct, shown by default and to no-JS /
+      reduced-motion users. The script hides this once the live stage mounts. */}
+  <div class="container g3d__static" data-reveal>
+    <div class="g3d__static-frame">
+      <PhotoFrame id={photoId} ratio="3 / 2" tint={tint} alt={pageT(locale, 'glx.viewerAlt')} />
+    </div>
+    <ul class="g3d__legend" role="list">
+      {parts.map((p) => (
+        <li class="g3d__leg">
+          <span class="g3d__dot" style={`--d:${p.c}`}></span>{pageT(locale, p.key)}
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  {/* LIVE pinned track — revealed only when JS mounts the 3D (is-live). The
+      tall height gives the scroll its scrub length; the sticky pin fills the
+      viewport full-bleed. */}
+  <div class="g3d__track" aria-hidden="true">
+    <div class="g3d__pin">
+      <canvas class="g3d__canvas"></canvas>
+      <p class="g3d__cap"></p>
+      <p class="g3d__hint">{pageT(locale, 'glx.dragHint')}</p>
+    </div>
+  </div>
+
+  {/* Caption source — the part names/colours the scene reads as it explodes.
+      Rendered server-side so all three locales stay in sync; never shown. */}
+  <ul class="g3d__beats" hidden>
+    {parts.map((p) => (
+      <li data-c={p.c}>{pageT(locale, p.key)}</li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .g3d__lead {
+    color: var(--c-muted);
+    max-width: var(--measure);
+    margin-bottom: var(--space-5);
+  }
+
+  /* --- Static baseline (default / no-JS / reduced-motion) --- */
+  .g3d__static {
+    display: grid;
+    grid-template-columns: 1.5fr 0.7fr;
+    gap: var(--space-5);
+    align-items: center;
+  }
+  .g3d__static-frame {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .g3d__legend { display: grid; gap: var(--space-3); }
+  .g3d__leg {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+  .g3d__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--d);
+    flex: none;
+    box-shadow: 0 0 12px -2px var(--d);
+  }
+  @media (max-width: 760px) {
+    .g3d__static { grid-template-columns: 1fr; gap: var(--space-4); }
+  }
+
+  /* --- Live pinned track: only when JS mounted the scene --- */
+  .g3d__track { display: none; }
+  .g3d.is-live .g3d__static { display: none; }
+  .g3d.is-live .g3d__track {
+    display: block;
+    position: relative;
+    height: 360vh;            /* scrub length: ~2.6 screens of scroll */
+    width: 100vw;             /* full-bleed, out of the container */
+    margin-left: calc(50% - 50vw);
+  }
+  /* ponytail: overflow-x:clip (not hidden) keeps the 100vw break-out from
+     adding a horizontal scrollbar WITHOUT turning this into a scroll container
+     (which would break the sticky pin). */
+  .g3d.is-live { overflow-x: clip; }
+
+  .g3d__pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 50% 14%, color-mix(in srgb, var(--tint) 14%, #0c0a08), #070605 72%);
+  }
+  /* Soft vignette for depth (never interactive). */
+  .g3d__pin::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(120% 100% at 50% 45%, transparent 52%, rgba(0, 0, 0, 0.6));
+  }
+  .g3d__canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity var(--dur-reveal) var(--ease-settle);
+  }
+  .g3d.is-live .g3d__canvas { opacity: 1; }
+
+  /* The cinematic caption — active part's name, lower-left, glowing faintly. */
+  .g3d__cap {
+    position: absolute;
+    left: clamp(var(--space-4), 6vw, 8rem);
+    bottom: clamp(var(--space-5), 14vh, 10rem);
+    z-index: 4;
+    margin: 0;
+    max-width: min(80%, 18ch);
+    font-family: var(--font-display);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    color: var(--c-text);
+    text-shadow: 0 0 32px color-mix(in srgb, var(--cap, var(--tint)) 60%, transparent);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--dur-reveal) var(--ease-settle),
+      transform var(--dur-reveal) var(--ease-settle);
+    pointer-events: none;
+  }
+  .g3d__cap.is-on { opacity: 1; transform: none; }
+
+  /* A quiet "scroll" cue, top of the pin; fades out after the first scroll. */
+  .g3d__hint {
+    position: absolute;
+    left: 50%;
+    top: clamp(var(--space-4), 8vh, 6rem);
+    transform: translateX(-50%);
+    z-index: 4;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--c-muted);
+    pointer-events: none;
+    transition: opacity var(--dur-reveal) var(--ease-settle);
+  }
+  .g3d.is-scrolled .g3d__hint { opacity: 0; }
+
+  @media (max-width: 760px) {
+    .g3d__cap { font-size: var(--fs-h2); }
+  }
+</style>
+
+<script>
+  // Lazy, self-contained scroll-driven 3D set-piece. three.js + postprocessing
+  // load only when the section nears the viewport and only when motion is
+  // allowed — first paint never waits.
+  const root = document.currentScript?.closest('.g3d') as HTMLElement | null
+    ?? document.querySelector('.g3d') as HTMLElement | null;
+  if (root) initGlasses(root);
+
+  function initGlasses(root: HTMLElement) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return; // reduced-motion keeps the static render — by design.
+
+    const track = root.querySelector('.g3d__track') as HTMLElement | null;
+    const pin = root.querySelector('.g3d__pin') as HTMLElement | null;
+    const canvas = root.querySelector('.g3d__canvas') as HTMLCanvasElement | null;
+    const cap = root.querySelector('.g3d__cap') as HTMLElement | null;
+    const beats = Array.from(root.querySelectorAll('.g3d__beats li')) as HTMLElement[];
+    if (!track || !pin || !canvas || !cap || !beats.length) return;
+
+    let started = false;
+    // Generous rootMargin: mount (and grow the page to the tall track) well
+    // before the user reaches it, so the height swap happens off-screen.
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && !started) {
+          started = true;
+          io.disconnect();
+          start().catch(() => {}); // any failure => static fallback stays.
+        }
+      }
+    }, { rootMargin: '800px 0px' });
+    io.observe(root);
+
+    async function start() {
+      const THREE = await import('three');
+      const { EffectComposer } = await import('three/addons/postprocessing/EffectComposer.js');
+      const { RenderPass } = await import('three/addons/postprocessing/RenderPass.js');
+      const { UnrealBloomPass } = await import('three/addons/postprocessing/UnrealBloomPass.js');
+      const { OutputPass } = await import('three/addons/postprocessing/OutputPass.js');
+
+      // Reveal the tall pinned track (hides the static baseline).
+      root!.classList.add('is-live');
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas!, antialias: true });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+      renderer.setClearColor(0x070605, 1);
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.Fog(0x070605, 7, 14);
+      const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+
+      // Warm key + cool fill, matching the page's lamp temperature, moodier here.
+      scene.add(new THREE.AmbientLight(0xfff0e0, 0.5));
+      scene.add(new THREE.HemisphereLight(0xfff0e0, 0x18100a, 0.5));
+      const key = new THREE.DirectionalLight(0xffd9b0, 2.1);
+      key.position.set(3, 5, 4);
+      scene.add(key);
+      const fill = new THREE.DirectionalLight(0x9fb6d8, 0.8);
+      fill.position.set(-4, -1, 2);
+      scene.add(fill);
+      const rim = new THREE.DirectionalLight(0xffb066, 1.5);
+      rim.position.set(-2, 2, -5);
+      scene.add(rim);
+
+      const mat = (color: number, opts: any = {}) =>
+        new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0.25, ...opts });
+
+      const root3 = new THREE.Group();
+      root3.scale.setScalar(1.2);
+      scene.add(root3);
+
+      // --- Glowing aura: concentric rings behind the product (bloom makes them
+      //     glow). Slow contra-rotation gives life without a busy idle loop. ---
+      const aura = new THREE.Group();
+      aura.position.set(0.4, 0.1, -0.5);
+      const ringTints = [0x8fcfbf, 0xffb066, 0x84a9d6];
+      const auraRings: { mesh: any; spin: number }[] = [];
+      ringTints.forEach((c, i) => {
+        // Tighter radii that hug the product, tilted ~35–48° toward the camera so
+        // they read as a rounded concentric halo — not the full-bleed edge-on
+        // diagonals that used to slash across the whole frame.
+        const geo = new THREE.TorusGeometry(0.95 + i * 0.4, 0.01, 8, 120);
+        const m = new THREE.MeshBasicMaterial({
+          color: c, transparent: true, opacity: 0.42 - i * 0.1,
+          blending: THREE.AdditiveBlending, depthWrite: false,
+        });
+        const mesh = new THREE.Mesh(geo, m);
+        mesh.rotation.x = 0.62 + i * 0.12;
+        mesh.rotation.y = -0.3 + i * 0.25;
+        aura.add(mesh);
+        auraRings.push({ mesh, spin: (i % 2 ? -1 : 1) * (0.04 + i * 0.015) });
+      });
+      root3.add(aura);
+
+      // --- Drifting particle field around the product (additive, blooms soft) ---
+      const COUNT = Math.round(Math.min(Math.max(innerWidth * 0.4, 240), 560));
+      const pos = new Float32Array(COUNT * 3);
+      for (let i = 0; i < COUNT; i++) {
+        const r = 2.2 + Math.random() * 2.8;
+        const th = Math.random() * Math.PI * 2;
+        const ph = Math.acos(2 * Math.random() - 1);
+        pos[i * 3] = 0.5 + r * Math.sin(ph) * Math.cos(th);
+        pos[i * 3 + 1] = 0.1 + (Math.random() - 0.5) * 3.4;
+        pos[i * 3 + 2] = -0.4 + r * Math.cos(ph) * 0.6;
+      }
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
+        color: 0xffcf9a, size: 0.022, transparent: true, opacity: 0.7,
+        blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true,
+      }));
+      root3.add(particles);
+
+      // --- Ordinary glasses (the frame the module clips onto) ---
+      const frameMat = mat(0x4a4038, { roughness: 0.4, metalness: 0.35 });
+      const glasses = new THREE.Group();
+      const ring = (x: number) => {
+        const r = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.055, 16, 48), frameMat);
+        r.position.set(x, 0, 0);
+        return r;
+      };
+      glasses.add(ring(-0.78), ring(0.78));
+      const bridge = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.07, 0.07), frameMat);
+      bridge.position.set(0, 0.2, 0);
+      glasses.add(bridge);
+      const temple = (x: number) => {
+        const t = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.07, 1.7), frameMat);
+        t.position.set(x, 0.18, -0.85);
+        return t;
+      };
+      glasses.add(temple(-1.36), temple(1.36));
+      root3.add(glasses);
+
+      // --- The module: real parts, each with assembled + exploded positions.
+      //     ponytail: primitive placeholder geometry — swap for the real meshes
+      //     when the hardware spec lands; positions/explode targets stay. ---
+      const module = new THREE.Group();
+      module.position.set(1.36, 0.18, -0.35); // on the right temple, behind the lens
+      root3.add(module);
+
+      type Part = { mesh: any; home: any; away: any };
+      const movable: Part[] = [];
+      const add = (mesh: any, home: [number, number, number], away: [number, number, number]) => {
+        mesh.position.set(...home);
+        movable.push({ mesh, home: new THREE.Vector3(...home), away: new THREE.Vector3(...away) });
+        module.add(mesh);
+      };
+
+      // Order MUST match the legend `parts` array: camera, board, speaker, battery, clip.
+      const camG = new THREE.Group();
+      const camBody = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.2, 0.12), mat(0x4a8fd0, { roughness: 0.4 }));
+      const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.06, 24), mat(0x0a0a0c, { roughness: 0.1, metalness: 0.7 }));
+      lens.rotation.x = Math.PI / 2;
+      lens.position.z = 0.08;
+      camG.add(camBody, lens);
+      add(camG, [-0.04, 0.02, 0.34], [0.04, 0.8, 0.95]);
+
+      const board = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.28, 0.5), mat(0x3aa36b, { roughness: 0.55 }));
+      add(board, [-0.02, 0, 0], [0, 1.3, 0]);
+
+      const spk = new THREE.Group();
+      const spkBody = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.12, 0.18), mat(0xe09a5e, { roughness: 0.5 }));
+      const grille = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.02, 20), mat(0x141416, { roughness: 0.3, metalness: 0.4 }));
+      grille.position.y = -0.06;
+      spk.add(spkBody, grille);
+      add(spk, [0, -0.12, -0.18], [0.02, 0.22, -1.0]);
+
+      const batt = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.26, 0.34), mat(0xb59cdc, { roughness: 0.35, metalness: 0.45 }));
+      add(batt, [0, 0, -0.42], [0, -0.75, -1.05]);
+
+      const clip = new THREE.Group();
+      const clipBody = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.34, 0.6), mat(0xd8cfbe, { roughness: 0.85, metalness: 0.05 }));
+      const clipJaw = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.1, 0.62), mat(0xd8cfbe, { roughness: 0.85, metalness: 0.05 }));
+      clipJaw.position.set(0.13, 0.14, 0);
+      clip.add(clipBody, clipJaw);
+      add(clip, [0, 0, 0], [0, -0.75, 0]);
+
+      // --- Post-processing: bloom for the cinematic glow ---
+      const composer = new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene, camera));
+      const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.45, 0.55, 0.5);
+      composer.addPass(bloom);
+      composer.addPass(new OutputPass());
+
+      // --- Helpers ---
+      const clamp01 = (x: number) => Math.min(Math.max(x, 0), 1);
+      const easeInOut = (x: number) => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
+      const smoothstep = (a: number, b: number, x: number) => {
+        const t = clamp01((x - a) / (b - a));
+        return t * t * (3 - 2 * t);
+      };
+      const lerp = (a: number, b: number, x: number) => a + (b - a) * x;
+      const target = new THREE.Vector3(0.4, 0.08, -0.2);
+
+      // Scroll progress through the pinned track (0 at entry .. 1 at exit).
+      const progress = () => {
+        const r = track!.getBoundingClientRect();
+        const span = r.height - innerHeight;
+        return span > 0 ? clamp01(-r.top / span) : 0;
+      };
+
+      // --- Sizing: the pin is full-viewport ---
+      const resize = () => {
+        const w = pin!.clientWidth;
+        const h = pin!.clientHeight;
+        renderer.setSize(w, h, false);
+        composer.setSize(w, h);
+        bloom.setSize(w, h);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      };
+      resize();
+      new ResizeObserver(resize).observe(pin!);
+
+      // Hide the scroll cue once the user has actually scrolled.
+      addEventListener('scroll', () => root!.classList.add('is-scrolled'), { once: true, passive: true });
+
+      // Render only while the pin is on-screen + tab focused (battery-friendly).
+      let visible = true;
+      const vio = new IntersectionObserver((e) => { visible = e[0].isIntersecting; }, { threshold: 0 });
+      vio.observe(pin!);
+
+      let activeIdx = -2;
+      const setActive = (idx: number) => {
+        if (idx === activeIdx) return;
+        activeIdx = idx;
+        if (idx >= 0 && idx < beats.length) {
+          cap!.textContent = beats[idx].textContent?.trim() ?? '';
+          cap!.style.setProperty('--cap', beats[idx].dataset.c ?? 'var(--tint)');
+          cap!.classList.add('is-on');
+        } else {
+          cap!.classList.remove('is-on');
+        }
+      };
+
+      let clock = 0;
+      const tick = () => {
+        requestAnimationFrame(tick);
+        if (!visible || document.hidden) return;
+        clock += 0.016;
+
+        const p = progress();
+
+        // Whole model turns as you scroll (~210° across the track).
+        root3.rotation.y = -0.5 + easeInOut(clamp01(p / 0.92)) * (Math.PI * 1.25);
+        root3.rotation.x = lerp(0.08, -0.04, smoothstep(0.2, 0.8, p));
+
+        // Camera eases in toward the product as it explodes.
+        const cz = lerp(5.6, 4.2, smoothstep(0.0, 0.65, p));
+        const cy = lerp(1.5, 0.9, smoothstep(0.0, 0.65, p));
+        camera.position.set(1.7, cy, cz);
+        camera.lookAt(target);
+
+        // Explode 0..1 across the middle band; parts name themselves in sequence.
+        const e = smoothstep(0.3, 0.82, p);
+        const tmp = new THREE.Vector3();
+        for (const part of movable) {
+          tmp.lerpVectors(part.home, part.away, easeInOut(e));
+          part.mesh.position.copy(tmp);
+        }
+        setActive(e < 0.04 ? -1 : Math.min(movable.length - 1, Math.floor(e * movable.length)));
+
+        // Aura + particles: subtle life, never busy.
+        for (const a of auraRings) a.mesh.rotation.z += a.spin * 0.01;
+        particles.rotation.y += 0.0008;
+
+        composer.render();
+      };
+      tick();
+    }
+  }
+</script>

@@ -8,10 +8,14 @@ type PageKey =
   | 'svc.problem' | 'svc.approach' | 'svc.whatYouGet' | 'svc.howItWorks' | 'svc.pricing'
   | 'svc.requestQuote' | 'svc.quoteNote'
   | 'svc.detailHint' | 'svc.detailWhen' | 'svc.detailWhat' | 'svc.detailGives'
+  | 'svc.examples'
   | 'prj.idea' | 'prj.why' | 'prj.now' | 'prj.next' | 'prj.follow' | 'prj.followCta'
   | 'glx.what' | 'glx.diff' | 'glx.how' | 'glx.v1' | 'glx.v1included' | 'glx.v1excluded'
   | 'glx.v1hardware' | 'glx.principles' | 'glx.ai' | 'glx.roadmap' | 'glx.ecosystem'
-  | 'glx.why' | 'glx.visionNote'
+  | 'glx.why' | 'glx.visionNote' | 'glx.faq'
+  | 'glx.explore' | 'glx.exploreLead' | 'glx.explode' | 'glx.assemble' | 'glx.dragHint'
+  | 'glx.partCamera' | 'glx.partBoard' | 'glx.partSpeaker' | 'glx.partBattery' | 'glx.partClip'
+  | 'glx.viewerAlt'
   | 'contact.heading' | 'placeholder';
 
 export const pages: Record<Locale, Record<PageKey, string>> = {
@@ -27,6 +31,7 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'svc.detailWhen': 'Когда это про вас',
     'svc.detailWhat': 'Что я сделаю',
     'svc.detailGives': 'Что вы получите',
+    'svc.examples': 'Примеры работ',
     'prj.idea': 'Идея',
     'prj.why': 'Почему я это делаю',
     'prj.now': 'Где сейчас',
@@ -47,6 +52,17 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'glx.why': 'Зачем это вообще',
     'glx.faq': 'Частые вопросы',
     'glx.visionNote': 'Это планы и направление, а не то, что уже готово сегодня.',
+    'glx.explore': 'Загляни внутрь модуля',
+    'glx.exploreLead': 'Покрути модуль и разнеси его на детали. Внутри — настоящее железо, то самое, что цепляется на дужку обычных очков.',
+    'glx.explode': 'Разнести на детали',
+    'glx.assemble': 'Собрать обратно',
+    'glx.dragHint': 'Потяни, чтобы повернуть',
+    'glx.partCamera': 'Камера OV5640',
+    'glx.partBoard': 'Плата ESP32-S3',
+    'glx.partSpeaker': 'Динамик MAX98357A',
+    'glx.partBattery': 'Батарея',
+    'glx.partClip': 'Кронштейн на очки',
+    'glx.viewerAlt': 'Модуль Sudonit на обычных очках: камера, плата ESP32-S3, динамик и батарея на 3D-печатном кронштейне.',
     'contact.heading': 'Обсудим?',
     'placeholder': 'Скоро расскажу подробнее.',
   },
@@ -62,6 +78,7 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'svc.detailWhen': 'When this is you',
     'svc.detailWhat': "What I'll do",
     'svc.detailGives': 'What you get',
+    'svc.examples': 'Example work',
     'prj.idea': 'The idea',
     'prj.why': "Why I'm building it",
     'prj.now': 'Where it is now',
@@ -82,6 +99,17 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'glx.why': 'Why it exists',
     'glx.faq': 'Common questions',
     'glx.visionNote': "This is the plan and direction — not what's finished today.",
+    'glx.explore': 'Look inside the module',
+    'glx.exploreLead': 'Spin the module and pull it apart. Inside is the real hardware — the same that clips onto the temple of ordinary glasses.',
+    'glx.explode': 'Pull it apart',
+    'glx.assemble': 'Put it back together',
+    'glx.dragHint': 'Drag to rotate',
+    'glx.partCamera': 'OV5640 camera',
+    'glx.partBoard': 'ESP32-S3 board',
+    'glx.partSpeaker': 'MAX98357A speaker',
+    'glx.partBattery': 'Battery',
+    'glx.partClip': 'Clip-on bracket',
+    'glx.viewerAlt': 'The Sudonit module on ordinary glasses: camera, ESP32-S3 board, speaker and battery on a 3D-printed bracket.',
     'contact.heading': "Let's talk?",
     'placeholder': 'More on this soon.',
   },
@@ -97,6 +125,7 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'svc.detailWhen': 'Cuándo es tu caso',
     'svc.detailWhat': 'Qué haré',
     'svc.detailGives': 'Qué obtienes',
+    'svc.examples': 'Ejemplos de trabajo',
     'prj.idea': 'La idea',
     'prj.why': 'Por qué lo construyo',
     'prj.now': 'En qué punto está',
@@ -117,6 +146,17 @@ export const pages: Record<Locale, Record<PageKey, string>> = {
     'glx.why': 'Por qué existe',
     'glx.faq': 'Preguntas frecuentes',
     'glx.visionNote': 'Esto es el plan y la dirección — no lo que ya está listo hoy.',
+    'glx.explore': 'Mira dentro del módulo',
+    'glx.exploreLead': 'Gira el módulo y sepáralo en piezas. Dentro está el hardware real, el mismo que se engancha a la patilla de unas gafas normales.',
+    'glx.explode': 'Separar en piezas',
+    'glx.assemble': 'Volver a montar',
+    'glx.dragHint': 'Arrastra para girar',
+    'glx.partCamera': 'Cámara OV5640',
+    'glx.partBoard': 'Placa ESP32-S3',
+    'glx.partSpeaker': 'Altavoz MAX98357A',
+    'glx.partBattery': 'Batería',
+    'glx.partClip': 'Soporte de pinza',
+    'glx.viewerAlt': 'El módulo Sudonit sobre gafas normales: cámara, placa ESP32-S3, altavoz y batería en un soporte impreso en 3D.',
     'contact.heading': '¿Hablamos?',
     'placeholder': 'Pronto, más detalles.',
   },

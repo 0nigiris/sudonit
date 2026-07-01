@@ -1,7 +1,8 @@
 ---
 /**
- * Services — the "hire-me-now" verbs (Fix + Teach), given primacy.
- * Cards from the content model; warm primary CTA (Fix my computer -> WhatsApp).
+ * Services — the "hire-me-now" verbs. Emphasis: Creation & AI + Tutoring lead
+ * (primary cards); Repair stays available but quieter (one compact strip below).
+ * Cards from the content model; neutral WhatsApp CTA.
  */
 import { type Locale } from '../../data/site';
 import { getServices, PHOTO_BY_KEY } from '../../lib/content';
@@ -9,11 +10,15 @@ import { localePath } from '../../lib/paths';
 import { homeT } from '../../i18n/home';
 import { t } from '../../i18n/ui';
 import { whatsappLink } from '../../data/contact';
+import { tint } from '../../data/verbs';
 import VerbCard from '../VerbCard.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const services = await getServices(locale);
+// Creation & Tutoring lead; Repair (verb "fix") is kept but de-emphasized.
+const primary = services.filter((s) => s.data.verb !== 'fix');
+const secondary = services.filter((s) => s.data.verb === 'fix');
 ---
 
 <section class="section section--ruled" id="services">
@@ -27,7 +32,7 @@ const services = await getServices(locale);
 
     <div class="cards2" data-reveal-group>
       {
-        services.map((s) => (
+        primary.map((s) => (
           <VerbCard
             verb={s.data.verb}
             name={s.data.name}
@@ -40,9 +45,24 @@ const services = await getServices(locale);
       }
     </div>
 
+    {/* Repair — a real, additional service but a side earner, so it reads as a
+        compact strip (not a full-width hero card): present, clear, not dominant. */}
+    <div class="svc-repair" data-reveal>
+      {secondary.map((s) => (
+        <a class="repair" href={localePath(locale, s.data.key)} style={`--tint:${tint(s.data.verb)}`}>
+          <span class="repair__verb" aria-hidden="true">{s.data.verb === 'fix' ? 'FIX' : s.data.verb}</span>
+          <span class="repair__text">
+            <span class="repair__name">{s.data.name}</span>
+            <span class="repair__line">{s.data.oneLine}</span>
+          </span>
+          <span class="repair__arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+
     <p class="services__cta" data-reveal>
       <a class="cta cta--warm" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-        {t(locale, 'contact.primaryRepair')} →
+        {t(locale, 'contact.whatsapp')} →
       </a>
       <span class="services__reply"><span class="services__pulse" aria-hidden="true"></span>{homeT(locale, 'contact.reply')}</span>
     </p>
@@ -50,18 +70,85 @@ const services = await getServices(locale);
 </section>
 
 <style>
+  /* A warm callout — a soft full-radius tint wash, no side-tab accent bar. */
   .services__note {
     max-width: var(--measure);
     margin: var(--space-3) 0 var(--space-5);
     padding: var(--space-3) var(--space-4);
-    border-left: 3px solid var(--c-light);
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--c-light) 9%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-light) 20%, var(--c-line));
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--c-light) 7%, transparent);
     color: var(--c-text);
     font-size: var(--fs-small);
     line-height: var(--lh-body);
     text-wrap: pretty;
   }
+  /* Repair — compact strip below the two leads. A side earner: visible and
+     clickable, but deliberately smaller than the primary cards. */
+  .svc-repair {
+    margin-top: var(--space-4);
+  }
+  .repair {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    /* Taller than a thin strip (~half a full card), full width kept. */
+    padding: var(--space-5) var(--space-4);
+    background: linear-gradient(180deg, var(--c-surface-2), var(--c-surface));
+    border: 1px solid var(--c-line);
+    border-left: 2px solid color-mix(in srgb, var(--tint) 60%, var(--c-line));
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition:
+      border-color var(--dur-micro) var(--ease-settle),
+      transform var(--dur-reveal) var(--ease-settle);
+  }
+  .repair:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--tint) 45%, var(--c-line));
+  }
+  .repair__verb {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
+    color: var(--tint);
+  }
+  .repair__text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-1) var(--space-3);
+    min-width: 0;
+  }
+  .repair__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-h3);
+    color: var(--c-text);
+  }
+  .repair__line {
+    color: var(--c-muted);
+    font-size: var(--fs-small);
+  }
+  .repair__arrow {
+    flex: none;
+    margin-left: auto;
+    color: var(--tint);
+    transition: transform var(--dur-micro) var(--ease-settle);
+  }
+  .repair:hover .repair__arrow { transform: translateX(4px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .repair,
+    .repair__arrow { transition: none; }
+    .repair:hover { transform: none; }
+    .repair:hover .repair__arrow { transform: none; }
+  }
+  @media (max-width: 560px) {
+    .repair__arrow { display: none; }
+  }
+
   .services__cta {
     margin-top: var(--space-5);
     display: flex;
@@ -69,6 +156,7 @@ const services = await getServices(locale);
     gap: var(--space-4);
     flex-wrap: wrap;
   }
+
   .services__reply {
     display: inline-flex;
     align-items: center;
@@ -76,19 +164,12 @@ const services = await getServices(locale);
     font-size: var(--fs-small);
     color: var(--c-muted);
   }
+  /* Static live-dot. The animated pulse was the banned "janky middle" motion
+     (idle loop, neither focus-carrying nor invisible) — removed. */
   .services__pulse {
     width: 8px;
     height: 8px;
     border-radius: 999px;
     background: var(--c-ok);
-    animation: services-pulse 2.4s var(--ease-settle) infinite;
-  }
-  @keyframes services-pulse {
-    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-ok) 55%, transparent); }
-    70% { box-shadow: 0 0 0 7px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .services__pulse { animation: none; }
   }
 </style>

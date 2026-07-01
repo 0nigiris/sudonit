@@ -14,6 +14,7 @@ import { pageT } from '../../i18n/pages';
 import { t } from '../../i18n/ui';
 import PageHero from '../PageHero.astro';
 import ContactStrip from '../ContactStrip.astro';
+import GlassesViewer from '../GlassesViewer.astro';
 
 interface Props {
   entry: CollectionEntry<'projects'>;
@@ -45,6 +46,9 @@ const statusLabel = d.status === 'in-progress' ? t(locale, 'status.inProgress') 
       </div>
     </section>
   )}
+
+  {/* The 3D set-piece — rotate the module, pull it into its real parts. */}
+  <GlassesViewer locale={locale} tint={tc} photoId={PHOTO_BY_KEY[d.key] ?? 'E1'} />
 
   {/* What makes it different — differentiator cards */}
   {d.points && d.points.length > 0 && (

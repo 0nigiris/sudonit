@@ -60,6 +60,7 @@ export async function getShowcaseItems(locale: Locale) {
  * wiring is one place, not spread across section files.
  */
 export const PHOTO_BY_KEY: Record<string, string> = {
+  creation: 'gen1',
   repair: 'B1',
   tutoring: 'C1',
   glasses: 'E1',

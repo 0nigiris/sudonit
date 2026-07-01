@@ -1,0 +1,116 @@
+---
+/**
+ * Trust — "who is this, and why you can relax with me." The personal-trust
+ * thread the page carried only quietly, given its own confident, scannable
+ * home. Deliberately NOT a biography and NOT the price guarantee (that lives
+ * in About): three honest principles about HOW he works — plain words, fixing
+ * over upselling, honesty about limits. Concretizes the About thesis.
+ */
+import { type Locale } from '../../data/site';
+import { homeT } from '../../i18n/home';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+
+// Each principle pairs an i18n key set with a quiet line icon.
+const points = [
+  { t: 'trust.p1Title', b: 'trust.p1Body', icon: 'chat' },
+  { t: 'trust.p2Title', b: 'trust.p2Body', icon: 'wrench' },
+  { t: 'trust.p3Title', b: 'trust.p3Body', icon: 'check' },
+] as const;
+---
+
+<section class="section section--ruled trust" id="trust">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow" data-reveal>{homeT(locale, 'trust.eyebrow')}</p>
+      <h2 class="section__title" data-reveal>{homeT(locale, 'trust.title')}</h2>
+      <p class="trust__lead" data-reveal>{homeT(locale, 'trust.lead')}</p>
+    </div>
+
+    <ul class="trust__grid" data-reveal-group>
+      {points.map((p) => (
+        <li class="trust__item">
+          <span class="trust__icon" aria-hidden="true">
+            {p.icon === 'chat' && (
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-5.4A8 8 0 1 1 21 11.5z" />
+                <path d="M8.5 12h7M8.5 9h5" />
+              </svg>
+            )}
+            {p.icon === 'wrench' && (
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a4 4 0 0 1 5 5l-1.8-.5-1.6 1.6-2.7-2.7L15.2 8l-.5-1.7zM12.6 8.8 4.8 16.6a2 2 0 0 0 2.8 2.8l7.8-7.8" />
+              </svg>
+            )}
+            {p.icon === 'check' && (
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M8 12.5l2.5 2.5L16 9.5" />
+              </svg>
+            )}
+          </span>
+          <h3 class="trust__title">{homeT(locale, p.t)}</h3>
+          <p class="trust__body">{homeT(locale, p.b)}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trust__lead {
+    max-width: var(--measure);
+    margin-top: var(--space-3);
+    color: var(--c-muted);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-snug);
+    text-wrap: pretty;
+  }
+
+  .trust__grid {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  .trust__item {
+    padding: var(--space-4);
+    background: linear-gradient(180deg, var(--c-surface), var(--c-surface));
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-lg);
+  }
+  .trust__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-bottom: var(--space-3);
+    border-radius: 50%;
+    color: var(--c-light);
+    background: color-mix(in srgb, var(--c-light) 12%, transparent);
+  }
+  .trust__title {
+    font-size: var(--fs-h3);
+    margin-bottom: var(--space-2);
+  }
+  .trust__body {
+    color: var(--c-muted);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 860px) {
+    .trust__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+  }
+</style>

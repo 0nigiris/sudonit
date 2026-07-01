@@ -1,0 +1,140 @@
+---
+/**
+ * Starfield — the warm ambient "falling stars" behind the whole page (the
+ * signature from the first site). A single fixed canvas, drawn behind all
+ * content (z-index:-1, between the lamp and the page). Slow downward drift +
+ * gentle twinkle — atmosphere, never interactive.
+ *
+ * Graceful degradation, per project rules:
+ *  - no-JS: nothing renders (the warm lamp + dark base still look complete).
+ *  - reduced-motion: the field is drawn ONCE, static — no drift, no twinkle.
+ */
+---
+
+<canvas id="starfield" aria-hidden="true"></canvas>
+
+<style>
+  #starfield {
+    position: fixed;
+    inset: 0;
+    z-index: -1; /* above the lamp (body::before), behind every bit of content */
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const cv = document.getElementById('starfield') as HTMLCanvasElement | null;
+  const ctx = cv?.getContext('2d');
+  if (cv && ctx) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    // Warm palette: amber, cream, soft white — same family as the site.
+    const COLORS = ['#ff9d4d', '#ffce9a', '#f5f0e8', '#cdbfa6'];
+    const TAU = Math.PI * 2;
+
+    type Star = {
+      x: number; y: number; r: number; c: string;
+      vy: number; vx: number; phase: number; tw: number; base: number;
+      spark: boolean;
+    };
+    let stars: Star[] = [];
+    let w = 0, h = 0, dpr = 1;
+
+    const rand = (a: number, b: number) => a + Math.random() * (b - a);
+
+    function build() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      cv.width = Math.floor(w * dpr);
+      cv.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // Density scales with screen area, clamped so it's sparse and quiet —
+      // atmosphere you sense, not a busy field that competes with content.
+      const count = Math.round(Math.min(Math.max((w * h) / 22000, 28), 80));
+      stars = Array.from({ length: count }, () => ({
+        x: rand(0, w),
+        y: rand(0, h),
+        r: rand(0.5, 1.6),
+        c: COLORS[(Math.random() * COLORS.length) | 0],
+        vy: rand(0.05, 0.35),       // slow fall
+        vx: rand(-0.05, 0.05),      // faint sideways drift
+        phase: rand(0, TAU),
+        tw: rand(0.6, 1.6),         // twinkle speed
+        base: rand(0.12, 0.42),     // base opacity — kept faint, barely there
+        spark: Math.random() < 0.12 // just a couple of 4-point sparkles
+      }));
+    }
+
+    function dot(s: Star, alpha: number) {
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = s.c;
+      if (s.spark) {
+        // a tiny 4-point sparkle: a soft core + thin cross
+        const L = s.r * 3.2;
+        ctx.beginPath();
+        ctx.moveTo(s.x - L, s.y);
+        ctx.lineTo(s.x + L, s.y);
+        ctx.moveTo(s.x, s.y - L);
+        ctx.lineTo(s.x, s.y + L);
+        ctx.strokeStyle = s.c;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r * 0.8, 0, TAU);
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, TAU);
+        ctx.fill();
+      }
+    }
+
+    // Static draw (reduced-motion / no animation): one pass at base opacity.
+    function drawStatic() {
+      ctx.clearRect(0, 0, w, h);
+      for (const s of stars) dot(s, s.base);
+      ctx.globalAlpha = 1;
+    }
+
+    let raf = 0;
+    let t = 0;
+    function frame() {
+      ctx.clearRect(0, 0, w, h);
+      t += 0.016;
+      for (const s of stars) {
+        s.y += s.vy;
+        s.x += s.vx;
+        if (s.y - 4 > h) { s.y = -4; s.x = rand(0, w); }
+        if (s.x < -4) s.x = w + 4;
+        else if (s.x > w + 4) s.x = -4;
+        const tw = 0.5 + 0.5 * Math.sin(t * s.tw + s.phase);
+        dot(s, s.base * (0.45 + 0.55 * tw));
+      }
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(frame);
+    }
+
+    function start() {
+      cancelAnimationFrame(raf);
+      if (reduce.matches) { drawStatic(); return; }
+      if (!document.hidden) raf = requestAnimationFrame(frame);
+    }
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => { build(); start(); }, 150);
+    });
+    // Pause when the tab is hidden — no point burning a render loop offscreen.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else start();
+    });
+    reduce.addEventListener('change', start);
+
+    build();
+    start();
+  }
+</script>

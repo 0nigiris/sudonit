@@ -9,7 +9,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 // Services are the "hire-me-now" verbs.
-const serviceVerb = z.enum(['fix', 'teach']);
+const serviceVerb = z.enum(['fix', 'teach', 'create']);
 // Projects are the "what I'm building" verbs.
 const projectVerb = z.enum(['build', 'create']);
 
@@ -44,6 +44,11 @@ const services = defineCollection({
       // Small caveat shown under a tiers price list (e.g. "from-prices, final
       // price discussed"). Falls back to the generic quote note.
       priceNote: z.string().optional(),
+      // Example-work gallery as shot-list ids (e.g. ["gen1","gen2"]). Rendered
+      // via PhotoFrame so it shows tasteful placeholders until the real files
+      // land in src/assets/photos/<id>.* — zero layout change. Used by the
+      // "Создание и ИИ" page to show real generated work.
+      gallery: z.array(z.string()).optional(),
       // Dedicated-page body (optional — falls back to a holding line until written).
       problem: z.string().optional(),
       approach: z.string().optional(),

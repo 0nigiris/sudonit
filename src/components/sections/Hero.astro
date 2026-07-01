@@ -9,13 +9,10 @@ import { type Locale } from '../../data/site';
 import { homeT } from '../../i18n/home';
 import { t } from '../../i18n/ui';
 import { whatsappLink } from '../../data/contact';
-import { VERB_META, tint, type Verb } from '../../data/verbs';
 import PhotoFrame from '../PhotoFrame.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
-
-const verbs = Object.keys(VERB_META) as Verb[];
 ---
 
 <section class="hero">
@@ -24,13 +21,6 @@ const verbs = Object.keys(VERB_META) as Verb[];
       <p class="hero__kicker">{homeT(locale, 'hero.kicker')}</p>
 
       <h1 class="hero__name">{homeT(locale, 'hero.name')}</h1>
-
-      {/* The identity spine — quiet, tinted, decorative-but-meaningful. */}
-      <ul class="hero__verbs" aria-hidden="true">
-        {verbs.map((v) => (
-          <li class="hero__verb" style={`--tint:${tint(v)}`}>{VERB_META[v].label}</li>
-        ))}
-      </ul>
 
       <p class="hero__lead">{homeT(locale, 'hero.lead')}</p>
 
@@ -85,29 +75,23 @@ const verbs = Object.keys(VERB_META) as Verb[];
     font-weight: 700;
     line-height: 0.95;
     letter-spacing: -0.035em;
-    /* a warm vertical sheen so the name reads as lit, not flat paint */
-    background: linear-gradient(180deg, var(--c-text), color-mix(in srgb, var(--c-text) 84%, var(--c-light)));
+    /* A lit gradient with a movable specular band. At REST the highlight is
+       parked upper-left (18%) — matching the lamp that pools from the top-left
+       (--lamp's 8% -6% source), so the name reads as lit even with no motion.
+       The entrance sweeps this band across once (see hero-name-sweep). */
+    background: linear-gradient(
+      100deg,
+      var(--c-text) 0%,
+      color-mix(in srgb, var(--c-text) 86%, var(--c-light)) 30%,
+      var(--c-light-hi) 50%,
+      color-mix(in srgb, var(--c-text) 86%, var(--c-light)) 70%,
+      var(--c-text) 100%
+    );
+    background-size: 250% 100%;
+    background-position: 18% 0;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-  }
-
-  .hero__verbs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-3);
-    margin-top: var(--space-4);
-  }
-  .hero__verb {
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    color: var(--tint);
-    padding: 0.35em 0.7em;
-    border: 1px solid color-mix(in srgb, var(--tint) 30%, var(--c-line));
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--tint) 8%, transparent);
   }
 
   .hero__lead {
@@ -165,6 +149,64 @@ const verbs = Object.keys(VERB_META) as Verb[];
   .hero__portrait :global(.hero__photo .photo__img),
   .hero__portrait :global(.hero__photo .photo__inner) {
     border-radius: var(--radius-lg);
+  }
+
+  /* ============================================================
+     Cinematic entrance — the second focus-pole (the first is /glasses).
+     "The lamp turns on over the workbench": the portrait lights up first
+     (it is the light source), a specular band sweeps once across the name,
+     and the text rises into the light in one choreographed beat (~1.3s).
+
+     Contract (matches motion.css):
+     - Armed ONLY under `.js` (set inline in <head> before paint) — so no-JS
+       users get the final, fully-lit static frame with zero flash.
+     - `both` fill holds the from-state during each delay (nothing flashes in
+       early) and pins the to-state after (nothing snaps back).
+     - Nothing essential is hidden past ~0.7s, so the LCP name paints fast.
+     - Reduced motion = the complete static frame (handled below).
+     ============================================================ */
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes hero-portrait-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.965); }
+    to   { opacity: 1; transform: none; }
+  }
+  /* The lamp warming up behind the figure. */
+  @keyframes hero-glow-in {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: none; }
+  }
+  /* One specular pass: band travels from off-right to its upper-left rest. */
+  @keyframes hero-name-sweep {
+    from { background-position: 135% 0; }
+    to   { background-position: 18% 0; }
+  }
+
+  .js .hero__portrait { animation: hero-portrait-in 760ms var(--ease-settle) both 60ms; }
+  .js .hero__portrait::before { animation: hero-glow-in 900ms var(--ease-settle) both 40ms; }
+  .js .hero__kicker { animation: hero-rise 520ms var(--ease-settle) both 120ms; }
+  .js .hero__name {
+    animation:
+      hero-rise 560ms var(--ease-settle) both 160ms,
+      hero-name-sweep 1000ms var(--ease-settle) both 360ms;
+  }
+  .js .hero__lead { animation: hero-rise 560ms var(--ease-settle) both 360ms; }
+  .js .hero__trust { animation: hero-rise 560ms var(--ease-settle) both 460ms; }
+  .js .hero__actions { animation: hero-rise 560ms var(--ease-settle) both 560ms; }
+
+  /* Reduced motion = the complete frame: lit, present, unmoved, no sweep. */
+  @media (prefers-reduced-motion: reduce) {
+    .js .hero__portrait,
+    .js .hero__portrait::before,
+    .js .hero__kicker,
+    .js .hero__name,
+    .js .hero__lead,
+    .js .hero__trust,
+    .js .hero__actions {
+      animation: none !important;
+    }
   }
 
   @media (max-width: 900px) {

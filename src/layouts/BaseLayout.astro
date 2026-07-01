@@ -9,6 +9,7 @@ import { localePath, barePath } from '../lib/paths';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileStickyBar from '../components/MobileStickyBar.astro';
+import Starfield from '../components/Starfield.astro';
 
 interface Props {
   locale: Locale;
@@ -81,8 +82,9 @@ const xDefault = noindex ? undefined : abs(localePath(DEFAULT_LOCALE, bare));
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
-    {/* The warm "lamp" light is a static CSS layer (body::before in base.css) —
-        no canvas, no constant motion. Atmosphere, not decoration you notice. */}
+    {/* Warm ambient starfield (the first site's signature). Fixed canvas behind
+        all content; reduced-motion renders it static, no-JS shows none. */}
+    <Starfield />
     <a class="skip-link" href="#main">Skip to content</a>
     <Header locale={locale} />
     <main id="main">
